@@ -8,5 +8,5 @@ export function loadOrCreateOHMie(addres: Address ): OHMie{
       user = new OHMie(addres.toHex())
       user.save()
     }
-    return user
+    return user as OHMie
 }
