@@ -10,6 +10,7 @@ dataSources:
     source:
       address: '0xa64ed1b66cb2838ef2a198d8345c0ce6967a2a3c'
       abi: DAIBondDepository
+      startBlock: 12280908
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
