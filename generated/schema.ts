@@ -60,20 +60,23 @@ export class Ohmie extends Entity {
     this.set("daiBondWithdrawals", Value.fromStringArray(value));
   }
 
-  get daiBondTotalDeposit(): BigInt | null {
+  get daiBondTotalDeposit(): BigDecimal | null {
     let value = this.get("daiBondTotalDeposit");
     if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigInt();
+      return value.toBigDecimal();
     }
   }
 
-  set daiBondTotalDeposit(value: BigInt | null) {
+  set daiBondTotalDeposit(value: BigDecimal | null) {
     if (value === null) {
       this.unset("daiBondTotalDeposit");
     } else {
-      this.set("daiBondTotalDeposit", Value.fromBigInt(value as BigInt));
+      this.set(
+        "daiBondTotalDeposit",
+        Value.fromBigDecimal(value as BigDecimal)
+      );
     }
   }
 }
@@ -126,22 +129,22 @@ export class DaiBondDeposit extends Entity {
     this.set("ohmie", Value.fromString(value));
   }
 
-  get amount(): BigInt {
+  get amount(): BigDecimal {
     let value = this.get("amount");
-    return value.toBigInt();
+    return value.toBigDecimal();
   }
 
-  set amount(value: BigInt) {
-    this.set("amount", Value.fromBigInt(value));
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
   }
 
-  get maxPremium(): BigInt {
+  get maxPremium(): BigDecimal {
     let value = this.get("maxPremium");
-    return value.toBigInt();
+    return value.toBigDecimal();
   }
 
-  set maxPremium(value: BigInt) {
-    this.set("maxPremium", Value.fromBigInt(value));
+  set maxPremium(value: BigDecimal) {
+    this.set("maxPremium", Value.fromBigDecimal(value));
   }
 }
 
