@@ -12,7 +12,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class OHMie extends Entity {
+export class Ohmie extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -20,17 +20,17 @@ export class OHMie extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save OHMie entity without an ID");
+    assert(id !== null, "Cannot save Ohmie entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save OHMie entity with non-string ID. " +
+      "Cannot save Ohmie entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("OHMie", id.toString(), this);
+    store.set("Ohmie", id.toString(), this);
   }
 
-  static load(id: string): OHMie | null {
-    return store.get("OHMie", id) as OHMie | null;
+  static load(id: string): Ohmie | null {
+    return store.get("Ohmie", id) as Ohmie | null;
   }
 
   get id(): string {
@@ -42,26 +42,26 @@ export class OHMie extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get DAIBondDeposits(): Array<string> {
-    let value = this.get("DAIBondDeposits");
+  get daiBondDeposits(): Array<string> {
+    let value = this.get("daiBondDeposits");
     return value.toStringArray();
   }
 
-  set DAIBondDeposits(value: Array<string>) {
-    this.set("DAIBondDeposits", Value.fromStringArray(value));
+  set daiBondDeposits(value: Array<string>) {
+    this.set("daiBondDeposits", Value.fromStringArray(value));
   }
 
-  get DAIBondWithdrawals(): Array<string> {
-    let value = this.get("DAIBondWithdrawals");
+  get daiBondWithdrawals(): Array<string> {
+    let value = this.get("daiBondWithdrawals");
     return value.toStringArray();
   }
 
-  set DAIBondWithdrawals(value: Array<string>) {
-    this.set("DAIBondWithdrawals", Value.fromStringArray(value));
+  set daiBondWithdrawals(value: Array<string>) {
+    this.set("daiBondWithdrawals", Value.fromStringArray(value));
   }
 }
 
-export class DAIBondDeposit extends Entity {
+export class DaiBondDeposit extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -69,17 +69,17 @@ export class DAIBondDeposit extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save DAIBondDeposit entity without an ID");
+    assert(id !== null, "Cannot save DaiBondDeposit entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save DAIBondDeposit entity with non-string ID. " +
+      "Cannot save DaiBondDeposit entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("DAIBondDeposit", id.toString(), this);
+    store.set("DaiBondDeposit", id.toString(), this);
   }
 
-  static load(id: string): DAIBondDeposit | null {
-    return store.get("DAIBondDeposit", id) as DAIBondDeposit | null;
+  static load(id: string): DaiBondDeposit | null {
+    return store.get("DaiBondDeposit", id) as DaiBondDeposit | null;
   }
 
   get id(): string {
@@ -137,7 +137,7 @@ export class DAIBondDeposit extends Entity {
   }
 }
 
-export class DAIBondRedeem extends Entity {
+export class DaiBondRedeem extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -145,17 +145,17 @@ export class DAIBondRedeem extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save DAIBondRedeem entity without an ID");
+    assert(id !== null, "Cannot save DaiBondRedeem entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save DAIBondRedeem entity with non-string ID. " +
+      "Cannot save DaiBondRedeem entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("DAIBondRedeem", id.toString(), this);
+    store.set("DaiBondRedeem", id.toString(), this);
   }
 
-  static load(id: string): DAIBondRedeem | null {
-    return store.get("DAIBondRedeem", id) as DAIBondRedeem | null;
+  static load(id: string): DaiBondRedeem | null {
+    return store.get("DaiBondRedeem", id) as DaiBondRedeem | null;
   }
 
   get id(): string {

@@ -1,24 +1,24 @@
-type OHMie @entity {
+type Ohmie @entity {
   "address of user account"
   id: ID!
-  DAIBondDeposits: [DAIBondDeposit!]! @derivedFrom(field: "user")
-  DAIBondWithdrawals: [DAIBondRedeem!]! @derivedFrom(field: "user")
+  daiBondDeposits: [DaiBondDeposit!]! @derivedFrom(field: "user")
+  daiBondWithdrawals: [DaiBondRedeem!]! @derivedFrom(field: "user")
 }
 
-type DAIBondDeposit @entity {
+type DaiBondDeposit @entity {
   id: ID!
   timestamp: BigInt!
   transaction: Transaction!
-  user: OHMie!
+  user: Ohmie!
   amount: BigInt!
   maxPremium: BigInt!
 }
 
-type DAIBondRedeem @entity {
+type DaiBondRedeem @entity {
   id: ID!
   timestamp: BigInt!
   transaction: Transaction!
-  user: OHMie!
+  user: Ohmie!
 }
 
 type Transaction @entity {
