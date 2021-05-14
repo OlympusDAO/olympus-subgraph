@@ -126,13 +126,13 @@ export class DaiBondDeposit extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get user(): string {
-    let value = this.get("user");
+  get ohmie(): string {
+    let value = this.get("ohmie");
     return value.toString();
   }
 
-  set user(value: string) {
-    this.set("user", Value.fromString(value));
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
   }
 
   get amount(): BigInt {
@@ -202,13 +202,13 @@ export class DaiBondRedeem extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get user(): string {
-    let value = this.get("user");
+  get ohmie(): string {
+    let value = this.get("ohmie");
     return value.toString();
   }
 
-  set user(value: string) {
-    this.set("user", Value.fromString(value));
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
   }
 }
 
