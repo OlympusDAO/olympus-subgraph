@@ -14,6 +14,9 @@ export function handleDeposit(call: DepositCall): void {
   deposit.amount = call.inputs.amount_
   deposit.maxPremium = call.inputs.maxPremium_
   deposit.save()
+
+  user.daiBondTotalDeposit = user.daiBondTotalDeposit.plus(call.inputs.amount_)
+  user.save()
 }
 
 export function handleRedeem(call: RedeemCall): void {

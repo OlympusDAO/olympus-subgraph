@@ -59,6 +59,23 @@ export class Ohmie extends Entity {
   set daiBondWithdrawals(value: Array<string>) {
     this.set("daiBondWithdrawals", Value.fromStringArray(value));
   }
+
+  get daiBondTotalDeposit(): BigInt | null {
+    let value = this.get("daiBondTotalDeposit");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set daiBondTotalDeposit(value: BigInt | null) {
+    if (value === null) {
+      this.unset("daiBondTotalDeposit");
+    } else {
+      this.set("daiBondTotalDeposit", Value.fromBigInt(value as BigInt));
+    }
+  }
 }
 
 export class DaiBondDeposit extends Entity {

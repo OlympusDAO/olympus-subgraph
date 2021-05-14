@@ -3,6 +3,7 @@ type Ohmie @entity {
   id: ID!
   daiBondDeposits: [DaiBondDeposit!]! @derivedFrom(field: "user")
   daiBondWithdrawals: [DaiBondRedeem!]! @derivedFrom(field: "user")
+  daiBondTotalDeposit : BigInt
 }
 
 type DaiBondDeposit @entity {
