@@ -8,7 +8,6 @@ type Ohmie @entity {
 
 type DaiBondDeposit @entity {
   id: ID!
-  timestamp: BigInt!
   transaction: Transaction!
   ohmie: Ohmie!
   amount: BigInt!
@@ -17,7 +16,6 @@ type DaiBondDeposit @entity {
 
 type DaiBondRedeem @entity {
   id: ID!
-  timestamp: BigInt!
   transaction: Transaction!
   ohmie: Ohmie!
 }

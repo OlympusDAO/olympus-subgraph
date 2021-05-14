@@ -108,15 +108,6 @@ export class DaiBondDeposit extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-
   get transaction(): string {
     let value = this.get("transaction");
     return value.toString();
@@ -182,15 +173,6 @@ export class DaiBondRedeem extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
   }
 
   get transaction(): string {
