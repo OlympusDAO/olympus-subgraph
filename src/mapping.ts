@@ -6,7 +6,7 @@ import { loadOrCreateOHMie } from "./utils/OHMie"
 export function handleDeposit(call: DepositCall): void {
   let ohmie = loadOrCreateOHMie(call.transaction.from)
 
-  let transaction = loadOrCreateTransaction(call.transaction)
+  let transaction = loadOrCreateTransaction(call.transaction, call.block)
   
   let deposit = new DaiBondDeposit(transaction.id)
   deposit.transaction = transaction.id
@@ -22,7 +22,7 @@ export function handleDeposit(call: DepositCall): void {
 export function handleRedeem(call: RedeemCall): void {
   let ohmie = loadOrCreateOHMie(call.transaction.from)
 
-  let transaction = loadOrCreateTransaction(call.transaction)
+  let transaction = loadOrCreateTransaction(call.transaction, call.block)
   
   let redeem = new DaiBondRedeem(transaction.id)
   redeem.transaction = transaction.id
