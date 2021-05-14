@@ -1,11 +1,11 @@
 import {  DepositCall, RedeemCall  } from '../generated/DAIBondDepository.sol/DAIBondDepository'
 import { OHMie, DAIBondDeposit, DAIBondRedeem } from '../generated/schema'
-import { loadOrCreateTransaction } from "./utils/Transaction"
+import { loadOrCreateTransaction } from "./utils/Transactions"
 
 export function handleDeposit(call: DepositCall): void {
   let user = loadOHMieOrCreate(call)
 
-  let transaction = loadOrCreateTransaction(call.transaction, call.block)
+  let transaction = loadOrCreateTransaction(call.transaction)
   
   let deposit = new DAIBondDeposit(transaction.id)
   deposit.transaction = transaction.id
@@ -18,7 +18,7 @@ export function handleDeposit(call: DepositCall): void {
 export function handleRedeem(call: RedeemCall): void {
   let user = loadOHMieOrCreate(call)
 
-  let transaction = loadOrCreateTransaction(call.transaction, call.block)
+  let transaction = loadOrCreateTransaction(call.transaction)
   
   let redeem = new DAIBondRedeem(transaction.id)
   redeem.transaction = transaction.id
