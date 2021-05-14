@@ -1,6 +1,35 @@
-type Gravatar @entity {
+type OHMie @entity {
+  "address of user account"
   id: ID!
-  owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  DAIBondDeposits: [DAIBondDeposit!]! @derivedFrom(field: "user")
+  DAIBondWithdrawals: [DAIBondRedeem!]! @derivedFrom(field: "user")
+}
+
+type DAIBondDeposit @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  user: OHMie!
+  amount: BigInt!
+  maxPremium: BigInt!
+}
+
+type DAIBondRedeem @entity {
+  id: ID!
+  timestamp: BigInt!
+  transaction: Transaction!
+  user: OHMie!
+}
+
+type Transaction @entity {
+  "transaction hash"
+  id: ID!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  blockHash: Bytes!
+  from: Bytes!
+  to: Bytes
+  value: BigInt!
+  gasUsed: BigInt!
+  gasPrice: BigInt!
 }
