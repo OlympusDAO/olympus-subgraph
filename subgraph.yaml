@@ -113,43 +113,43 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/OHMDAIERC20.ts
-  # - kind: ethereum/contract
-  #   name: OlympusERC20.sol
-  #   network: mainnet
-  #   source:
-  #     address: '0x383518188c0c6d7730d91b2c03a03c837814a899'
-  #     abi: OlympusERC20
-  #     startBlock: 12084967
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - OlympusERC20
-  #     abis:
-  #       - name: OlympusERC20
-  #         file: ./abis/OlympusERC20.json
-  #     callHandlers:
-  #       - function: transfer(address,uint256)
-  #         handler: handleTransfer
-  #     file: ./src/OlympusERC20.ts
-  # - kind: ethereum/contract
-  #   name: sOlympusERC20.sol
-  #   network: mainnet
-  #   source:
-  #     address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
-  #     abi: sOlympusERC20
-  #     startBlock: 12084973
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - sOlympusERC20
-  #     abis:
-  #       - name: sOlympusERC20
-  #         file: ./abis/sOlympusERC20.json
-  #     callHandlers:
-  #       - function: transfer(address,uint256)
-  #         handler: handleTransfer
-  #     file: ./src/sOlympusERC20.ts
+  - kind: ethereum/contract
+    name: OlympusERC20
+    network: mainnet
+    source:
+      address: '0x383518188c0c6d7730d91b2c03a03c837814a899'
+      abi: OlympusERC20
+      startBlock: 12084967
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OlympusERC20
+      abis:
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/OlympusERC20.ts
+  - kind: ethereum/contract
+    name: sOlympusERC20
+    network: mainnet
+    source:
+      address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
+      abi: sOlympusERC20
+      startBlock: 12084973
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - sOlympusERC20
+      abis:
+        - name: sOlympusERC20
+          file: ./abis/sOlympusERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/sOlympusERC20.ts

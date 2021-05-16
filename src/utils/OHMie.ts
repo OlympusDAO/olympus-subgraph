@@ -9,6 +9,8 @@ export function loadOrCreateOHMie(addres: Address): Ohmie{
         ohmie = new Ohmie(addres.toHex())
         ohmie.daiBondTotalDeposit = new BigDecimal(new BigInt(0))
         ohmie.ohmDaiSlpTotalDeposit = new BigDecimal(new BigInt(0))
+        ohmie.ohmBalance = new BigDecimal(new BigInt(0))
+        ohmie.sohmBalance = new BigDecimal(new BigInt(0))
         ohmie.save()
     }
     return ohmie as Ohmie

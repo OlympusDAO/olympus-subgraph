@@ -133,23 +133,6 @@ export class Treasury extends Entity {
       this.set("ohmDaiSlpBalance", Value.fromBigDecimal(value as BigDecimal));
     }
   }
-
-  get riskFreeValue(): BigDecimal | null {
-    let value = this.get("riskFreeValue");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set riskFreeValue(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("riskFreeValue");
-    } else {
-      this.set("riskFreeValue", Value.fromBigDecimal(value as BigDecimal));
-    }
-  }
 }
 
 export class Ohmie extends Entity {
@@ -237,6 +220,40 @@ export class Ohmie extends Entity {
         "ohmDaiSlpTotalDeposit",
         Value.fromBigDecimal(value as BigDecimal)
       );
+    }
+  }
+
+  get ohmBalance(): BigDecimal | null {
+    let value = this.get("ohmBalance");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set ohmBalance(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("ohmBalance");
+    } else {
+      this.set("ohmBalance", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
+  get sohmBalance(): BigDecimal | null {
+    let value = this.get("sohmBalance");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set sohmBalance(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("sohmBalance");
+    } else {
+      this.set("sohmBalance", Value.fromBigDecimal(value as BigDecimal));
     }
   }
 }

@@ -5,8 +5,6 @@ import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateTreasury } from './utils/Treasuries'
 import { TREASURY_ADDRESS, SUSHI_OHMDAI_PAIR } from './utils/Constants'
 
-
-
 export function handleTransfer(event: Transfer): void {
     let treasury = loadOrCreateTreasury()
     let value = toDecimal(event.params.value)

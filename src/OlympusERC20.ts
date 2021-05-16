@@ -1,43 +1,16 @@
-import {  DepositCall, RedeemCall  } from '../generated/DAIBondDepository/DAIBondDepository'
-import { Deposit, Redeemtion } from '../generated/schema'
-import { loadOrCreateTransaction } from "./utils/Transactions"
-import { loadOrCreateOHMie } from "./utils/OHMie"
+import { Address } from '@graphprotocol/graph-ts'
+
+import {  Transfer  } from '../generated/OlympusERC20/OlympusERC20'
 import { toDecimal } from "./utils/Decimals"
-import { DAIBOND_TOKEN } from './utils/Constants'
-import { loadOrCreateToken } from './utils/Tokens'
-import { loadOrCreateTreasury } from './utils/Treasuries'
+import { loadOrCreateOHMie } from "./utils/OHMie"
 
-export function handleDeposit(call: DepositCall): void {
-  let ohmie = loadOrCreateOHMie(call.transaction.from)
-  let treasury = loadOrCreateTreasury()
-  let transaction = loadOrCreateTransaction(call.transaction, call.block)
-  
-  let amount = toDecimal(call.inputs.amount_)
-  let deposit = new Deposit(transaction.id)
-  deposit.transaction = transaction.id
-  deposit.ohmie = ohmie.id
-  deposit.amount = amount
-  deposit.maxPremium = toDecimal(call.inputs.maxPremium_)
-  deposit.token = loadOrCreateToken(DAIBOND_TOKEN).id;
-  deposit.treasury = treasury.id;
-  deposit.save()
+export function handleTransfer(event: Transfer): void {
+    let ohmieFrom = loadOrCreateOHMie(event.transaction.from as Address)
+    let ohmieTo = loadOrCreateOHMie(event.transaction.to as Address)
+    let value = toDecimal(event.params.value)
 
-  ohmie.daiBondTotalDeposit = ohmie.daiBondTotalDeposit.plus(amount)
-  ohmie.save()
-
-  treasury.daiBondTotalDeposit = treasury.daiBondTotalDeposit.plus(amount)
-  treasury.save()
-}
-
-export function handleRedeem(call: RedeemCall): void {
-  let ohmie = loadOrCreateOHMie(call.transaction.from)
-  let treasury = loadOrCreateTreasury()
-  let transaction = loadOrCreateTransaction(call.transaction, call.block)
-  
-  let redeem = new Redeemtion(transaction.id)
-  redeem.transaction = transaction.id
-  redeem.ohmie = ohmie.id
-  redeem.token = loadOrCreateToken(DAIBOND_TOKEN).id;
-  redeem.treasury = treasury.id;
-  redeem.save()
+    ohmieTo.sohmBalance = ohmieTo.sohmBalance.plus(value)
+    ohmieTo.save()
+    ohmieFrom.sohmBalance = ohmieFrom.sohmBalance.minus(value)
+    ohmieFrom.save()
 }

@@ -14,8 +14,10 @@ type Ohmie @entity {
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
   bondWithdrawals: [Redeemtion!]! @derivedFrom(field: "ohmie")
-  daiBondTotalDeposit : BigDecimal
-  ohmDaiSlpTotalDeposit : BigDecimal
+  daiBondTotalDeposit: BigDecimal
+  ohmDaiSlpTotalDeposit: BigDecimal
+  ohmBalance: BigDecimal
+  sohmBalance: BigDecimal
 }
 
 type Deposit @entity {
