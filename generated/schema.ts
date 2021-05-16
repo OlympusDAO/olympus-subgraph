@@ -12,6 +12,146 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Treasury extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Treasury entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Treasury entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Treasury", id.toString(), this);
+  }
+
+  static load(id: string): Treasury | null {
+    return store.get("Treasury", id) as Treasury | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get bondDeposits(): Array<string> {
+    let value = this.get("bondDeposits");
+    return value.toStringArray();
+  }
+
+  set bondDeposits(value: Array<string>) {
+    this.set("bondDeposits", Value.fromStringArray(value));
+  }
+
+  get bondWithdrawals(): Array<string> {
+    let value = this.get("bondWithdrawals");
+    return value.toStringArray();
+  }
+
+  set bondWithdrawals(value: Array<string>) {
+    this.set("bondWithdrawals", Value.fromStringArray(value));
+  }
+
+  get daiBondTotalDeposit(): BigDecimal | null {
+    let value = this.get("daiBondTotalDeposit");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set daiBondTotalDeposit(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("daiBondTotalDeposit");
+    } else {
+      this.set(
+        "daiBondTotalDeposit",
+        Value.fromBigDecimal(value as BigDecimal)
+      );
+    }
+  }
+
+  get ohmDaiSlpTotalDeposit(): BigDecimal | null {
+    let value = this.get("ohmDaiSlpTotalDeposit");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set ohmDaiSlpTotalDeposit(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("ohmDaiSlpTotalDeposit");
+    } else {
+      this.set(
+        "ohmDaiSlpTotalDeposit",
+        Value.fromBigDecimal(value as BigDecimal)
+      );
+    }
+  }
+
+  get daiBalance(): BigDecimal | null {
+    let value = this.get("daiBalance");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set daiBalance(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("daiBalance");
+    } else {
+      this.set("daiBalance", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
+  get ohmDaiSlpBalance(): BigDecimal | null {
+    let value = this.get("ohmDaiSlpBalance");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set ohmDaiSlpBalance(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("ohmDaiSlpBalance");
+    } else {
+      this.set("ohmDaiSlpBalance", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
+  get riskFreeValue(): BigDecimal | null {
+    let value = this.get("riskFreeValue");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set riskFreeValue(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("riskFreeValue");
+    } else {
+      this.set("riskFreeValue", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+}
+
 export class Ohmie extends Entity {
   constructor(id: string) {
     super();
@@ -42,22 +182,22 @@ export class Ohmie extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get daiBondDeposits(): Array<string> {
-    let value = this.get("daiBondDeposits");
+  get bondDeposits(): Array<string> {
+    let value = this.get("bondDeposits");
     return value.toStringArray();
   }
 
-  set daiBondDeposits(value: Array<string>) {
-    this.set("daiBondDeposits", Value.fromStringArray(value));
+  set bondDeposits(value: Array<string>) {
+    this.set("bondDeposits", Value.fromStringArray(value));
   }
 
-  get daiBondWithdrawals(): Array<string> {
-    let value = this.get("daiBondWithdrawals");
+  get bondWithdrawals(): Array<string> {
+    let value = this.get("bondWithdrawals");
     return value.toStringArray();
   }
 
-  set daiBondWithdrawals(value: Array<string>) {
-    this.set("daiBondWithdrawals", Value.fromStringArray(value));
+  set bondWithdrawals(value: Array<string>) {
+    this.set("bondWithdrawals", Value.fromStringArray(value));
   }
 
   get daiBondTotalDeposit(): BigDecimal | null {
@@ -79,9 +219,29 @@ export class Ohmie extends Entity {
       );
     }
   }
+
+  get ohmDaiSlpTotalDeposit(): BigDecimal | null {
+    let value = this.get("ohmDaiSlpTotalDeposit");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set ohmDaiSlpTotalDeposit(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("ohmDaiSlpTotalDeposit");
+    } else {
+      this.set(
+        "ohmDaiSlpTotalDeposit",
+        Value.fromBigDecimal(value as BigDecimal)
+      );
+    }
+  }
 }
 
-export class DaiBondDeposit extends Entity {
+export class Deposit extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -89,17 +249,17 @@ export class DaiBondDeposit extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save DaiBondDeposit entity without an ID");
+    assert(id !== null, "Cannot save Deposit entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save DaiBondDeposit entity with non-string ID. " +
+      "Cannot save Deposit entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("DaiBondDeposit", id.toString(), this);
+    store.set("Deposit", id.toString(), this);
   }
 
-  static load(id: string): DaiBondDeposit | null {
-    return store.get("DaiBondDeposit", id) as DaiBondDeposit | null;
+  static load(id: string): Deposit | null {
+    return store.get("Deposit", id) as Deposit | null;
   }
 
   get id(): string {
@@ -146,9 +306,27 @@ export class DaiBondDeposit extends Entity {
   set maxPremium(value: BigDecimal) {
     this.set("maxPremium", Value.fromBigDecimal(value));
   }
+
+  get token(): string {
+    let value = this.get("token");
+    return value.toString();
+  }
+
+  set token(value: string) {
+    this.set("token", Value.fromString(value));
+  }
+
+  get treasury(): string {
+    let value = this.get("treasury");
+    return value.toString();
+  }
+
+  set treasury(value: string) {
+    this.set("treasury", Value.fromString(value));
+  }
 }
 
-export class DaiBondRedeem extends Entity {
+export class Redeemtion extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -156,17 +334,17 @@ export class DaiBondRedeem extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save DaiBondRedeem entity without an ID");
+    assert(id !== null, "Cannot save Redeemtion entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save DaiBondRedeem entity with non-string ID. " +
+      "Cannot save Redeemtion entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("DaiBondRedeem", id.toString(), this);
+    store.set("Redeemtion", id.toString(), this);
   }
 
-  static load(id: string): DaiBondRedeem | null {
-    return store.get("DaiBondRedeem", id) as DaiBondRedeem | null;
+  static load(id: string): Redeemtion | null {
+    return store.get("Redeemtion", id) as Redeemtion | null;
   }
 
   get id(): string {
@@ -194,6 +372,24 @@ export class DaiBondRedeem extends Entity {
 
   set ohmie(value: string) {
     this.set("ohmie", Value.fromString(value));
+  }
+
+  get token(): string {
+    let value = this.get("token");
+    return value.toString();
+  }
+
+  set token(value: string) {
+    this.set("token", Value.fromString(value));
+  }
+
+  get treasury(): string {
+    let value = this.get("treasury");
+    return value.toString();
+  }
+
+  set treasury(value: string) {
+    this.set("treasury", Value.fromString(value));
   }
 }
 
@@ -305,5 +501,54 @@ export class Transaction extends Entity {
 
   set gasPrice(value: BigInt) {
     this.set("gasPrice", Value.fromBigInt(value));
+  }
+}
+
+export class Token extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Token entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Token entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Token", id.toString(), this);
+  }
+
+  static load(id: string): Token | null {
+    return store.get("Token", id) as Token | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get address(): Bytes {
+    let value = this.get("address");
+    return value.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
   }
 }

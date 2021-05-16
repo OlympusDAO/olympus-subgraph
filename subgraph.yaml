@@ -5,7 +5,7 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: DAIBondDepository.sol
+    name: DAIBondDepository
     network: mainnet
     source:
       address: '0xa64ed1b66cb2838ef2a198d8345c0ce6967a2a3c'
@@ -25,4 +25,131 @@ dataSources:
           handler: handleDeposit
         - function: redeem()
           handler: handleRedeem
-      file: ./src/mapping.ts
+      file: ./src/DAIBondDeposit.ts
+  - kind: ethereum/contract
+    name: LPBondDepository
+    network: mainnet
+    source:
+      address: '0x13e8484a86327f5882d1340ed0d7643a29548536'
+      abi: LPBondDepository
+      startBlock: 12368362
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - LPBondDeposit
+      abis:
+        - name: LPBondDepository
+          file: ./abis/LPBondDepository.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem()
+          handler: handleRedeem
+      file: ./src/LPBondDeposit.ts
+  #Old SLP Bond Contract
+  - kind: ethereum/contract
+    name: OHMPrincipleDepository
+    network: mainnet
+    source:
+      address: '0xd27001d1aAEd5f002C722Ad729de88a91239fF29'
+      abi: OHMPrincipleDepository
+      startBlock: 12154429
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OHMPrincipleDepository
+      abis:
+        - name: OHMPrincipleDepository
+          file: ./abis/OHMPrincipleDepository.json
+      callHandlers:
+        - function: depositBondPrinciple(uint256)
+          handler: handleDeposit
+        - function: redeemBond()
+          handler: handleRedeem
+      file: ./src/OHMPrincipleDepository.ts
+  - kind: ethereum/contract
+    name: DAIERC20
+    network: mainnet
+    source:
+      address: '0x6b175474e89094c44da98b954eedeac495271d0f'
+      abi: DAIERC20
+      #Start from Treasury Creation
+      startBlock: 12085425
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - DAIERC20
+      abis:
+        - name: DAIERC20
+          file: ./abis/DAIERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/DAIERC20.ts
+  - kind: ethereum/contract
+    name: OHMDAIERC20
+    network: mainnet
+    source:
+      address: '0x34d7d7aaf50ad4944b70b320acb24c95fa2def7c'
+      abi: OHMDAIERC20
+      #Start from Treasury Creation
+      startBlock: 12085425
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OHMDAIERC20
+      abis:
+        - name: OHMDAIERC20
+          file: ./abis/OHMDAIERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/OHMDAIERC20.ts
+  # - kind: ethereum/contract
+  #   name: OlympusERC20.sol
+  #   network: mainnet
+  #   source:
+  #     address: '0x383518188c0c6d7730d91b2c03a03c837814a899'
+  #     abi: OlympusERC20
+  #     startBlock: 12084967
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - OlympusERC20
+  #     abis:
+  #       - name: OlympusERC20
+  #         file: ./abis/OlympusERC20.json
+  #     callHandlers:
+  #       - function: transfer(address,uint256)
+  #         handler: handleTransfer
+  #     file: ./src/OlympusERC20.ts
+  # - kind: ethereum/contract
+  #   name: sOlympusERC20.sol
+  #   network: mainnet
+  #   source:
+  #     address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
+  #     abi: sOlympusERC20
+  #     startBlock: 12084973
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - sOlympusERC20
+  #     abis:
+  #       - name: sOlympusERC20
+  #         file: ./abis/sOlympusERC20.json
+  #     callHandlers:
+  #       - function: transfer(address,uint256)
+  #         handler: handleTransfer
+  #     file: ./src/sOlympusERC20.ts

@@ -1,23 +1,39 @@
+type Treasury @entity {
+  "address of user account"
+  id: ID!
+  bondDeposits: [Deposit!]! @derivedFrom(field: "treasury")
+  bondWithdrawals: [Redeemtion!]! @derivedFrom(field: "treasury")
+  daiBondTotalDeposit : BigDecimal
+  ohmDaiSlpTotalDeposit : BigDecimal
+  daiBalance: BigDecimal
+  ohmDaiSlpBalance: BigDecimal
+}
+
 type Ohmie @entity {
   "address of user account"
   id: ID!
-  daiBondDeposits: [DaiBondDeposit!]! @derivedFrom(field: "ohmie")
-  daiBondWithdrawals: [DaiBondRedeem!]! @derivedFrom(field: "ohmie")
+  bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
+  bondWithdrawals: [Redeemtion!]! @derivedFrom(field: "ohmie")
   daiBondTotalDeposit : BigDecimal
+  ohmDaiSlpTotalDeposit : BigDecimal
 }
 
-type DaiBondDeposit @entity {
+type Deposit @entity {
   id: ID!
   transaction: Transaction!
   ohmie: Ohmie!
   amount: BigDecimal!
   maxPremium: BigDecimal!
+  token: Token!
+  treasury: Treasury!
 }
 
-type DaiBondRedeem @entity {
+type Redeemtion @entity {
   id: ID!
   transaction: Transaction!
   ohmie: Ohmie!
+  token: Token!
+  treasury: Treasury!
 }
 
 type Transaction @entity {
@@ -31,4 +47,10 @@ type Transaction @entity {
   value: BigInt!
   gasUsed: BigInt!
   gasPrice: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+  name: String!
+  address: Bytes!
 }
