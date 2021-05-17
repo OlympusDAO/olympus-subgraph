@@ -183,22 +183,40 @@ export class Ohmie extends Entity {
     this.set("bondWithdrawals", Value.fromStringArray(value));
   }
 
-  get ohmTransactions(): Array<string> {
-    let value = this.get("ohmTransactions");
+  get sentOhmTransactions(): Array<string> {
+    let value = this.get("sentOhmTransactions");
     return value.toStringArray();
   }
 
-  set ohmTransactions(value: Array<string>) {
-    this.set("ohmTransactions", Value.fromStringArray(value));
+  set sentOhmTransactions(value: Array<string>) {
+    this.set("sentOhmTransactions", Value.fromStringArray(value));
   }
 
-  get sohmTransactions(): Array<string> {
-    let value = this.get("sohmTransactions");
+  get receivedOhmTransactions(): Array<string> {
+    let value = this.get("receivedOhmTransactions");
     return value.toStringArray();
   }
 
-  set sohmTransactions(value: Array<string>) {
-    this.set("sohmTransactions", Value.fromStringArray(value));
+  set receivedOhmTransactions(value: Array<string>) {
+    this.set("receivedOhmTransactions", Value.fromStringArray(value));
+  }
+
+  get sentSohmTransactions(): Array<string> {
+    let value = this.get("sentSohmTransactions");
+    return value.toStringArray();
+  }
+
+  set sentSohmTransactions(value: Array<string>) {
+    this.set("sentSohmTransactions", Value.fromStringArray(value));
+  }
+
+  get receivedSohmTransactions(): Array<string> {
+    let value = this.get("receivedSohmTransactions");
+    return value.toStringArray();
+  }
+
+  set receivedSohmTransactions(value: Array<string>) {
+    this.set("receivedSohmTransactions", Value.fromStringArray(value));
   }
 
   get daiBondTotalDeposit(): BigDecimal | null {
@@ -539,7 +557,7 @@ export class Transaction extends Entity {
   }
 }
 
-export class ohmTransaction extends Entity {
+export class OhmTransaction extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -547,17 +565,17 @@ export class ohmTransaction extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save ohmTransaction entity without an ID");
+    assert(id !== null, "Cannot save OhmTransaction entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save ohmTransaction entity with non-string ID. " +
+      "Cannot save OhmTransaction entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("ohmTransaction", id.toString(), this);
+    store.set("OhmTransaction", id.toString(), this);
   }
 
-  static load(id: string): ohmTransaction | null {
-    return store.get("ohmTransaction", id) as ohmTransaction | null;
+  static load(id: string): OhmTransaction | null {
+    return store.get("OhmTransaction", id) as OhmTransaction | null;
   }
 
   get id(): string {
@@ -578,13 +596,22 @@ export class ohmTransaction extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get ohmieTo(): string {
+    let value = this.get("ohmieTo");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set ohmieTo(value: string) {
+    this.set("ohmieTo", Value.fromString(value));
+  }
+
+  get ohmieFrom(): string {
+    let value = this.get("ohmieFrom");
+    return value.toString();
+  }
+
+  set ohmieFrom(value: string) {
+    this.set("ohmieFrom", Value.fromString(value));
   }
 
   get amount(): BigDecimal {
@@ -594,19 +621,10 @@ export class ohmTransaction extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
-  }
-
-  get action(): string {
-    let value = this.get("action");
-    return value.toString();
-  }
-
-  set action(value: string) {
-    this.set("action", Value.fromString(value));
   }
 }
 
-export class sohmTransaction extends Entity {
+export class SohmTransaction extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -614,17 +632,17 @@ export class sohmTransaction extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save sohmTransaction entity without an ID");
+    assert(id !== null, "Cannot save SohmTransaction entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save sohmTransaction entity with non-string ID. " +
+      "Cannot save SohmTransaction entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("sohmTransaction", id.toString(), this);
+    store.set("SohmTransaction", id.toString(), this);
   }
 
-  static load(id: string): sohmTransaction | null {
-    return store.get("sohmTransaction", id) as sohmTransaction | null;
+  static load(id: string): SohmTransaction | null {
+    return store.get("SohmTransaction", id) as SohmTransaction | null;
   }
 
   get id(): string {
@@ -645,13 +663,22 @@ export class sohmTransaction extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get ohmieTo(): string {
+    let value = this.get("ohmieTo");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set ohmieTo(value: string) {
+    this.set("ohmieTo", Value.fromString(value));
+  }
+
+  get ohmieFrom(): string {
+    let value = this.get("ohmieFrom");
+    return value.toString();
+  }
+
+  set ohmieFrom(value: string) {
+    this.set("ohmieFrom", Value.fromString(value));
   }
 
   get amount(): BigDecimal {
@@ -661,15 +688,6 @@ export class sohmTransaction extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
-  }
-
-  get action(): string {
-    let value = this.get("action");
-    return value.toString();
-  }
-
-  set action(value: string) {
-    this.set("action", Value.fromString(value));
   }
 }
 
