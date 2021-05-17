@@ -183,6 +183,24 @@ export class Ohmie extends Entity {
     this.set("bondWithdrawals", Value.fromStringArray(value));
   }
 
+  get ohmTransactions(): Array<string> {
+    let value = this.get("ohmTransactions");
+    return value.toStringArray();
+  }
+
+  set ohmTransactions(value: Array<string>) {
+    this.set("ohmTransactions", Value.fromStringArray(value));
+  }
+
+  get sohmTransactions(): Array<string> {
+    let value = this.get("sohmTransactions");
+    return value.toStringArray();
+  }
+
+  set sohmTransactions(value: Array<string>) {
+    this.set("sohmTransactions", Value.fromStringArray(value));
+  }
+
   get daiBondTotalDeposit(): BigDecimal | null {
     let value = this.get("daiBondTotalDeposit");
     if (value === null || value.kind == ValueKind.NULL) {
@@ -518,6 +536,140 @@ export class Transaction extends Entity {
 
   set gasPrice(value: BigInt) {
     this.set("gasPrice", Value.fromBigInt(value));
+  }
+}
+
+export class ohmTransaction extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save ohmTransaction entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save ohmTransaction entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("ohmTransaction", id.toString(), this);
+  }
+
+  static load(id: string): ohmTransaction | null {
+    return store.get("ohmTransaction", id) as ohmTransaction | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get action(): string {
+    let value = this.get("action");
+    return value.toString();
+  }
+
+  set action(value: string) {
+    this.set("action", Value.fromString(value));
+  }
+}
+
+export class sohmTransaction extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save sohmTransaction entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save sohmTransaction entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("sohmTransaction", id.toString(), this);
+  }
+
+  static load(id: string): sohmTransaction | null {
+    return store.get("sohmTransaction", id) as sohmTransaction | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get action(): string {
+    let value = this.get("action");
+    return value.toString();
+  }
+
+  set action(value: string) {
+    this.set("action", Value.fromString(value));
   }
 }
 

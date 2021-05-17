@@ -14,6 +14,8 @@ type Ohmie @entity {
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
   bondWithdrawals: [Redeemtion!]! @derivedFrom(field: "ohmie")
+  ohmTransactions: [ohmTransaction!]! @derivedFrom(field: "ohmie")
+  sohmTransactions: [sohmTransaction!]! @derivedFrom(field: "ohmie")
   daiBondTotalDeposit: BigDecimal
   ohmDaiSlpTotalDeposit: BigDecimal
   ohmBalance: BigDecimal
@@ -49,6 +51,22 @@ type Transaction @entity {
   value: BigInt!
   gasUsed: BigInt!
   gasPrice: BigInt!
+}
+
+type ohmTransaction @entity {
+  id: ID!
+  transaction: Transaction!
+  ohmie: Ohmie!
+  amount: BigDecimal!
+  action: String!
+}
+
+type sohmTransaction @entity {
+  id: ID!
+  transaction: Transaction!
+  ohmie: Ohmie!
+  amount: BigDecimal!
+  action: String!
 }
 
 type Token @entity {
