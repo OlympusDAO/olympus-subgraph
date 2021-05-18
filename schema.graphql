@@ -2,7 +2,7 @@ type Treasury @entity {
   "address of user account"
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "treasury")
-  bondWithdrawals: [Redeemtion!]! @derivedFrom(field: "treasury")
+  bondWithdrawals: [Redemption!]! @derivedFrom(field: "treasury")
   daiBondTotalDeposit : BigDecimal
   ohmDaiSlpTotalDeposit : BigDecimal
   daiBalance: BigDecimal
@@ -13,7 +13,7 @@ type Ohmie @entity {
   "address of user account"
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
-  bondWithdrawals: [Redeemtion!]! @derivedFrom(field: "ohmie")
+  bondRedemptions: [Redemption!]! @derivedFrom(field: "ohmie")
   sentOhmTransactions: [OhmTransaction!]! @derivedFrom(field: "ohmieFrom")
   receivedOhmTransactions: [OhmTransaction!]! @derivedFrom(field: "ohmieTo")
   sentSohmTransactions: [SohmTransaction!]! @derivedFrom(field: "ohmieFrom")
@@ -32,14 +32,17 @@ type Deposit @entity {
   maxPremium: BigDecimal!
   token: Token!
   treasury: Treasury!
+  timestamp: BigInt!
 }
 
-type Redeemtion @entity {
+type Redemption @entity {
   id: ID!
-  transaction: Transaction!
-  ohmie: Ohmie!
-  token: Token!
-  treasury: Treasury!
+  transaction: Transaction
+  ohmie: Ohmie
+  token: Token
+  treasury: Treasury
+  amount: BigDecimal
+  timestamp: BigInt
 }
 
 type Transaction @entity {

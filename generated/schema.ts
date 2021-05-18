@@ -377,9 +377,18 @@ export class Deposit extends Entity {
   set treasury(value: string) {
     this.set("treasury", Value.fromString(value));
   }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
 }
 
-export class Redeemtion extends Entity {
+export class Redemption extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -387,17 +396,17 @@ export class Redeemtion extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save Redeemtion entity without an ID");
+    assert(id !== null, "Cannot save Redemption entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save Redeemtion entity with non-string ID. " +
+      "Cannot save Redemption entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("Redeemtion", id.toString(), this);
+    store.set("Redemption", id.toString(), this);
   }
 
-  static load(id: string): Redeemtion | null {
-    return store.get("Redeemtion", id) as Redeemtion | null;
+  static load(id: string): Redemption | null {
+    return store.get("Redemption", id) as Redemption | null;
   }
 
   get id(): string {
@@ -409,40 +418,106 @@ export class Redeemtion extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get transaction(): string {
+  get transaction(): string | null {
     let value = this.get("transaction");
-    return value.toString();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
+  set transaction(value: string | null) {
+    if (value === null) {
+      this.unset("transaction");
+    } else {
+      this.set("transaction", Value.fromString(value as string));
+    }
   }
 
-  get ohmie(): string {
+  get ohmie(): string | null {
     let value = this.get("ohmie");
-    return value.toString();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set ohmie(value: string | null) {
+    if (value === null) {
+      this.unset("ohmie");
+    } else {
+      this.set("ohmie", Value.fromString(value as string));
+    }
   }
 
-  get token(): string {
+  get token(): string | null {
     let value = this.get("token");
-    return value.toString();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set token(value: string) {
-    this.set("token", Value.fromString(value));
+  set token(value: string | null) {
+    if (value === null) {
+      this.unset("token");
+    } else {
+      this.set("token", Value.fromString(value as string));
+    }
   }
 
-  get treasury(): string {
+  get treasury(): string | null {
     let value = this.get("treasury");
-    return value.toString();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set treasury(value: string) {
-    this.set("treasury", Value.fromString(value));
+  set treasury(value: string | null) {
+    if (value === null) {
+      this.unset("treasury");
+    } else {
+      this.set("treasury", Value.fromString(value as string));
+    }
+  }
+
+  get amount(): BigDecimal | null {
+    let value = this.get("amount");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set amount(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt | null) {
+    if (value === null) {
+      this.unset("timestamp");
+    } else {
+      this.set("timestamp", Value.fromBigInt(value as BigInt));
+    }
   }
 }
 

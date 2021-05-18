@@ -3,7 +3,7 @@ import { Address  } from '@graphprotocol/graph-ts'
 import {  Transfer  } from '../generated/OHMDAIERC20/OHMDAIERC20'
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateTreasury } from './utils/Treasuries'
-import { TREASURY_ADDRESS, SUSHI_OHMDAI_PAIR } from './utils/Constants'
+import { TREASURY_ADDRESS } from './utils/Constants'
 
 export function handleTransfer(event: Transfer): void {
     let treasury = loadOrCreateTreasury()
