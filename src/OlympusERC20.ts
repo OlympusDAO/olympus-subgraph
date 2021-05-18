@@ -19,6 +19,7 @@ export function handleTransfer(event: Transfer): void {
     ohmTx.ohmieTo = ohmieTo.id
     ohmTx.ohmieFrom = ohmieFrom.id
     ohmTx.amount = value
+    ohmTx.timestamp = transaction.timestamp;
     ohmTx.save()
 
     ohmieTo.ohmBalance = ohmieTo.ohmBalance.plus(value)

@@ -174,13 +174,13 @@ export class Ohmie extends Entity {
     this.set("bondDeposits", Value.fromStringArray(value));
   }
 
-  get bondWithdrawals(): Array<string> {
-    let value = this.get("bondWithdrawals");
+  get bondRedemptions(): Array<string> {
+    let value = this.get("bondRedemptions");
     return value.toStringArray();
   }
 
-  set bondWithdrawals(value: Array<string>) {
-    this.set("bondWithdrawals", Value.fromStringArray(value));
+  set bondRedemptions(value: Array<string>) {
+    this.set("bondRedemptions", Value.fromStringArray(value));
   }
 
   get sentOhmTransactions(): Array<string> {
@@ -697,6 +697,15 @@ export class OhmTransaction extends Entity {
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
   }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
 }
 
 export class SohmTransaction extends Entity {
@@ -763,6 +772,15 @@ export class SohmTransaction extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 

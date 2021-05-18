@@ -64,6 +64,7 @@ type OhmTransaction @entity {
   ohmieTo: Ohmie!
   ohmieFrom: Ohmie!
   amount: BigDecimal!
+  timestamp: BigInt!
 }
 
 type SohmTransaction @entity {
@@ -72,6 +73,7 @@ type SohmTransaction @entity {
   ohmieTo: Ohmie!
   ohmieFrom: Ohmie!
   amount: BigDecimal!
+  timestamp: BigInt!
 }
 
 type Token @entity {
