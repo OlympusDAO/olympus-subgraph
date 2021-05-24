@@ -1,5 +1,5 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts'
-import { SohmTransaction, Rebase, StackingRewards } from '../generated/schema'
+import { SohmTransaction, StackingRewards } from '../generated/schema'
 
 import {  Transfer, RebaseCall, LogRebase } from '../generated/sOlympusERC20/sOlympusERC20'
 import { toDecimal } from "./utils/Decimals"
