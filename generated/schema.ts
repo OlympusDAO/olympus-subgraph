@@ -875,7 +875,7 @@ export class Token extends Entity {
   }
 }
 
-export class StackingRewards extends Entity {
+export class StackingReward extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -883,17 +883,17 @@ export class StackingRewards extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save StackingRewards entity without an ID");
+    assert(id !== null, "Cannot save StackingReward entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save StackingRewards entity with non-string ID. " +
+      "Cannot save StackingReward entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("StackingRewards", id.toString(), this);
+    store.set("StackingReward", id.toString(), this);
   }
 
-  static load(id: string): StackingRewards | null {
-    return store.get("StackingRewards", id) as StackingRewards | null;
+  static load(id: string): StackingReward | null {
+    return store.get("StackingReward", id) as StackingReward | null;
   }
 
   get id(): string {

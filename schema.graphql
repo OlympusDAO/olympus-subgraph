@@ -88,7 +88,7 @@ type Token @entity {
   address: Bytes!
 }
 
-type StackingRewards @entity {
+type StackingReward @entity {
   id: ID!
   transaction: String!
   amount: BigDecimal!
