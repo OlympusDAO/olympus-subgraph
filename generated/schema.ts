@@ -108,6 +108,15 @@ export class Treasury extends Entity {
   set dailyBonds(value: Array<string>) {
     this.set("dailyBonds", Value.fromStringArray(value));
   }
+
+  get dailyStackingRewards(): Array<string> {
+    let value = this.get("dailyStackingRewards");
+    return value.toStringArray();
+  }
+
+  set dailyStackingRewards(value: Array<string>) {
+    this.set("dailyStackingRewards", Value.fromStringArray(value));
+  }
 }
 
 export class DailyBond extends Entity {
@@ -930,5 +939,63 @@ export class StackingReward extends Entity {
 
   set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
+  }
+}
+
+export class DailyStackingReward extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save DailyStackingReward entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save DailyStackingReward entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("DailyStackingReward", id.toString(), this);
+  }
+
+  static load(id: string): DailyStackingReward | null {
+    return store.get("DailyStackingReward", id) as DailyStackingReward | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get treasury(): string {
+    let value = this.get("treasury");
+    return value.toString();
+  }
+
+  set treasury(value: string) {
+    this.set("treasury", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
   }
 }

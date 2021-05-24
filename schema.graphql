@@ -5,6 +5,7 @@ type Treasury @entity {
   daiBondTotalDeposit : BigDecimal
   ohmDaiSlpTotalDeposit : BigDecimal
   dailyBonds: [DailyBond!]! @derivedFrom(field: "treasury")
+  dailyStackingRewards: [DailyStackingReward!]! @derivedFrom(field: "treasury")
 }
 
 type DailyBond @entity {
@@ -93,4 +94,11 @@ type StackingReward @entity {
   transaction: String!
   amount: BigDecimal!
   timestamp: BigInt!
+}
+
+type DailyStackingReward @entity {
+  id: ID!
+  treasury: Treasury!
+  timestamp: BigInt!
+  amount: BigDecimal!
 }
