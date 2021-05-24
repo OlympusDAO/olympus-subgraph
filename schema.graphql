@@ -25,6 +25,8 @@ type Ohmie @entity {
   receivedOhmTransactions: [OhmTransaction!]! @derivedFrom(field: "ohmieTo")
   sentSohmTransactions: [SohmTransaction!]! @derivedFrom(field: "ohmieFrom")
   receivedSohmTransactions: [SohmTransaction!]! @derivedFrom(field: "ohmieTo")
+  stakeTransactions: [Stake!]! @derivedFrom(field: "ohmie")
+  unstakeTransactions: [Unstake!]! @derivedFrom(field: "ohmie")
   daiBondTotalDeposit: BigDecimal
   ohmDaiSlpTotalDeposit: BigDecimal
   ohmBalance: BigDecimal
@@ -101,4 +103,20 @@ type DailyStackingReward @entity {
   treasury: Treasury!
   timestamp: BigInt!
   amount: BigDecimal!
+}
+
+type Stake @entity {
+  id: ID!
+  transaction: Transaction!
+  ohmie: Ohmie!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type Unstake @entity {
+  id: ID!
+  transaction: Transaction!
+  ohmie: Ohmie!
+  amount: BigDecimal!
+  timestamp: BigInt!
 }

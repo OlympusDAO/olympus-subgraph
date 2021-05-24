@@ -114,3 +114,28 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/sOlympusERC20.ts
+  - kind: ethereum/contract
+    name: OlympusStaking
+    network: mainnet
+    source:
+      address: '0x0822f3c03dcc24d200aff33493dc08d0e1f274a2'
+      abi: OlympusStaking
+      startBlock: 12085272
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OlympusStaking
+      abis:
+        - name: OlympusStaking
+          file: ./abis/OlympusStaking.json
+      callHandlers:
+        - function: stakeOHM(uint256)
+          handler: handleStake
+        - function: unstakeOHM(uint256)
+          handler: handleUnstake
+      file: ./src/OlympusStaking.ts
+
+
+      

@@ -270,6 +270,24 @@ export class Ohmie extends Entity {
     this.set("receivedSohmTransactions", Value.fromStringArray(value));
   }
 
+  get stakeTransactions(): Array<string> {
+    let value = this.get("stakeTransactions");
+    return value.toStringArray();
+  }
+
+  set stakeTransactions(value: Array<string>) {
+    this.set("stakeTransactions", Value.fromStringArray(value));
+  }
+
+  get unstakeTransactions(): Array<string> {
+    let value = this.get("unstakeTransactions");
+    return value.toStringArray();
+  }
+
+  set unstakeTransactions(value: Array<string>) {
+    this.set("unstakeTransactions", Value.fromStringArray(value));
+  }
+
   get daiBondTotalDeposit(): BigDecimal | null {
     let value = this.get("daiBondTotalDeposit");
     if (value === null || value.kind == ValueKind.NULL) {
@@ -997,5 +1015,139 @@ export class DailyStackingReward extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
+  }
+}
+
+export class Stake extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Stake entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Stake entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Stake", id.toString(), this);
+  }
+
+  static load(id: string): Stake | null {
+    return store.get("Stake", id) as Stake | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+}
+
+export class Unstake extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Unstake entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Unstake entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Unstake", id.toString(), this);
+  }
+
+  static load(id: string): Unstake | null {
+    return store.get("Unstake", id) as Unstake | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }

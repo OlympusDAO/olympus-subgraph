@@ -5,7 +5,7 @@ import { dayFromTimestamp } from './Dates';
 
 export function loadOrCreateDailyStackingReward(timestamp: BigInt, treasury: Treasury): DailyStackingReward{
     let day_timestamp = dayFromTimestamp(timestamp)
-    let id = day_timestamp+token.name
+    let id = day_timestamp
     let dailySR = DailyStackingReward.load(id)
     if (dailySR == null) {
         dailySR = new DailyStackingReward(id)
