@@ -33,6 +33,38 @@
         "anonymous": false,
         "inputs": [
             {
+                "indexed": false,
+                "internalType": "address",
+                "name": "monetaryPolicy",
+                "type": "address"
+            }
+        ],
+        "name": "LogMonetaryPolicyUpdated",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "epoch",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "totalSupply",
+                "type": "uint256"
+            }
+        ],
+        "name": "LogRebase",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
                 "indexed": true,
                 "internalType": "address",
                 "name": "previousOwner",
@@ -46,70 +78,6 @@
             }
         ],
         "name": "OwnershipTransferred",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "previousTWAPEpochPeriod",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newTWAPEpochPeriod",
-                "type": "uint256"
-            }
-        ],
-        "name": "TWAPEpochChanged",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "previousTWAPOracle",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newTWAPOracle",
-                "type": "address"
-            }
-        ],
-        "name": "TWAPOracleChanged",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newTWAPSource",
-                "type": "address"
-            }
-        ],
-        "name": "TWAPSourceAdded",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "removedTWAPSource",
-                "type": "address"
-            }
-        ],
-        "name": "TWAPSourceRemoved",
         "type": "event"
     },
     {
@@ -167,38 +135,7 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "account_",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount_",
-                "type": "uint256"
-            }
-        ],
-        "name": "_burnFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "newTWAPSourceDexPool_",
-                "type": "address"
-            }
-        ],
-        "name": "addTWAPSource",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
+                "name": "owner_",
                 "type": "address"
             },
             {
@@ -227,7 +164,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "value",
                 "type": "uint256"
             }
         ],
@@ -246,7 +183,7 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "account",
+                "name": "who",
                 "type": "address"
             }
         ],
@@ -262,60 +199,16 @@
         "type": "function"
     },
     {
-        "inputs": [
+        "inputs": [],
+        "name": "circulatingSupply",
+        "outputs": [
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "",
                 "type": "uint256"
             }
         ],
-        "name": "burn",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "account_",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount_",
-                "type": "uint256"
-            }
-        ],
-        "name": "burnFrom",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newTWAPEpochPeriod_",
-                "type": "uint256"
-            }
-        ],
-        "name": "changeTWAPEpochPeriod",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "newTWAPOracle_",
-                "type": "address"
-            }
-        ],
-        "name": "changeTWAPOracle",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -380,21 +273,16 @@
         "type": "function"
     },
     {
-        "inputs": [
+        "inputs": [],
+        "name": "monetaryPolicy",
+        "outputs": [
             {
                 "internalType": "address",
-                "name": "account_",
+                "name": "",
                 "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount_",
-                "type": "uint256"
             }
         ],
-        "name": "mint",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -488,13 +376,19 @@
     {
         "inputs": [
             {
-                "internalType": "address",
-                "name": "twapSourceToRemove_",
-                "type": "address"
+                "internalType": "uint256",
+                "name": "olyProfit",
+                "type": "uint256"
             }
         ],
-        "name": "removeTWAPSource",
-        "outputs": [],
+        "name": "rebase",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "stateMutability": "nonpayable",
         "type": "function"
     },
@@ -509,19 +403,39 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "vault_",
+                "name": "monetaryPolicy_",
                 "type": "address"
             }
         ],
-        "name": "setVault",
-        "outputs": [
+        "name": "setMonetaryPolicy",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
             {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
+                "internalType": "address",
+                "name": "newStakingContract_",
+                "type": "address"
             }
         ],
+        "name": "setStakingContract",
+        "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "stakingContract",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -554,12 +468,12 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "recipient",
+                "name": "to",
                 "type": "address"
             },
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "value",
                 "type": "uint256"
             }
         ],
@@ -578,17 +492,17 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "sender",
+                "name": "from",
                 "type": "address"
             },
             {
                 "internalType": "address",
-                "name": "recipient",
+                "name": "to",
                 "type": "address"
             },
             {
                 "internalType": "uint256",
-                "name": "amount",
+                "name": "value",
                 "type": "uint256"
             }
         ],
@@ -614,45 +528,6 @@
         "name": "transferOwnership",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "twapEpochPeriod",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "twapOracle",
-        "outputs": [
-            {
-                "internalType": "contract ITWAPOracle",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "vault",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     }
 ]

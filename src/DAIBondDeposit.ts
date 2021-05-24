@@ -1,3 +1,5 @@
+import { Address } from '@graphprotocol/graph-ts'
+
 import {  DepositCall, RedeemCall  } from '../generated/DAIBondDepository/DAIBondDepository'
 import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
@@ -7,20 +9,22 @@ import { DAIBOND_TOKEN } from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { loadOrCreateTreasury } from './utils/Treasuries'
 import { loadOrCreateRedemption } from './utils/Redemption'
-import { Address } from '@graphprotocol/graph-ts'
+import { createDailyBondRecord } from './utils/DailyBond'
+
 
 export function handleDeposit(call: DepositCall): void {
   let ohmie = loadOrCreateOHMie(call.transaction.from)
   let treasury = loadOrCreateTreasury()
   let transaction = loadOrCreateTransaction(call.transaction, call.block)
-  
+  let token = loadOrCreateToken(DAIBOND_TOKEN)
+
   let amount = toDecimal(call.inputs.amount_, 18)
   let deposit = new Deposit(transaction.id)
   deposit.transaction = transaction.id
   deposit.ohmie = ohmie.id
   deposit.amount = amount
   deposit.maxPremium = toDecimal(call.inputs.maxPremium_)
-  deposit.token = loadOrCreateToken(DAIBOND_TOKEN).id;
+  deposit.token = token.id;
   deposit.treasury = treasury.id;
   deposit.timestamp = transaction.timestamp;
   deposit.save()
@@ -30,6 +34,8 @@ export function handleDeposit(call: DepositCall): void {
 
   treasury.daiBondTotalDeposit = treasury.daiBondTotalDeposit.plus(amount)
   treasury.save()
+
+  createDailyBondRecord(deposit.timestamp, token, deposit.amount, treasury)
 }
 
 export function handleRedeem(call: RedeemCall): void {

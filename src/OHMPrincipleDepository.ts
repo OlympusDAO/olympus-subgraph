@@ -7,19 +7,21 @@ import { OHMDAILPBOND_TOKEN } from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { loadOrCreateTreasury } from './utils/Treasuries'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
+import { createDailyBondRecord } from './utils/DailyBond'
 
 export function handleDeposit(call: DepositBondPrincipleCall): void {
   let ohmie = loadOrCreateOHMie(call.transaction.from)
   let treasury = loadOrCreateTreasury()
   let transaction = loadOrCreateTransaction(call.transaction, call.block)
-  
+  let token = loadOrCreateToken(OHMDAILPBOND_TOKEN)
+
   let amount = toDecimal(call.inputs.amountToDeposit_, 18)
   let deposit = new Deposit(transaction.id)
   deposit.transaction = transaction.id
   deposit.ohmie = ohmie.id
   deposit.amount = amount
   deposit.maxPremium = new BigDecimal(new BigInt(0))
-  deposit.token = loadOrCreateToken(OHMDAILPBOND_TOKEN).id;
+  deposit.token = token.id;
   deposit.treasury = treasury.id;
   deposit.timestamp = transaction.timestamp;
   deposit.save()
@@ -29,6 +31,8 @@ export function handleDeposit(call: DepositBondPrincipleCall): void {
 
   treasury.ohmDaiSlpTotalDeposit = treasury.ohmDaiSlpTotalDeposit.plus(amount)
   treasury.save()
+
+  createDailyBondRecord(deposit.timestamp, token, deposit.amount, treasury)
 }
 
 export function handleRedeem(call: RedeemBondCall): void {

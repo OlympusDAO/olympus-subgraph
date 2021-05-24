@@ -36,6 +36,46 @@ export class Approval__Params {
   }
 }
 
+export class LogMonetaryPolicyUpdated extends ethereum.Event {
+  get params(): LogMonetaryPolicyUpdated__Params {
+    return new LogMonetaryPolicyUpdated__Params(this);
+  }
+}
+
+export class LogMonetaryPolicyUpdated__Params {
+  _event: LogMonetaryPolicyUpdated;
+
+  constructor(event: LogMonetaryPolicyUpdated) {
+    this._event = event;
+  }
+
+  get monetaryPolicy(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class LogRebase extends ethereum.Event {
+  get params(): LogRebase__Params {
+    return new LogRebase__Params(this);
+  }
+}
+
+export class LogRebase__Params {
+  _event: LogRebase;
+
+  constructor(event: LogRebase) {
+    this._event = event;
+  }
+
+  get epoch(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get totalSupply(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class OwnershipTransferred extends ethereum.Event {
   get params(): OwnershipTransferred__Params {
     return new OwnershipTransferred__Params(this);
@@ -55,86 +95,6 @@ export class OwnershipTransferred__Params {
 
   get newOwner(): Address {
     return this._event.parameters[1].value.toAddress();
-  }
-}
-
-export class TWAPEpochChanged extends ethereum.Event {
-  get params(): TWAPEpochChanged__Params {
-    return new TWAPEpochChanged__Params(this);
-  }
-}
-
-export class TWAPEpochChanged__Params {
-  _event: TWAPEpochChanged;
-
-  constructor(event: TWAPEpochChanged) {
-    this._event = event;
-  }
-
-  get previousTWAPEpochPeriod(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get newTWAPEpochPeriod(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class TWAPOracleChanged extends ethereum.Event {
-  get params(): TWAPOracleChanged__Params {
-    return new TWAPOracleChanged__Params(this);
-  }
-}
-
-export class TWAPOracleChanged__Params {
-  _event: TWAPOracleChanged;
-
-  constructor(event: TWAPOracleChanged) {
-    this._event = event;
-  }
-
-  get previousTWAPOracle(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get newTWAPOracle(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
-export class TWAPSourceAdded extends ethereum.Event {
-  get params(): TWAPSourceAdded__Params {
-    return new TWAPSourceAdded__Params(this);
-  }
-}
-
-export class TWAPSourceAdded__Params {
-  _event: TWAPSourceAdded;
-
-  constructor(event: TWAPSourceAdded) {
-    this._event = event;
-  }
-
-  get newTWAPSource(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-}
-
-export class TWAPSourceRemoved extends ethereum.Event {
-  get params(): TWAPSourceRemoved__Params {
-    return new TWAPSourceRemoved__Params(this);
-  }
-}
-
-export class TWAPSourceRemoved__Params {
-  _event: TWAPSourceRemoved;
-
-  constructor(event: TWAPSourceRemoved) {
-    this._event = event;
-  }
-
-  get removedTWAPSource(): Address {
-    return this._event.parameters[0].value.toAddress();
   }
 }
 
@@ -215,21 +175,24 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  allowance(owner: Address, spender: Address): BigInt {
+  allowance(owner_: Address, spender: Address): BigInt {
     let result = super.call(
       "allowance",
       "allowance(address,address):(uint256)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)]
+      [ethereum.Value.fromAddress(owner_), ethereum.Value.fromAddress(spender)]
     );
 
     return result[0].toBigInt();
   }
 
-  try_allowance(owner: Address, spender: Address): ethereum.CallResult<BigInt> {
+  try_allowance(
+    owner_: Address,
+    spender: Address
+  ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "allowance",
       "allowance(address,address):(uint256)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)]
+      [ethereum.Value.fromAddress(owner_), ethereum.Value.fromAddress(spender)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -238,19 +201,19 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  approve(spender: Address, amount: BigInt): boolean {
+  approve(spender: Address, value: BigInt): boolean {
     let result = super.call("approve", "approve(address,uint256):(bool)", [
       ethereum.Value.fromAddress(spender),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_approve(spender: Address, amount: BigInt): ethereum.CallResult<boolean> {
+  try_approve(spender: Address, value: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("approve", "approve(address,uint256):(bool)", [
       ethereum.Value.fromAddress(spender),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -259,18 +222,41 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  balanceOf(account: Address): BigInt {
+  balanceOf(who: Address): BigInt {
     let result = super.call("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(who)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_balanceOf(account: Address): ethereum.CallResult<BigInt> {
+  try_balanceOf(who: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(who)
     ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  circulatingSupply(): BigInt {
+    let result = super.call(
+      "circulatingSupply",
+      "circulatingSupply():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_circulatingSupply(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "circulatingSupply",
+      "circulatingSupply():(uint256)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -357,6 +343,25 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  monetaryPolicy(): Address {
+    let result = super.call("monetaryPolicy", "monetaryPolicy():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_monetaryPolicy(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "monetaryPolicy",
+      "monetaryPolicy():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   name(): string {
     let result = super.call("name", "name():(string)", []);
 
@@ -406,23 +411,46 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  setVault(vault_: Address): boolean {
-    let result = super.call("setVault", "setVault(address):(bool)", [
-      ethereum.Value.fromAddress(vault_)
+  rebase(olyProfit: BigInt): BigInt {
+    let result = super.call("rebase", "rebase(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(olyProfit)
     ]);
 
-    return result[0].toBoolean();
+    return result[0].toBigInt();
   }
 
-  try_setVault(vault_: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall("setVault", "setVault(address):(bool)", [
-      ethereum.Value.fromAddress(vault_)
+  try_rebase(olyProfit: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("rebase", "rebase(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(olyProfit)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  stakingContract(): Address {
+    let result = super.call(
+      "stakingContract",
+      "stakingContract():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_stakingContract(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "stakingContract",
+      "stakingContract():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   symbol(): string {
@@ -455,22 +483,19 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  transfer(recipient: Address, amount: BigInt): boolean {
+  transfer(to: Address, value: BigInt): boolean {
     let result = super.call("transfer", "transfer(address,uint256):(bool)", [
-      ethereum.Value.fromAddress(recipient),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromAddress(to),
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_transfer(
-    recipient: Address,
-    amount: BigInt
-  ): ethereum.CallResult<boolean> {
+  try_transfer(to: Address, value: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("transfer", "transfer(address,uint256):(bool)", [
-      ethereum.Value.fromAddress(recipient),
-      ethereum.Value.fromUnsignedBigInt(amount)
+      ethereum.Value.fromAddress(to),
+      ethereum.Value.fromUnsignedBigInt(value)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -479,14 +504,14 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  transferFrom(sender: Address, recipient: Address, amount: BigInt): boolean {
+  transferFrom(from: Address, to: Address, value: BigInt): boolean {
     let result = super.call(
       "transferFrom",
       "transferFrom(address,address,uint256):(bool)",
       [
-        ethereum.Value.fromAddress(sender),
-        ethereum.Value.fromAddress(recipient),
-        ethereum.Value.fromUnsignedBigInt(amount)
+        ethereum.Value.fromAddress(from),
+        ethereum.Value.fromAddress(to),
+        ethereum.Value.fromUnsignedBigInt(value)
       ]
     );
 
@@ -494,17 +519,17 @@ export class sOlympusERC20 extends ethereum.SmartContract {
   }
 
   try_transferFrom(
-    sender: Address,
-    recipient: Address,
-    amount: BigInt
+    from: Address,
+    to: Address,
+    value: BigInt
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "transferFrom",
       "transferFrom(address,address,uint256):(bool)",
       [
-        ethereum.Value.fromAddress(sender),
-        ethereum.Value.fromAddress(recipient),
-        ethereum.Value.fromUnsignedBigInt(amount)
+        ethereum.Value.fromAddress(from),
+        ethereum.Value.fromAddress(to),
+        ethereum.Value.fromUnsignedBigInt(value)
       ]
     );
     if (result.reverted) {
@@ -512,59 +537,6 @@ export class sOlympusERC20 extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
-  twapEpochPeriod(): BigInt {
-    let result = super.call(
-      "twapEpochPeriod",
-      "twapEpochPeriod():(uint256)",
-      []
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_twapEpochPeriod(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "twapEpochPeriod",
-      "twapEpochPeriod():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  twapOracle(): Address {
-    let result = super.call("twapOracle", "twapOracle():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_twapOracle(): ethereum.CallResult<Address> {
-    let result = super.tryCall("twapOracle", "twapOracle():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  vault(): Address {
-    let result = super.call("vault", "vault():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_vault(): ethereum.CallResult<Address> {
-    let result = super.tryCall("vault", "vault():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 }
 
@@ -594,70 +566,6 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class _burnFromCall extends ethereum.Call {
-  get inputs(): _burnFromCall__Inputs {
-    return new _burnFromCall__Inputs(this);
-  }
-
-  get outputs(): _burnFromCall__Outputs {
-    return new _burnFromCall__Outputs(this);
-  }
-}
-
-export class _burnFromCall__Inputs {
-  _call: _burnFromCall;
-
-  constructor(call: _burnFromCall) {
-    this._call = call;
-  }
-
-  get account_(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get amount_(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class _burnFromCall__Outputs {
-  _call: _burnFromCall;
-
-  constructor(call: _burnFromCall) {
-    this._call = call;
-  }
-}
-
-export class AddTWAPSourceCall extends ethereum.Call {
-  get inputs(): AddTWAPSourceCall__Inputs {
-    return new AddTWAPSourceCall__Inputs(this);
-  }
-
-  get outputs(): AddTWAPSourceCall__Outputs {
-    return new AddTWAPSourceCall__Outputs(this);
-  }
-}
-
-export class AddTWAPSourceCall__Inputs {
-  _call: AddTWAPSourceCall;
-
-  constructor(call: AddTWAPSourceCall) {
-    this._call = call;
-  }
-
-  get newTWAPSourceDexPool_(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class AddTWAPSourceCall__Outputs {
-  _call: AddTWAPSourceCall;
-
-  constructor(call: AddTWAPSourceCall) {
-    this._call = call;
-  }
-}
-
 export class ApproveCall extends ethereum.Call {
   get inputs(): ApproveCall__Inputs {
     return new ApproveCall__Inputs(this);
@@ -679,7 +587,7 @@ export class ApproveCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get value(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -693,130 +601,6 @@ export class ApproveCall__Outputs {
 
   get value0(): boolean {
     return this._call.outputValues[0].value.toBoolean();
-  }
-}
-
-export class BurnCall extends ethereum.Call {
-  get inputs(): BurnCall__Inputs {
-    return new BurnCall__Inputs(this);
-  }
-
-  get outputs(): BurnCall__Outputs {
-    return new BurnCall__Outputs(this);
-  }
-}
-
-export class BurnCall__Inputs {
-  _call: BurnCall;
-
-  constructor(call: BurnCall) {
-    this._call = call;
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class BurnCall__Outputs {
-  _call: BurnCall;
-
-  constructor(call: BurnCall) {
-    this._call = call;
-  }
-}
-
-export class BurnFromCall extends ethereum.Call {
-  get inputs(): BurnFromCall__Inputs {
-    return new BurnFromCall__Inputs(this);
-  }
-
-  get outputs(): BurnFromCall__Outputs {
-    return new BurnFromCall__Outputs(this);
-  }
-}
-
-export class BurnFromCall__Inputs {
-  _call: BurnFromCall;
-
-  constructor(call: BurnFromCall) {
-    this._call = call;
-  }
-
-  get account_(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get amount_(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class BurnFromCall__Outputs {
-  _call: BurnFromCall;
-
-  constructor(call: BurnFromCall) {
-    this._call = call;
-  }
-}
-
-export class ChangeTWAPEpochPeriodCall extends ethereum.Call {
-  get inputs(): ChangeTWAPEpochPeriodCall__Inputs {
-    return new ChangeTWAPEpochPeriodCall__Inputs(this);
-  }
-
-  get outputs(): ChangeTWAPEpochPeriodCall__Outputs {
-    return new ChangeTWAPEpochPeriodCall__Outputs(this);
-  }
-}
-
-export class ChangeTWAPEpochPeriodCall__Inputs {
-  _call: ChangeTWAPEpochPeriodCall;
-
-  constructor(call: ChangeTWAPEpochPeriodCall) {
-    this._call = call;
-  }
-
-  get newTWAPEpochPeriod_(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class ChangeTWAPEpochPeriodCall__Outputs {
-  _call: ChangeTWAPEpochPeriodCall;
-
-  constructor(call: ChangeTWAPEpochPeriodCall) {
-    this._call = call;
-  }
-}
-
-export class ChangeTWAPOracleCall extends ethereum.Call {
-  get inputs(): ChangeTWAPOracleCall__Inputs {
-    return new ChangeTWAPOracleCall__Inputs(this);
-  }
-
-  get outputs(): ChangeTWAPOracleCall__Outputs {
-    return new ChangeTWAPOracleCall__Outputs(this);
-  }
-}
-
-export class ChangeTWAPOracleCall__Inputs {
-  _call: ChangeTWAPOracleCall;
-
-  constructor(call: ChangeTWAPOracleCall) {
-    this._call = call;
-  }
-
-  get newTWAPOracle_(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class ChangeTWAPOracleCall__Outputs {
-  _call: ChangeTWAPOracleCall;
-
-  constructor(call: ChangeTWAPOracleCall) {
-    this._call = call;
   }
 }
 
@@ -896,40 +680,6 @@ export class IncreaseAllowanceCall__Outputs {
   }
 }
 
-export class MintCall extends ethereum.Call {
-  get inputs(): MintCall__Inputs {
-    return new MintCall__Inputs(this);
-  }
-
-  get outputs(): MintCall__Outputs {
-    return new MintCall__Outputs(this);
-  }
-}
-
-export class MintCall__Inputs {
-  _call: MintCall;
-
-  constructor(call: MintCall) {
-    this._call = call;
-  }
-
-  get account_(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get amount_(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class MintCall__Outputs {
-  _call: MintCall;
-
-  constructor(call: MintCall) {
-    this._call = call;
-  }
-}
-
 export class PermitCall extends ethereum.Call {
   get inputs(): PermitCall__Inputs {
     return new PermitCall__Inputs(this);
@@ -984,33 +734,37 @@ export class PermitCall__Outputs {
   }
 }
 
-export class RemoveTWAPSourceCall extends ethereum.Call {
-  get inputs(): RemoveTWAPSourceCall__Inputs {
-    return new RemoveTWAPSourceCall__Inputs(this);
+export class RebaseCall extends ethereum.Call {
+  get inputs(): RebaseCall__Inputs {
+    return new RebaseCall__Inputs(this);
   }
 
-  get outputs(): RemoveTWAPSourceCall__Outputs {
-    return new RemoveTWAPSourceCall__Outputs(this);
-  }
-}
-
-export class RemoveTWAPSourceCall__Inputs {
-  _call: RemoveTWAPSourceCall;
-
-  constructor(call: RemoveTWAPSourceCall) {
-    this._call = call;
-  }
-
-  get twapSourceToRemove_(): Address {
-    return this._call.inputValues[0].value.toAddress();
+  get outputs(): RebaseCall__Outputs {
+    return new RebaseCall__Outputs(this);
   }
 }
 
-export class RemoveTWAPSourceCall__Outputs {
-  _call: RemoveTWAPSourceCall;
+export class RebaseCall__Inputs {
+  _call: RebaseCall;
 
-  constructor(call: RemoveTWAPSourceCall) {
+  constructor(call: RebaseCall) {
     this._call = call;
+  }
+
+  get olyProfit(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class RebaseCall__Outputs {
+  _call: RebaseCall;
+
+  constructor(call: RebaseCall) {
+    this._call = call;
+  }
+
+  get value0(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
   }
 }
 
@@ -1040,37 +794,63 @@ export class RenounceOwnershipCall__Outputs {
   }
 }
 
-export class SetVaultCall extends ethereum.Call {
-  get inputs(): SetVaultCall__Inputs {
-    return new SetVaultCall__Inputs(this);
+export class SetMonetaryPolicyCall extends ethereum.Call {
+  get inputs(): SetMonetaryPolicyCall__Inputs {
+    return new SetMonetaryPolicyCall__Inputs(this);
   }
 
-  get outputs(): SetVaultCall__Outputs {
-    return new SetVaultCall__Outputs(this);
+  get outputs(): SetMonetaryPolicyCall__Outputs {
+    return new SetMonetaryPolicyCall__Outputs(this);
   }
 }
 
-export class SetVaultCall__Inputs {
-  _call: SetVaultCall;
+export class SetMonetaryPolicyCall__Inputs {
+  _call: SetMonetaryPolicyCall;
 
-  constructor(call: SetVaultCall) {
+  constructor(call: SetMonetaryPolicyCall) {
     this._call = call;
   }
 
-  get vault_(): Address {
+  get monetaryPolicy_(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
 
-export class SetVaultCall__Outputs {
-  _call: SetVaultCall;
+export class SetMonetaryPolicyCall__Outputs {
+  _call: SetMonetaryPolicyCall;
 
-  constructor(call: SetVaultCall) {
+  constructor(call: SetMonetaryPolicyCall) {
+    this._call = call;
+  }
+}
+
+export class SetStakingContractCall extends ethereum.Call {
+  get inputs(): SetStakingContractCall__Inputs {
+    return new SetStakingContractCall__Inputs(this);
+  }
+
+  get outputs(): SetStakingContractCall__Outputs {
+    return new SetStakingContractCall__Outputs(this);
+  }
+}
+
+export class SetStakingContractCall__Inputs {
+  _call: SetStakingContractCall;
+
+  constructor(call: SetStakingContractCall) {
     this._call = call;
   }
 
-  get value0(): boolean {
-    return this._call.outputValues[0].value.toBoolean();
+  get newStakingContract_(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetStakingContractCall__Outputs {
+  _call: SetStakingContractCall;
+
+  constructor(call: SetStakingContractCall) {
+    this._call = call;
   }
 }
 
@@ -1091,11 +871,11 @@ export class TransferCall__Inputs {
     this._call = call;
   }
 
-  get recipient(): Address {
+  get to(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get value(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1129,15 +909,15 @@ export class TransferFromCall__Inputs {
     this._call = call;
   }
 
-  get sender(): Address {
+  get from(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get recipient(): Address {
+  get to(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get value(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }

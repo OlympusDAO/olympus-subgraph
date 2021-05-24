@@ -1,7 +1,7 @@
-import { Address } from '@graphprotocol/graph-ts'
-import { SohmTransaction } from '../generated/schema'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
+import { SohmTransaction, Rebase, StackingRewards } from '../generated/schema'
 
-import {  Transfer  } from '../generated/sOlympusERC20/sOlympusERC20'
+import {  Transfer, RebaseCall, LogRebase } from '../generated/sOlympusERC20/sOlympusERC20'
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateOHMie } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
@@ -25,4 +25,17 @@ export function handleTransfer(event: Transfer): void {
 
     ohmieFrom.sohmBalance = ohmieFrom.sohmBalance.minus(value)
     ohmieFrom.save()
+}
+
+export function rebaseFunction(call: RebaseCall): void {
+    let transaction = loadOrCreateTransaction(call.transaction, call.block)
+
+    let distribution = StackingRewards.load(transaction.id)
+    if (distribution == null && call.inputs.olyProfit.gt(new BigInt(0))) {
+        distribution = new StackingRewards(transaction.id)
+        distribution.amount = toDecimal(call.inputs.olyProfit, 9)
+        distribution.transaction = transaction.id
+        distribution.timestamp = transaction.timestamp
+        distribution.save()
+    }
 }

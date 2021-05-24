@@ -107,6 +107,9 @@ dataSources:
       abis:
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
+      callHandlers:
+        - function: rebase(uint256)
+          handler: rebaseFunction
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer

@@ -1,12 +1,18 @@
 type Treasury @entity {
-  "address of user account"
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "treasury")
   bondWithdrawals: [Redemption!]! @derivedFrom(field: "treasury")
   daiBondTotalDeposit : BigDecimal
   ohmDaiSlpTotalDeposit : BigDecimal
-  daiBalance: BigDecimal
-  ohmDaiSlpBalance: BigDecimal
+  dailyBonds: [DailyBond!]! @derivedFrom(field: "treasury")
+}
+
+type DailyBond @entity {
+  id: ID!
+  treasury: Treasury!
+  timestamp: BigInt!
+  token: Token!
+  amount: BigDecimal!
 }
 
 type Ohmie @entity {
@@ -80,4 +86,11 @@ type Token @entity {
   id: ID!
   name: String!
   address: Bytes!
+}
+
+type StackingRewards @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  timestamp: BigInt!
 }
