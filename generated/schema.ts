@@ -902,7 +902,7 @@ export class Token extends Entity {
   }
 }
 
-export class StackingReward extends Entity {
+export class Rebase extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -910,17 +910,17 @@ export class StackingReward extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save StackingReward entity without an ID");
+    assert(id !== null, "Cannot save Rebase entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save StackingReward entity with non-string ID. " +
+      "Cannot save Rebase entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("StackingReward", id.toString(), this);
+    store.set("Rebase", id.toString(), this);
   }
 
-  static load(id: string): StackingReward | null {
-    return store.get("StackingReward", id) as StackingReward | null;
+  static load(id: string): Rebase | null {
+    return store.get("Rebase", id) as Rebase | null;
   }
 
   get id(): string {
@@ -948,6 +948,15 @@ export class StackingReward extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get percentage(): BigDecimal {
+    let value = this.get("percentage");
+    return value.toBigDecimal();
+  }
+
+  set percentage(value: BigDecimal) {
+    this.set("percentage", Value.fromBigDecimal(value));
   }
 
   get timestamp(): BigInt {

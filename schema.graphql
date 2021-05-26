@@ -91,10 +91,11 @@ type Token @entity {
   address: Bytes!
 }
 
-type StackingReward @entity {
+type Rebase @entity {
   id: ID!
   transaction: String!
   amount: BigDecimal!
+  percentage: BigDecimal!
   timestamp: BigInt!
 }
 

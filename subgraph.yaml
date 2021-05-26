@@ -130,12 +130,11 @@ dataSources:
       abis:
         - name: OlympusStaking
           file: ./abis/OlympusStaking.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
       callHandlers:
         - function: stakeOHM(uint256)
           handler: handleStake
         - function: unstakeOHM(uint256)
           handler: handleUnstake
       file: ./src/OlympusStaking.ts
-
-
-      

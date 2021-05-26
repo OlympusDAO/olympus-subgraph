@@ -1,12 +1,14 @@
-import { Address, BigInt } from '@graphprotocol/graph-ts'
-import { SohmTransaction, StackingReward } from '../generated/schema'
+import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
+import { SohmTransaction, Rebase } from '../generated/schema'
 
 import {  Transfer, RebaseCall } from '../generated/sOlympusERC20/sOlympusERC20'
+import { STAKING_CONTRACT, OHM_ERC20_CONTRACT } from './utils/Constants'
 import { createDailyStackingReward } from './utils/DailyStackingReward'
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateOHMie } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateTreasury } from './utils/Treasuries'
+import { OlympusERC20 } from '../generated/OlympusERC20/OlympusERC20'
 
 export function handleTransfer(event: Transfer): void {
     let ohmieFrom = loadOrCreateOHMie(event.params.from as Address)
@@ -33,15 +35,19 @@ export function rebaseFunction(call: RebaseCall): void {
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
     let treasury = loadOrCreateTreasury()
 
-    let distribution = StackingReward.load(transaction.id)
-    if (distribution == null && call.inputs.olyProfit.gt(new BigInt(0))) {
-        distribution = new StackingReward(transaction.id)
-        distribution.amount = toDecimal(call.inputs.olyProfit, 9)
-        distribution.transaction = transaction.id
-        distribution.timestamp = transaction.timestamp
-        distribution.save()
+    let rebase = Rebase.load(transaction.id)
+    if (rebase == null && call.inputs.olyProfit.gt(new BigInt(0))) {
 
-        createDailyStackingReward(distribution.timestamp, distribution.amount, treasury)
+        let staking_contract = OlympusERC20.bind(Address.fromString(OHM_ERC20_CONTRACT))
+
+        rebase = new Rebase(transaction.id)
+        rebase.amount = toDecimal(call.inputs.olyProfit, 9)
+        rebase.percentage = rebase.amount.div(toDecimal(staking_contract.balanceOf(Address.fromString(STAKING_CONTRACT)), 9)).times(new BigDecimal(new BigInt(100)))
+        rebase.transaction = transaction.id
+        rebase.timestamp = transaction.timestamp
+        rebase.save()
+
+        createDailyStackingReward(rebase.timestamp, rebase.amount, treasury)
 
     }
 }
