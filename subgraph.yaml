@@ -107,6 +107,8 @@ dataSources:
       abis:
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
       callHandlers:
         - function: rebase(uint256)
           handler: rebaseFunction
@@ -130,8 +132,6 @@ dataSources:
       abis:
         - name: OlympusStaking
           file: ./abis/OlympusStaking.json
-        - name: OlympusERC20
-          file: ./abis/OlympusERC20.json
       callHandlers:
         - function: stakeOHM(uint256)
           handler: handleStake

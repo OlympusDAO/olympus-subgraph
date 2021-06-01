@@ -9,6 +9,7 @@ export function loadOrCreateTreasury(): Treasury{
         treasury = new Treasury(TREASURY_ADDRESS)
         treasury.daiBondTotalDeposit = new BigDecimal(new BigInt(0))
         treasury.ohmDaiSlpTotalDeposit = new BigDecimal(new BigInt(0))
+        treasury.ohmies = []
         treasury.save()
     }
     return treasury as Treasury

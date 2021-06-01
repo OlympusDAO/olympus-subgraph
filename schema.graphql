@@ -6,6 +6,7 @@ type Treasury @entity {
   ohmDaiSlpTotalDeposit : BigDecimal
   dailyBonds: [DailyBond!]! @derivedFrom(field: "treasury")
   dailyStackingRewards: [DailyStackingReward!]! @derivedFrom(field: "treasury")
+  ohmies: [Ohmie!]!
 }
 
 type DailyBond @entity {
@@ -27,10 +28,15 @@ type Ohmie @entity {
   receivedSohmTransactions: [SohmTransaction!]! @derivedFrom(field: "ohmieTo")
   stakeTransactions: [Stake!]! @derivedFrom(field: "ohmie")
   unstakeTransactions: [Unstake!]! @derivedFrom(field: "ohmie")
+  receivedRebases: [OhmieRebase!]! @derivedFrom(field: "ohmie")
+  totalReceivedRebases: BigDecimal
   daiBondTotalDeposit: BigDecimal
   ohmDaiSlpTotalDeposit: BigDecimal
   ohmBalance: BigDecimal
   sohmBalance: BigDecimal
+  stakedOHMs: BigDecimal
+  stakedRewards: BigDecimal
+  treasury: Treasury!
 }
 
 type Deposit @entity {
@@ -95,6 +101,7 @@ type Rebase @entity {
   id: ID!
   transaction: String!
   amount: BigDecimal!
+  stakedOhms: BigDecimal!
   percentage: BigDecimal!
   timestamp: BigInt!
 }
@@ -120,4 +127,12 @@ type Unstake @entity {
   ohmie: Ohmie!
   amount: BigDecimal!
   timestamp: BigInt!
+}
+
+type OhmieRebase @entity {
+  id: ID!
+  timestamp: BigInt!
+  ohmie: Ohmie!
+  percentage: BigDecimal!
+  amount: BigDecimal!
 }
