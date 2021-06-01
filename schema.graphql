@@ -29,7 +29,6 @@ type Ohmie @entity {
   stakeTransactions: [Stake!]! @derivedFrom(field: "ohmie")
   unstakeTransactions: [Unstake!]! @derivedFrom(field: "ohmie")
   receivedRebases: [OhmieRebase!]! @derivedFrom(field: "ohmie")
-  totalReceivedRebases: BigDecimal
   daiBondTotalDeposit: BigDecimal
   ohmDaiSlpTotalDeposit: BigDecimal
   ohmBalance: BigDecimal

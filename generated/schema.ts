@@ -306,26 +306,6 @@ export class Ohmie extends Entity {
     this.set("receivedRebases", Value.fromStringArray(value));
   }
 
-  get totalReceivedRebases(): BigDecimal | null {
-    let value = this.get("totalReceivedRebases");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set totalReceivedRebases(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("totalReceivedRebases");
-    } else {
-      this.set(
-        "totalReceivedRebases",
-        Value.fromBigDecimal(value as BigDecimal)
-      );
-    }
-  }
-
   get daiBondTotalDeposit(): BigDecimal | null {
     let value = this.get("daiBondTotalDeposit");
     if (value === null || value.kind == ValueKind.NULL) {

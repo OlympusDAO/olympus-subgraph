@@ -18,7 +18,6 @@ export function loadOrCreateOHMie(addres: Address): Ohmie{
         ohmie.ohmDaiSlpTotalDeposit = BigDecimal.fromString("0")
         ohmie.ohmBalance = BigDecimal.fromString("0")
         ohmie.sohmBalance = BigDecimal.fromString("0")
-        ohmie.totalReceivedRebases = BigDecimal.fromString("0")
         ohmie.stakedOHMs = BigDecimal.fromString("0")
         ohmie.treasury = treasury.id
         ohmie.stakedRewards = BigDecimal.fromString("0")
