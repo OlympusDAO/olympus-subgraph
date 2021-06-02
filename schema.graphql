@@ -33,7 +33,6 @@ type Ohmie @entity {
   ohmDaiSlpTotalDeposit: BigDecimal
   ohmBalance: BigDecimal
   sohmBalance: BigDecimal
-  stakedOHMs: BigDecimal
   stakedRewards: BigDecimal
   treasury: Treasury!
 }

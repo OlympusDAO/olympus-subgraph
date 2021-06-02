@@ -380,23 +380,6 @@ export class Ohmie extends Entity {
     }
   }
 
-  get stakedOHMs(): BigDecimal | null {
-    let value = this.get("stakedOHMs");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set stakedOHMs(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("stakedOHMs");
-    } else {
-      this.set("stakedOHMs", Value.fromBigDecimal(value as BigDecimal));
-    }
-  }
-
   get stakedRewards(): BigDecimal | null {
     let value = this.get("stakedRewards");
     if (value === null || value.kind == ValueKind.NULL) {

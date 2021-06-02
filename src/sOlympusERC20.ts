@@ -43,7 +43,7 @@ export function rebaseFunction(call: RebaseCall): void {
         rebase = new Rebase(transaction.id)
         rebase.amount = toDecimal(call.inputs.olyProfit, 9)
         rebase.stakedOhms = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT)), 9)
-        rebase.percentage = rebase.amount.div(rebase.stakedOhms).times(BigDecimal.fromString("100"))
+        rebase.percentage = rebase.amount.div(rebase.stakedOhms)
         rebase.transaction = transaction.id
         rebase.timestamp = transaction.timestamp
         rebase.save()
@@ -51,19 +51,23 @@ export function rebaseFunction(call: RebaseCall): void {
         let ohmies = treasury.ohmies
         for(let i=0; i < ohmies.length; i++){
             let ohmieId = ohmies[i]
+            let ohmieRebase = OhmieRebase.load(transaction.id + ohmieId)
+            if(ohmieRebase==null){
+                let ohmie = Ohmie.load(ohmieId)
+                let rebaseValue = ohmie.sohmBalance.times(rebase.percentage)
 
-            let ohmie = Ohmie.load(ohmieId)
-            let rebaseValue = ohmie.stakedOHMs.times(rebase.percentage).div(BigDecimal.fromString("100"))
-            ohmie.stakedOHMs = ohmie.stakedOHMs.plus(rebaseValue)
-            ohmie.stakedRewards = ohmie.stakedRewards.plus(rebaseValue)
-            ohmie.save()
+                ohmieRebase = new OhmieRebase(transaction.id + ohmieId)
+                ohmieRebase.ohmie = ohmieId
+                ohmieRebase.percentage = rebase.percentage
+                ohmieRebase.amount = rebaseValue
+                ohmieRebase.timestamp = transaction.timestamp
+                ohmieRebase.save()
+    
+                ohmie.sohmBalance = ohmie.sohmBalance.plus(rebaseValue)
+                ohmie.stakedRewards = ohmie.stakedRewards.plus(rebaseValue)
+                ohmie.save()
+            }
 
-            let ohmieRebase = new OhmieRebase(transaction.id + ohmieId)
-            ohmieRebase.ohmie = ohmieId
-            ohmieRebase.percentage = rebase.percentage
-            ohmieRebase.amount = rebaseValue
-            ohmieRebase.timestamp = transaction.timestamp
-            ohmieRebase.save()
         }
 
         createDailyStackingReward(rebase.timestamp, rebase.amount, treasury)
