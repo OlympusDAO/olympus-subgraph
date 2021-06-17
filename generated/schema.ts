@@ -229,13 +229,13 @@ export class OhmieBalance extends Entity {
     this.set("bondBalance", Value.fromBigDecimal(value));
   }
 
-  get dolarBalance(): BigDecimal {
-    let value = this.get("dolarBalance");
+  get dollarBalance(): BigDecimal {
+    let value = this.get("dollarBalance");
     return value.toBigDecimal();
   }
 
-  set dolarBalance(value: BigDecimal) {
-    this.set("dolarBalance", Value.fromBigDecimal(value));
+  set dollarBalance(value: BigDecimal) {
+    this.set("dollarBalance", Value.fromBigDecimal(value));
   }
 
   get timestamp(): BigInt {

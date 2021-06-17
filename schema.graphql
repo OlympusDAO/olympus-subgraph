@@ -22,7 +22,7 @@ type OhmieBalance @entity {
   sohmBalance: BigDecimal!
   ohmBalance: BigDecimal!
   bondBalance: BigDecimal!
-  dolarBalance: BigDecimal!
+  dollarBalance: BigDecimal!
   timestamp: BigInt!
 }
 

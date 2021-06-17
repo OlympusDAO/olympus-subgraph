@@ -28,7 +28,7 @@ export function updateOhmieBalance(ohmie: Ohmie, timestamp: BigInt): void{
     balance.sohmBalance = toDecimal(sohm_contract.balanceOf(Address.fromString(ohmie.id)), 9)
 
     let usdRate = getOHMUSDRate()
-    balance.dolarBalance = balance.ohmBalance.times(usdRate).plus(balance.sohmBalance.times(usdRate))
+    balance.dollarBalance = balance.ohmBalance.times(usdRate).plus(balance.sohmBalance.times(usdRate))
     //TODO get pending bonding rewards 
     balance.save()
 
