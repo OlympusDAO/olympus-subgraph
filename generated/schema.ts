@@ -12,122 +12,6 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Treasury extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Treasury entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Treasury entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Treasury", id.toString(), this);
-  }
-
-  static load(id: string): Treasury | null {
-    return store.get("Treasury", id) as Treasury | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get bondDeposits(): Array<string> {
-    let value = this.get("bondDeposits");
-    return value.toStringArray();
-  }
-
-  set bondDeposits(value: Array<string>) {
-    this.set("bondDeposits", Value.fromStringArray(value));
-  }
-
-  get bondWithdrawals(): Array<string> {
-    let value = this.get("bondWithdrawals");
-    return value.toStringArray();
-  }
-
-  set bondWithdrawals(value: Array<string>) {
-    this.set("bondWithdrawals", Value.fromStringArray(value));
-  }
-
-  get daiBondTotalDeposit(): BigDecimal | null {
-    let value = this.get("daiBondTotalDeposit");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set daiBondTotalDeposit(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("daiBondTotalDeposit");
-    } else {
-      this.set(
-        "daiBondTotalDeposit",
-        Value.fromBigDecimal(value as BigDecimal)
-      );
-    }
-  }
-
-  get ohmDaiSlpTotalDeposit(): BigDecimal | null {
-    let value = this.get("ohmDaiSlpTotalDeposit");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set ohmDaiSlpTotalDeposit(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("ohmDaiSlpTotalDeposit");
-    } else {
-      this.set(
-        "ohmDaiSlpTotalDeposit",
-        Value.fromBigDecimal(value as BigDecimal)
-      );
-    }
-  }
-
-  get dailyBonds(): Array<string> {
-    let value = this.get("dailyBonds");
-    return value.toStringArray();
-  }
-
-  set dailyBonds(value: Array<string>) {
-    this.set("dailyBonds", Value.fromStringArray(value));
-  }
-
-  get dailyStackingRewards(): Array<string> {
-    let value = this.get("dailyStackingRewards");
-    return value.toStringArray();
-  }
-
-  set dailyStackingRewards(value: Array<string>) {
-    this.set("dailyStackingRewards", Value.fromStringArray(value));
-  }
-
-  get ohmies(): Array<string> {
-    let value = this.get("ohmies");
-    return value.toStringArray();
-  }
-
-  set ohmies(value: Array<string>) {
-    this.set("ohmies", Value.fromStringArray(value));
-  }
-}
-
 export class DailyBond extends Entity {
   constructor(id: string) {
     super();
@@ -156,15 +40,6 @@ export class DailyBond extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get treasury(): string {
-    let value = this.get("treasury");
-    return value.toString();
-  }
-
-  set treasury(value: string) {
-    this.set("treasury", Value.fromString(value));
   }
 
   get timestamp(): BigInt {
@@ -243,42 +118,6 @@ export class Ohmie extends Entity {
     this.set("bondRedemptions", Value.fromStringArray(value));
   }
 
-  get sentOhmTransactions(): Array<string> {
-    let value = this.get("sentOhmTransactions");
-    return value.toStringArray();
-  }
-
-  set sentOhmTransactions(value: Array<string>) {
-    this.set("sentOhmTransactions", Value.fromStringArray(value));
-  }
-
-  get receivedOhmTransactions(): Array<string> {
-    let value = this.get("receivedOhmTransactions");
-    return value.toStringArray();
-  }
-
-  set receivedOhmTransactions(value: Array<string>) {
-    this.set("receivedOhmTransactions", Value.fromStringArray(value));
-  }
-
-  get sentSohmTransactions(): Array<string> {
-    let value = this.get("sentSohmTransactions");
-    return value.toStringArray();
-  }
-
-  set sentSohmTransactions(value: Array<string>) {
-    this.set("sentSohmTransactions", Value.fromStringArray(value));
-  }
-
-  get receivedSohmTransactions(): Array<string> {
-    let value = this.get("receivedSohmTransactions");
-    return value.toStringArray();
-  }
-
-  set receivedSohmTransactions(value: Array<string>) {
-    this.set("receivedSohmTransactions", Value.fromStringArray(value));
-  }
-
   get stakeTransactions(): Array<string> {
     let value = this.get("stakeTransactions");
     return value.toStringArray();
@@ -297,113 +136,115 @@ export class Ohmie extends Entity {
     this.set("unstakeTransactions", Value.fromStringArray(value));
   }
 
-  get receivedRebases(): Array<string> {
-    let value = this.get("receivedRebases");
+  get historicBalance(): Array<string> {
+    let value = this.get("historicBalance");
     return value.toStringArray();
   }
 
-  set receivedRebases(value: Array<string>) {
-    this.set("receivedRebases", Value.fromStringArray(value));
+  set historicBalance(value: Array<string>) {
+    this.set("historicBalance", Value.fromStringArray(value));
   }
 
-  get daiBondTotalDeposit(): BigDecimal | null {
-    let value = this.get("daiBondTotalDeposit");
+  get lastBalance(): string | null {
+    let value = this.get("lastBalance");
     if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBigDecimal();
+      return value.toString();
     }
   }
 
-  set daiBondTotalDeposit(value: BigDecimal | null) {
+  set lastBalance(value: string | null) {
     if (value === null) {
-      this.unset("daiBondTotalDeposit");
+      this.unset("lastBalance");
     } else {
-      this.set(
-        "daiBondTotalDeposit",
-        Value.fromBigDecimal(value as BigDecimal)
-      );
+      this.set("lastBalance", Value.fromString(value as string));
     }
   }
+}
 
-  get ohmDaiSlpTotalDeposit(): BigDecimal | null {
-    let value = this.get("ohmDaiSlpTotalDeposit");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
+export class OhmieBalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
   }
 
-  set ohmDaiSlpTotalDeposit(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("ohmDaiSlpTotalDeposit");
-    } else {
-      this.set(
-        "ohmDaiSlpTotalDeposit",
-        Value.fromBigDecimal(value as BigDecimal)
-      );
-    }
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save OhmieBalance entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save OhmieBalance entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("OhmieBalance", id.toString(), this);
   }
 
-  get ohmBalance(): BigDecimal | null {
-    let value = this.get("ohmBalance");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
+  static load(id: string): OhmieBalance | null {
+    return store.get("OhmieBalance", id) as OhmieBalance | null;
   }
 
-  set ohmBalance(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("ohmBalance");
-    } else {
-      this.set("ohmBalance", Value.fromBigDecimal(value as BigDecimal));
-    }
-  }
-
-  get sohmBalance(): BigDecimal | null {
-    let value = this.get("sohmBalance");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set sohmBalance(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("sohmBalance");
-    } else {
-      this.set("sohmBalance", Value.fromBigDecimal(value as BigDecimal));
-    }
-  }
-
-  get stakedRewards(): BigDecimal | null {
-    let value = this.get("stakedRewards");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set stakedRewards(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("stakedRewards");
-    } else {
-      this.set("stakedRewards", Value.fromBigDecimal(value as BigDecimal));
-    }
-  }
-
-  get treasury(): string {
-    let value = this.get("treasury");
+  get id(): string {
+    let value = this.get("id");
     return value.toString();
   }
 
-  set treasury(value: string) {
-    this.set("treasury", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get ohmie(): string {
+    let value = this.get("ohmie");
+    return value.toString();
+  }
+
+  set ohmie(value: string) {
+    this.set("ohmie", Value.fromString(value));
+  }
+
+  get sohmBalance(): BigDecimal {
+    let value = this.get("sohmBalance");
+    return value.toBigDecimal();
+  }
+
+  set sohmBalance(value: BigDecimal) {
+    this.set("sohmBalance", Value.fromBigDecimal(value));
+  }
+
+  get ohmBalance(): BigDecimal {
+    let value = this.get("ohmBalance");
+    return value.toBigDecimal();
+  }
+
+  set ohmBalance(value: BigDecimal) {
+    this.set("ohmBalance", Value.fromBigDecimal(value));
+  }
+
+  get bondBalance(): BigDecimal {
+    let value = this.get("bondBalance");
+    return value.toBigDecimal();
+  }
+
+  set bondBalance(value: BigDecimal) {
+    this.set("bondBalance", Value.fromBigDecimal(value));
+  }
+
+  get dolarBalance(): BigDecimal {
+    let value = this.get("dolarBalance");
+    return value.toBigDecimal();
+  }
+
+  set dolarBalance(value: BigDecimal) {
+    this.set("dolarBalance", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 
@@ -480,15 +321,6 @@ export class Deposit extends Entity {
 
   set token(value: string) {
     this.set("token", Value.fromString(value));
-  }
-
-  get treasury(): string {
-    let value = this.get("treasury");
-    return value.toString();
-  }
-
-  set treasury(value: string) {
-    this.set("treasury", Value.fromString(value));
   }
 
   get timestamp(): BigInt {
@@ -582,40 +414,6 @@ export class Redemption extends Entity {
     }
   }
 
-  get treasury(): string | null {
-    let value = this.get("treasury");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set treasury(value: string | null) {
-    if (value === null) {
-      this.unset("treasury");
-    } else {
-      this.set("treasury", Value.fromString(value as string));
-    }
-  }
-
-  get amount(): BigDecimal | null {
-    let value = this.get("amount");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set amount(value: BigDecimal | null) {
-    if (value === null) {
-      this.unset("amount");
-    } else {
-      this.set("amount", Value.fromBigDecimal(value as BigDecimal));
-    }
-  }
-
   get timestamp(): BigInt | null {
     let value = this.get("timestamp");
     if (value === null || value.kind == ValueKind.NULL) {
@@ -631,452 +429,6 @@ export class Redemption extends Entity {
     } else {
       this.set("timestamp", Value.fromBigInt(value as BigInt));
     }
-  }
-}
-
-export class Transaction extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Transaction entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Transaction entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Transaction", id.toString(), this);
-  }
-
-  static load(id: string): Transaction | null {
-    return store.get("Transaction", id) as Transaction | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-
-  get blockNumber(): BigInt {
-    let value = this.get("blockNumber");
-    return value.toBigInt();
-  }
-
-  set blockNumber(value: BigInt) {
-    this.set("blockNumber", Value.fromBigInt(value));
-  }
-
-  get blockHash(): Bytes {
-    let value = this.get("blockHash");
-    return value.toBytes();
-  }
-
-  set blockHash(value: Bytes) {
-    this.set("blockHash", Value.fromBytes(value));
-  }
-
-  get from(): Bytes {
-    let value = this.get("from");
-    return value.toBytes();
-  }
-
-  set from(value: Bytes) {
-    this.set("from", Value.fromBytes(value));
-  }
-
-  get to(): Bytes | null {
-    let value = this.get("to");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
-  }
-
-  set to(value: Bytes | null) {
-    if (value === null) {
-      this.unset("to");
-    } else {
-      this.set("to", Value.fromBytes(value as Bytes));
-    }
-  }
-
-  get value(): BigInt {
-    let value = this.get("value");
-    return value.toBigInt();
-  }
-
-  set value(value: BigInt) {
-    this.set("value", Value.fromBigInt(value));
-  }
-
-  get gasUsed(): BigInt {
-    let value = this.get("gasUsed");
-    return value.toBigInt();
-  }
-
-  set gasUsed(value: BigInt) {
-    this.set("gasUsed", Value.fromBigInt(value));
-  }
-
-  get gasPrice(): BigInt {
-    let value = this.get("gasPrice");
-    return value.toBigInt();
-  }
-
-  set gasPrice(value: BigInt) {
-    this.set("gasPrice", Value.fromBigInt(value));
-  }
-}
-
-export class OhmTransaction extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save OhmTransaction entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save OhmTransaction entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("OhmTransaction", id.toString(), this);
-  }
-
-  static load(id: string): OhmTransaction | null {
-    return store.get("OhmTransaction", id) as OhmTransaction | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get transaction(): string {
-    let value = this.get("transaction");
-    return value.toString();
-  }
-
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
-  }
-
-  get ohmieTo(): string {
-    let value = this.get("ohmieTo");
-    return value.toString();
-  }
-
-  set ohmieTo(value: string) {
-    this.set("ohmieTo", Value.fromString(value));
-  }
-
-  get ohmieFrom(): string {
-    let value = this.get("ohmieFrom");
-    return value.toString();
-  }
-
-  set ohmieFrom(value: string) {
-    this.set("ohmieFrom", Value.fromString(value));
-  }
-
-  get amount(): BigDecimal {
-    let value = this.get("amount");
-    return value.toBigDecimal();
-  }
-
-  set amount(value: BigDecimal) {
-    this.set("amount", Value.fromBigDecimal(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-}
-
-export class SohmTransaction extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save SohmTransaction entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save SohmTransaction entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("SohmTransaction", id.toString(), this);
-  }
-
-  static load(id: string): SohmTransaction | null {
-    return store.get("SohmTransaction", id) as SohmTransaction | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get transaction(): string {
-    let value = this.get("transaction");
-    return value.toString();
-  }
-
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
-  }
-
-  get ohmieTo(): string {
-    let value = this.get("ohmieTo");
-    return value.toString();
-  }
-
-  set ohmieTo(value: string) {
-    this.set("ohmieTo", Value.fromString(value));
-  }
-
-  get ohmieFrom(): string {
-    let value = this.get("ohmieFrom");
-    return value.toString();
-  }
-
-  set ohmieFrom(value: string) {
-    this.set("ohmieFrom", Value.fromString(value));
-  }
-
-  get amount(): BigDecimal {
-    let value = this.get("amount");
-    return value.toBigDecimal();
-  }
-
-  set amount(value: BigDecimal) {
-    this.set("amount", Value.fromBigDecimal(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-}
-
-export class Token extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Token entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Token entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Token", id.toString(), this);
-  }
-
-  static load(id: string): Token | null {
-    return store.get("Token", id) as Token | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get name(): string {
-    let value = this.get("name");
-    return value.toString();
-  }
-
-  set name(value: string) {
-    this.set("name", Value.fromString(value));
-  }
-
-  get address(): Bytes {
-    let value = this.get("address");
-    return value.toBytes();
-  }
-
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
-  }
-}
-
-export class Rebase extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Rebase entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Rebase entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Rebase", id.toString(), this);
-  }
-
-  static load(id: string): Rebase | null {
-    return store.get("Rebase", id) as Rebase | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get transaction(): string {
-    let value = this.get("transaction");
-    return value.toString();
-  }
-
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
-  }
-
-  get amount(): BigDecimal {
-    let value = this.get("amount");
-    return value.toBigDecimal();
-  }
-
-  set amount(value: BigDecimal) {
-    this.set("amount", Value.fromBigDecimal(value));
-  }
-
-  get stakedOhms(): BigDecimal {
-    let value = this.get("stakedOhms");
-    return value.toBigDecimal();
-  }
-
-  set stakedOhms(value: BigDecimal) {
-    this.set("stakedOhms", Value.fromBigDecimal(value));
-  }
-
-  get percentage(): BigDecimal {
-    let value = this.get("percentage");
-    return value.toBigDecimal();
-  }
-
-  set percentage(value: BigDecimal) {
-    this.set("percentage", Value.fromBigDecimal(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-}
-
-export class DailyStackingReward extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save DailyStackingReward entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save DailyStackingReward entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("DailyStackingReward", id.toString(), this);
-  }
-
-  static load(id: string): DailyStackingReward | null {
-    return store.get("DailyStackingReward", id) as DailyStackingReward | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get treasury(): string {
-    let value = this.get("treasury");
-    return value.toString();
-  }
-
-  set treasury(value: string) {
-    this.set("treasury", Value.fromString(value));
-  }
-
-  get timestamp(): BigInt {
-    let value = this.get("timestamp");
-    return value.toBigInt();
-  }
-
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
-  }
-
-  get amount(): BigDecimal {
-    let value = this.get("amount");
-    return value.toBigDecimal();
-  }
-
-  set amount(value: BigDecimal) {
-    this.set("amount", Value.fromBigDecimal(value));
   }
 }
 
@@ -1214,7 +566,7 @@ export class Unstake extends Entity {
   }
 }
 
-export class OhmieRebase extends Entity {
+export class Rebase extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -1222,17 +574,93 @@ export class OhmieRebase extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save OhmieRebase entity without an ID");
+    assert(id !== null, "Cannot save Rebase entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save OhmieRebase entity with non-string ID. " +
+      "Cannot save Rebase entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("OhmieRebase", id.toString(), this);
+    store.set("Rebase", id.toString(), this);
   }
 
-  static load(id: string): OhmieRebase | null {
-    return store.get("OhmieRebase", id) as OhmieRebase | null;
+  static load(id: string): Rebase | null {
+    return store.get("Rebase", id) as Rebase | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get transaction(): string {
+    let value = this.get("transaction");
+    return value.toString();
+  }
+
+  set transaction(value: string) {
+    this.set("transaction", Value.fromString(value));
+  }
+
+  get amount(): BigDecimal {
+    let value = this.get("amount");
+    return value.toBigDecimal();
+  }
+
+  set amount(value: BigDecimal) {
+    this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get stakedOhms(): BigDecimal {
+    let value = this.get("stakedOhms");
+    return value.toBigDecimal();
+  }
+
+  set stakedOhms(value: BigDecimal) {
+    this.set("stakedOhms", Value.fromBigDecimal(value));
+  }
+
+  get percentage(): BigDecimal {
+    let value = this.get("percentage");
+    return value.toBigDecimal();
+  }
+
+  set percentage(value: BigDecimal) {
+    this.set("percentage", Value.fromBigDecimal(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+}
+
+export class Transaction extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Transaction entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Transaction entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Transaction", id.toString(), this);
+  }
+
+  static load(id: string): Transaction | null {
+    return store.get("Transaction", id) as Transaction | null;
   }
 
   get id(): string {
@@ -1253,30 +681,123 @@ export class OhmieRebase extends Entity {
     this.set("timestamp", Value.fromBigInt(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockHash(): Bytes {
+    let value = this.get("blockHash");
+    return value.toBytes();
+  }
+
+  set blockHash(value: Bytes) {
+    this.set("blockHash", Value.fromBytes(value));
+  }
+
+  get from(): Bytes {
+    let value = this.get("from");
+    return value.toBytes();
+  }
+
+  set from(value: Bytes) {
+    this.set("from", Value.fromBytes(value));
+  }
+
+  get to(): Bytes | null {
+    let value = this.get("to");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set to(value: Bytes | null) {
+    if (value === null) {
+      this.unset("to");
+    } else {
+      this.set("to", Value.fromBytes(value as Bytes));
+    }
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+
+  get gasUsed(): BigInt {
+    let value = this.get("gasUsed");
+    return value.toBigInt();
+  }
+
+  set gasUsed(value: BigInt) {
+    this.set("gasUsed", Value.fromBigInt(value));
+  }
+
+  get gasPrice(): BigInt {
+    let value = this.get("gasPrice");
+    return value.toBigInt();
+  }
+
+  set gasPrice(value: BigInt) {
+    this.set("gasPrice", Value.fromBigInt(value));
+  }
+}
+
+export class Token extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Token entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Token entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Token", id.toString(), this);
+  }
+
+  static load(id: string): Token | null {
+    return store.get("Token", id) as Token | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
-  get percentage(): BigDecimal {
-    let value = this.get("percentage");
-    return value.toBigDecimal();
+  get name(): string {
+    let value = this.get("name");
+    return value.toString();
   }
 
-  set percentage(value: BigDecimal) {
-    this.set("percentage", Value.fromBigDecimal(value));
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
   }
 
-  get amount(): BigDecimal {
-    let value = this.get("amount");
-    return value.toBigDecimal();
+  get address(): Bytes {
+    let value = this.get("address");
+    return value.toBytes();
   }
 
-  set amount(value: BigDecimal) {
-    this.set("amount", Value.fromBigDecimal(value));
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
   }
 }

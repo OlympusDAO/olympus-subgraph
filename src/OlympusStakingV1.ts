@@ -1,9 +1,9 @@
 import { Address } from '@graphprotocol/graph-ts'
 import { Stake, Unstake } from '../generated/schema'
 
-import {  StakeOHMCall, UnstakeOHMCall  } from '../generated/OlympusStaking/OlympusStaking'
+import {  StakeOHMCall, UnstakeOHMCall  } from '../generated/OlympusStakingV1/OlympusStaking'
 import { toDecimal } from "./utils/Decimals"
-import { loadOrCreateOHMie } from "./utils/OHMie"
+import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 
 export function handleStake(call: StakeOHMCall): void {
@@ -17,6 +17,8 @@ export function handleStake(call: StakeOHMCall): void {
     stake.amount = value
     stake.timestamp = transaction.timestamp;
     stake.save()
+
+    updateOhmieBalance(ohmie, transaction.timestamp)
 }
 
 export function handleUnstake(call: UnstakeOHMCall): void {
@@ -30,4 +32,6 @@ export function handleUnstake(call: UnstakeOHMCall): void {
     unstake.amount = value
     unstake.timestamp = transaction.timestamp;
     unstake.save()
+
+    updateOhmieBalance(ohmie, transaction.timestamp)
 }

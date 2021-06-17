@@ -1,4 +1,4 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 
 //Tokens definition
 export const DAIBOND_TOKEN: string = "DAI";
@@ -25,4 +25,6 @@ export function getBondContracts(): string[]{
 export const DISTRIBUTOR_CONTRACT = '0xbe731507810c8747c3e01e62c676b1ca6f93242f';
 export const DAO_ADDRESS = '0x245cc372c84b3645bf0ffe6538620b04a217988b';
 export const STAKING_CONTRACT = '0x0822f3c03dcc24d200aff33493dc08d0e1f274a2';
+
 export const OHM_ERC20_CONTRACT = '0x383518188c0c6d7730d91b2c03a03c837814a899';
+export const SOHM_ERC20_CONTRACT = '0x31932e6e45012476ba3a3a4953cba62aee77fbbe';
