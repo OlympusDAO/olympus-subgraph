@@ -32,9 +32,9 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class OlympusStaking extends ethereum.SmartContract {
-  static bind(address: Address): OlympusStaking {
-    return new OlympusStaking("OlympusStaking", address);
+export class OlympusStakingV1 extends ethereum.SmartContract {
+  static bind(address: Address): OlympusStakingV1 {
+    return new OlympusStakingV1("OlympusStakingV1", address);
   }
 
   epochLengthInBlocks(): BigInt {

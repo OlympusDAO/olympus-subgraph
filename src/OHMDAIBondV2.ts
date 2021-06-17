@@ -1,4 +1,4 @@
-import {  DepositCall, RedeemCall  } from '../generated/OHMDAIBondV2/LPBondDepository'
+import {  DepositCall, RedeemCall  } from '../generated/OHMDAIBondV2/OHMDAIBondV2'
 import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"

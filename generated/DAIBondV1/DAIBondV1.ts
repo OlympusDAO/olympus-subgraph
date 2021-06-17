@@ -32,7 +32,7 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class DAIBondDepository__depositorInfoResult {
+export class DAIBondV1__depositorInfoResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -55,7 +55,7 @@ export class DAIBondDepository__depositorInfoResult {
   }
 }
 
-export class DAIBondDepository__getDepositorInfoResult {
+export class DAIBondV1__getDepositorInfoResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -78,9 +78,9 @@ export class DAIBondDepository__getDepositorInfoResult {
   }
 }
 
-export class DAIBondDepository extends ethereum.SmartContract {
-  static bind(address: Address): DAIBondDepository {
-    return new DAIBondDepository("DAIBondDepository", address);
+export class DAIBondV1 extends ethereum.SmartContract {
+  static bind(address: Address): DAIBondV1 {
+    return new DAIBondV1("DAIBondV1", address);
   }
 
   DAI(): Address {
@@ -371,14 +371,14 @@ export class DAIBondDepository extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  depositorInfo(param0: Address): DAIBondDepository__depositorInfoResult {
+  depositorInfo(param0: Address): DAIBondV1__depositorInfoResult {
     let result = super.call(
       "depositorInfo",
       "depositorInfo(address):(uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
 
-    return new DAIBondDepository__depositorInfoResult(
+    return new DAIBondV1__depositorInfoResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -388,7 +388,7 @@ export class DAIBondDepository extends ethereum.SmartContract {
 
   try_depositorInfo(
     param0: Address
-  ): ethereum.CallResult<DAIBondDepository__depositorInfoResult> {
+  ): ethereum.CallResult<DAIBondV1__depositorInfoResult> {
     let result = super.tryCall(
       "depositorInfo",
       "depositorInfo(address):(uint256,uint256,uint256,uint256)",
@@ -399,7 +399,7 @@ export class DAIBondDepository extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new DAIBondDepository__depositorInfoResult(
+      new DAIBondV1__depositorInfoResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -408,16 +408,14 @@ export class DAIBondDepository extends ethereum.SmartContract {
     );
   }
 
-  getDepositorInfo(
-    address_: Address
-  ): DAIBondDepository__getDepositorInfoResult {
+  getDepositorInfo(address_: Address): DAIBondV1__getDepositorInfoResult {
     let result = super.call(
       "getDepositorInfo",
       "getDepositorInfo(address):(uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromAddress(address_)]
     );
 
-    return new DAIBondDepository__getDepositorInfoResult(
+    return new DAIBondV1__getDepositorInfoResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -427,7 +425,7 @@ export class DAIBondDepository extends ethereum.SmartContract {
 
   try_getDepositorInfo(
     address_: Address
-  ): ethereum.CallResult<DAIBondDepository__getDepositorInfoResult> {
+  ): ethereum.CallResult<DAIBondV1__getDepositorInfoResult> {
     let result = super.tryCall(
       "getDepositorInfo",
       "getDepositorInfo(address):(uint256,uint256,uint256,uint256)",
@@ -438,7 +436,7 @@ export class DAIBondDepository extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new DAIBondDepository__getDepositorInfoResult(
+      new DAIBondV1__getDepositorInfoResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),

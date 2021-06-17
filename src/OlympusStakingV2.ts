@@ -1,15 +1,15 @@
 import { Address } from '@graphprotocol/graph-ts'
 import { Stake, Unstake } from '../generated/schema'
 
-import {  StakeOHMCall, UnstakeOHMCall  } from '../generated/OlympusStakingV1/OlympusStakingV1'
+import {  StakeCall, UnstakeCall  } from '../generated/OlympusStakingV2/OlympusStakingV2'
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
 
-export function handleStake(call: StakeOHMCall): void {
+export function handleStake(call: StakeCall): void {
     let ohmie = loadOrCreateOHMie(call.from as Address)
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
-    let value = toDecimal(call.inputs.amountToStake_, 9)
+    let value = toDecimal(call.inputs._amount, 9)
 
     let stake = new Stake(transaction.id)
     stake.transaction = transaction.id
@@ -21,10 +21,10 @@ export function handleStake(call: StakeOHMCall): void {
     updateOhmieBalance(ohmie, transaction.timestamp)
 }
 
-export function handleUnstake(call: UnstakeOHMCall): void {
+export function handleUnstake(call: UnstakeCall): void {
     let ohmie = loadOrCreateOHMie(call.from as Address)
     let transaction = loadOrCreateTransaction(call.transaction, call.block)
-    let value = toDecimal(call.inputs.amountToWithdraw_, 9)
+    let value = toDecimal(call.inputs._amount, 9)
 
     let unstake = new Unstake(transaction.id)
     unstake.transaction = transaction.id

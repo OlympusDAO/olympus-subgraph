@@ -32,7 +32,7 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class OHMPrincipleDepository__depositorInfoResult {
+export class OHMDAIBondV1__depositorInfoResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -55,7 +55,7 @@ export class OHMPrincipleDepository__depositorInfoResult {
   }
 }
 
-export class OHMPrincipleDepository__getDepositorInfoResult {
+export class OHMDAIBondV1__getDepositorInfoResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -78,9 +78,9 @@ export class OHMPrincipleDepository__getDepositorInfoResult {
   }
 }
 
-export class OHMPrincipleDepository extends ethereum.SmartContract {
-  static bind(address: Address): OHMPrincipleDepository {
-    return new OHMPrincipleDepository("OHMPrincipleDepository", address);
+export class OHMDAIBondV1 extends ethereum.SmartContract {
+  static bind(address: Address): OHMDAIBondV1 {
+    return new OHMDAIBondV1("OHMDAIBondV1", address);
   }
 
   DAOShare(): BigInt {
@@ -336,14 +336,14 @@ export class OHMPrincipleDepository extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  depositorInfo(param0: Address): OHMPrincipleDepository__depositorInfoResult {
+  depositorInfo(param0: Address): OHMDAIBondV1__depositorInfoResult {
     let result = super.call(
       "depositorInfo",
       "depositorInfo(address):(uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
 
-    return new OHMPrincipleDepository__depositorInfoResult(
+    return new OHMDAIBondV1__depositorInfoResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -353,7 +353,7 @@ export class OHMPrincipleDepository extends ethereum.SmartContract {
 
   try_depositorInfo(
     param0: Address
-  ): ethereum.CallResult<OHMPrincipleDepository__depositorInfoResult> {
+  ): ethereum.CallResult<OHMDAIBondV1__depositorInfoResult> {
     let result = super.tryCall(
       "depositorInfo",
       "depositorInfo(address):(uint256,uint256,uint256,uint256)",
@@ -364,7 +364,7 @@ export class OHMPrincipleDepository extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new OHMPrincipleDepository__depositorInfoResult(
+      new OHMDAIBondV1__depositorInfoResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -375,14 +375,14 @@ export class OHMPrincipleDepository extends ethereum.SmartContract {
 
   getDepositorInfo(
     depositorAddress_: Address
-  ): OHMPrincipleDepository__getDepositorInfoResult {
+  ): OHMDAIBondV1__getDepositorInfoResult {
     let result = super.call(
       "getDepositorInfo",
       "getDepositorInfo(address):(uint256,uint256,uint256,uint256)",
       [ethereum.Value.fromAddress(depositorAddress_)]
     );
 
-    return new OHMPrincipleDepository__getDepositorInfoResult(
+    return new OHMDAIBondV1__getDepositorInfoResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -392,7 +392,7 @@ export class OHMPrincipleDepository extends ethereum.SmartContract {
 
   try_getDepositorInfo(
     depositorAddress_: Address
-  ): ethereum.CallResult<OHMPrincipleDepository__getDepositorInfoResult> {
+  ): ethereum.CallResult<OHMDAIBondV1__getDepositorInfoResult> {
     let result = super.tryCall(
       "getDepositorInfo",
       "getDepositorInfo(address):(uint256,uint256,uint256,uint256)",
@@ -403,7 +403,7 @@ export class OHMPrincipleDepository extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new OHMPrincipleDepository__getDepositorInfoResult(
+      new OHMDAIBondV1__getDepositorInfoResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),

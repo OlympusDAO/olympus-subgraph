@@ -3,6 +3,8 @@ import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 //Tokens definition
 export const DAIBOND_TOKEN: string = "DAI";
 export const OHMDAILPBOND_TOKEN: string = "OHM-DAI";
+export const OHMFRAXLPBOND_TOKEN: string = "OHM-FRAX";
+
 export function getTokenAdress(name: string): Address{
     let address: Address = null
     if (name == DAIBOND_TOKEN)

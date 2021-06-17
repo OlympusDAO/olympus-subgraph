@@ -1,6 +1,6 @@
 import { Address } from '@graphprotocol/graph-ts'
 
-import {  DepositCall, RedeemCall  } from '../generated/DAIBondV1/DAIBondDepository'
+import {  DepositCall, RedeemCall  } from '../generated/DAIBondV1/DAIBondV1'
 import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
