@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js" integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<body>
+    <input type="text" id="account"> 
+    <button onclick="update()">Update</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="historyChart" width="100" height="100"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="dollarBalanceChart" width="100" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var historyChart = document.getElementById('historyChart').getContext('2d');
+    var dollarBalanceChart = document.getElementById('dollarBalanceChart').getContext('2d');
+
+    function update() {
+        var address = $('#account').val()
+
+        new Chart(historyChart).destroy()
+        new Chart(dollarBalanceChart).destroy()
+
+        $.ajax({url: "https://api.thegraph.com/subgraphs/id/QmQYq7u45Zz9oM6fvGWKmvsdRSHh4bLCZKKkn6TXBmhGSD",
+        contentType: "application/json",
+        type:'POST',
+        data: JSON.stringify({
+            query:`{
+                ohmieBalances(where: {ohmie: "`+address+`"}, orderBy: timestamp, orderDirection:asc) {
+                    ohmBalance
+                    sohmBalance
+                    timestamp
+                    dollarBalance
+                }
+            }`
+        }),
+        success: function(result) {
+            console.log(result);
+            var timestamps = $.map( result.data.ohmieBalances , function( n ) {
+                var d = new Date(0);
+                d.setUTCSeconds(n.timestamp);
+                var datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+                return datestring;
+            });
+            var ohmBalances = $.map( result.data.ohmieBalances , function( n ) {
+                return n.ohmBalance;
+            });
+            var sohmBalances = $.map( result.data.ohmieBalances , function( n ) {
+                return n.sohmBalance;
+            });
+            var dollarBalances = $.map( result.data.ohmieBalances , function( n ) {
+                return n.dollarBalance;
+            });
+
+            var ohmChart = new Chart(historyChart, {
+                type: 'line',
+                data: {
+                    labels: timestamps,
+                    datasets: [{
+                        label: 'OHM Balance',
+                        borderColor: 'rgb(75, 192, 192)',
+                        data: ohmBalances,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'sOHM Balance',
+                        borderColor: 'rgb(192, 192, 75)',
+                        data: sohmBalances,
+                        tension: 0.1
+                    }]
+                }
+            });
+
+            var dollarChart = new Chart(dollarBalanceChart, {
+                type: 'line',
+                data: {
+                    labels: timestamps,
+                    datasets: [{
+                        label: '$ Balance',
+                        borderColor: 'rgb(192, 75, 192)',
+                        data: dollarBalances,
+                        tension: 0.1
+                    }]
+                }
+            });
+        }
+    });
+    }
+
+    
+</script>
+</html>
