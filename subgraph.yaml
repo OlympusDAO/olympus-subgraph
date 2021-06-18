@@ -27,6 +27,16 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
       callHandlers:
         - function: stakeOHM(uint256)
           handler: handleStake
@@ -56,6 +66,16 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
       callHandlers:
         - function: stake(uint256,address)
           handler: handleStake
@@ -85,13 +105,21 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
         - function: redeem()
           handler: handleRedeem
       file: ./src/DAIBondV1.ts
-  #DAI Bond Contract V1
+  #DAI Bond Contract V2
   - kind: ethereum/contract
     name: DAIBondV2
     network: mainnet
@@ -114,6 +142,14 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
@@ -143,6 +179,14 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
       callHandlers:
         - function: depositBondPrinciple(uint256)
           handler: handleDeposit
@@ -172,6 +216,14 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
@@ -201,6 +253,14 @@ dataSources:
           file: ./abis/OlympusERC20.json
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit

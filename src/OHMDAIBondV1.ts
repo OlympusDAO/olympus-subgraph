@@ -24,7 +24,7 @@ export function handleDeposit(call: DepositBondPrincipleCall): void {
   deposit.save()
 
   createDailyBondRecord(deposit.timestamp, token, deposit.amount)
-  updateOhmieBalance(ohmie, transaction.timestamp)
+  updateOhmieBalance(ohmie, transaction)
 }
 
 export function handleRedeem(call: RedeemBondCall): void {
@@ -40,5 +40,5 @@ export function handleRedeem(call: RedeemBondCall): void {
   redemption.token = loadOrCreateToken(OHMDAILPBOND_TOKEN).id;
   redemption.timestamp = transaction.timestamp;
   redemption.save()
-  updateOhmieBalance(ohmie, transaction.timestamp)
+  updateOhmieBalance(ohmie, transaction)
 }

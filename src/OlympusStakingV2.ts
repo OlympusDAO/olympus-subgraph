@@ -18,7 +18,7 @@ export function handleStake(call: StakeCall): void {
     stake.timestamp = transaction.timestamp;
     stake.save()
 
-    updateOhmieBalance(ohmie, transaction.timestamp)
+    updateOhmieBalance(ohmie, transaction)
 }
 
 export function handleUnstake(call: UnstakeCall): void {
@@ -33,5 +33,5 @@ export function handleUnstake(call: UnstakeCall): void {
     unstake.timestamp = transaction.timestamp;
     unstake.save()
 
-    updateOhmieBalance(ohmie, transaction.timestamp)
+    updateOhmieBalance(ohmie, transaction)
 }
