@@ -328,6 +328,8 @@ dataSources:
           file: ./abis/OHMDAIBondV1.json
         - name: OHMDAIBondV2
           file: ./abis/OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: ./abis/OHMDAIBondV3.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
