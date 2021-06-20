@@ -1,4 +1,4 @@
-import {  DepositCall, RedeemCall  } from '../generated/OHMDAIBondV2/OHMDAIBondV2'
+import {  DepositCall, RedeemCall  } from '../generated/OHMDAIBondV3/OHMDAIBondV3'
 import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
@@ -12,12 +12,12 @@ export function handleDeposit(call: DepositCall): void {
   let transaction = loadOrCreateTransaction(call.transaction, call.block)
   let token = loadOrCreateToken(OHMDAILPBOND_TOKEN)
 
-  let amount = toDecimal(call.inputs.amount_, 18)
+  let amount = toDecimal(call.inputs._amount, 18)
   let deposit = new Deposit(transaction.id)
   deposit.transaction = transaction.id
   deposit.ohmie = ohmie.id
   deposit.amount = amount
-  deposit.maxPremium = toDecimal(call.inputs.maxPremium_)
+  deposit.maxPremium = toDecimal(call.inputs._maxPrice)
   deposit.token = token.id;
   deposit.timestamp = transaction.timestamp;
   deposit.save()

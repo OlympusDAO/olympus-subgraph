@@ -238,15 +238,6 @@ export class OhmieBalance extends Entity {
     this.set("dollarBalance", Value.fromBigDecimal(value));
   }
 
-  get outstandingBonds(): BigDecimal {
-    let value = this.get("outstandingBonds");
-    return value.toBigDecimal();
-  }
-
-  set outstandingBonds(value: BigDecimal) {
-    this.set("outstandingBonds", Value.fromBigDecimal(value));
-  }
-
   get timestamp(): BigInt {
     let value = this.get("timestamp");
     return value.toBigInt();

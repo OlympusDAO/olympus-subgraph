@@ -5,8 +5,10 @@ import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { toDecimal } from "./utils/Decimals"
 import { OHMDAILPBOND_TOKEN } from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
-import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
+import { BigDecimal, BigInt, Address } from '@graphprotocol/graph-ts'
 import { createDailyBondRecord } from './utils/DailyBond'
+import { OHMDAIBondV1 } from '../generated/DAIBondV1/OHMDAIBondV1'
+import { DAIBOND_CONTRACTS1 } from './utils/Constants'
 
 export function handleDeposit(call: DepositBondPrincipleCall): void {
   let ohmie = loadOrCreateOHMie(call.transaction.from)
