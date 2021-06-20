@@ -49,37 +49,37 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
     }
     if(transaction.blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT2_BLOCK))){
         let bondOHMDai_contract = OHMDAIBondV2.bind(Address.fromString(OHMDAISLPBOND_CONTRACT2))
-        let pending = bondOHMDai_contract.try_pendingPayoutFor(Address.fromString(ohmie.id))
-        if (pending.reverted==false && pending.value.gt(BigInt.fromString("0"))){
-            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending.value, 9))
+        let pending = bondOHMDai_contract.pendingPayoutFor(Address.fromString(ohmie.id))
+        if (pending.gt(BigInt.fromString("0"))){
+            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending, 9))
         }
     }
     if(transaction.blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT3_BLOCK))){
         let bondOHMDai_contract = OHMDAIBondV3.bind(Address.fromString(OHMDAISLPBOND_CONTRACT3))
-        let pending = bondOHMDai_contract.try_pendingPayoutFor(Address.fromString(ohmie.id))
-        if (pending.reverted==false && pending.value.gt(BigInt.fromString("0"))){
-            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending.value, 9))
+        let pending = bondOHMDai_contract.pendingPayoutFor(Address.fromString(ohmie.id))
+        if (pending.gt(BigInt.fromString("0"))){
+            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending, 9))
         }
     }
     if(transaction.blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS1_BLOCK))){
         let bondDai_contract = DAIBondV1.bind(Address.fromString(DAIBOND_CONTRACTS1))
-        let pending = bondDai_contract.try_getDepositorInfo(Address.fromString(ohmie.id))
-        if (pending.reverted==false && pending.value.value1.gt(BigInt.fromString("0"))){
-            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending.value.value1, 9))
+        let pending = bondDai_contract.getDepositorInfo(Address.fromString(ohmie.id))
+        if (pending.value1.gt(BigInt.fromString("0"))){
+            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending.value1, 9))
         }
     }
     if(transaction.blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS2_BLOCK))){
         let bondDai_contract = DAIBondV2.bind(Address.fromString(DAIBOND_CONTRACTS2))
-        let pending = bondDai_contract.try_pendingPayoutFor(Address.fromString(ohmie.id))
-        if (pending.reverted==false && pending.value.gt(BigInt.fromString("0"))){
-            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending.value, 9))
+        let pending = bondDai_contract.pendingPayoutFor(Address.fromString(ohmie.id))
+        if (pending.gt(BigInt.fromString("0"))){
+            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending, 9))
         }
     }
     if(transaction.blockNumber.gt(BigInt.fromString(OHMFRAXLPBOND_CONTRACT1_BLOCK))){
         let bondFRAXDai_contract = OHMDAIBondV3.bind(Address.fromString(OHMFRAXLPBOND_CONTRACT1))
-        let pending = bondFRAXDai_contract.try_pendingPayoutFor(Address.fromString(ohmie.id))
-        if (pending.reverted==false && pending.value.gt(BigInt.fromString("0"))){
-            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending.value, 9))
+        let pending = bondFRAXDai_contract.pendingPayoutFor(Address.fromString(ohmie.id))
+        if (pending.gt(BigInt.fromString("0"))){
+            balance.bondBalance = balance.bondBalance.plus(toDecimal(pending, 9))
         }
     }
 

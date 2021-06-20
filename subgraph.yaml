@@ -1,6 +1,6 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Olympus DAO Subgraph
+repository: https://github.com/OlympusDAO/olympus-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -30,7 +30,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: DAIBondV2
           file: ./abis/DAIBondV2.json
         - name: OHMDAIBondV1
@@ -73,7 +73,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: DAIBondV2
           file: ./abis/DAIBondV2.json
         - name: OHMDAIBondV1
@@ -157,7 +157,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: OHMDAIBondV1
           file: ./abis/OHMDAIBondV1.json
         - name: OHMDAIBondV2
@@ -198,7 +198,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: DAIBondV2
           file: ./abis/DAIBondV2.json
         - name: OHMDAIBondV2
@@ -239,7 +239,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: DAIBondV2
           file: ./abis/DAIBondV2.json
         - name: OHMDAIBondV1
@@ -280,7 +280,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: DAIBondV2
           file: ./abis/DAIBondV2.json
         - name: OHMDAIBondV1
@@ -321,7 +321,7 @@ dataSources:
         - name: UniswapV2Pair
           file: ./abis/UniswapV2Pair.json
         - name: DAIBondV1
-          file: ./abis/DAIBondV2.json
+          file: ./abis/DAIBondV1.json
         - name: DAIBondV2
           file: ./abis/DAIBondV2.json
         - name: OHMDAIBondV1
