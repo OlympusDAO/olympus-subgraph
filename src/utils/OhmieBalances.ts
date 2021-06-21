@@ -3,8 +3,7 @@ import { Ohmie, OhmieBalance } from '../../generated/schema'
 import { dayFromTimestamp } from './Dates';
 
 export function loadOrCreateOhmieBalance(ohmie: Ohmie, timestamp: BigInt): OhmieBalance{
-    let day_timestamp = dayFromTimestamp(timestamp)
-    let id = day_timestamp+ohmie.id
+    let id = timestamp.toString()+ohmie.id
 
     let ohmieBalance = OhmieBalance.load(id)
     if (ohmieBalance == null) {
