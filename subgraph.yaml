@@ -49,6 +49,8 @@ dataSources:
           file: ./abis/OHMFRAXBondV2.json
         - name: FRAXBondV1
           file: ./abis/FRAXBondV1.json
+        - name: CirculatingSupply
+          file: ./abis/CirculatingSupply.json
       callHandlers:
         - function: stakeOHM(uint256)
           handler: handleStake
@@ -253,7 +255,7 @@ dataSources:
         - function: redeem(bool)
           handler: handleRedeem
       file: ./src/DAIBondV2.ts
-#DAI Bond Contract V2
+  #DAI Bond Contract V2
   - kind: ethereum/contract
     name: DAIBondV3
     network: mainnet
@@ -553,7 +555,7 @@ dataSources:
         - function: redeem(bool)
           handler: handleRedeem
       file: ./src/OHMFRAXBondV1.ts
-  # FRAX-OHM v1
+  # FRAX-OHM v2
   - kind: ethereum/contract
     name: OHMFRAXBondV2
     network: mainnet

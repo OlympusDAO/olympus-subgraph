@@ -84,6 +84,12 @@ type Transaction @entity {
 
 type Token @entity {
   id: ID!
-  name: String!
-  address: Bytes!
 }
+
+type ProtocolMetric @entity {
+  id: ID!
+  timestamp: BigInt!
+  circulatingSupply: BigInt!
+  totalSupply: BigInt!
+}
+

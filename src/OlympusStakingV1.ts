@@ -5,6 +5,7 @@ import {  StakeOHMCall, UnstakeOHMCall  } from '../generated/OlympusStakingV1/Ol
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
+import { updateProtocolMetrics } from './utils/ProtocolMetrics'
 
 export function handleStake(call: StakeOHMCall): void {
     let ohmie = loadOrCreateOHMie(call.from as Address)
@@ -19,6 +20,7 @@ export function handleStake(call: StakeOHMCall): void {
     stake.save()
 
     updateOhmieBalance(ohmie, transaction)
+    updateProtocolMetrics(transaction)
 }
 
 export function handleUnstake(call: UnstakeOHMCall): void {

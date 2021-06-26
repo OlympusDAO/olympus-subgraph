@@ -782,22 +782,62 @@ export class Token extends Entity {
   set id(value: string) {
     this.set("id", Value.fromString(value));
   }
+}
 
-  get name(): string {
-    let value = this.get("name");
+export class ProtocolMetric extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save ProtocolMetric entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save ProtocolMetric entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("ProtocolMetric", id.toString(), this);
+  }
+
+  static load(id: string): ProtocolMetric | null {
+    return store.get("ProtocolMetric", id) as ProtocolMetric | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
     return value.toString();
   }
 
-  set name(value: string) {
-    this.set("name", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
-  get address(): Bytes {
-    let value = this.get("address");
-    return value.toBytes();
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
   }
 
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get circulatingSupply(): BigInt {
+    let value = this.get("circulatingSupply");
+    return value.toBigInt();
+  }
+
+  set circulatingSupply(value: BigInt) {
+    this.set("circulatingSupply", Value.fromBigInt(value));
+  }
+
+  get totalSupply(): BigInt {
+    let value = this.get("totalSupply");
+    return value.toBigInt();
+  }
+
+  set totalSupply(value: BigInt) {
+    this.set("totalSupply", Value.fromBigInt(value));
   }
 }
