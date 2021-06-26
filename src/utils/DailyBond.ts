@@ -5,7 +5,7 @@ import { dayFromTimestamp } from './Dates';
 
 export function loadOrCreateDailyBond(timestamp: BigInt, token: Token): DailyBond{
     let day_timestamp = dayFromTimestamp(timestamp)
-    let id = day_timestamp+token.name
+    let id = day_timestamp+token.id
     let dailyBond = DailyBond.load(id)
     if (dailyBond == null) {
         dailyBond = new DailyBond(id)
