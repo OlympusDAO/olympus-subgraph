@@ -89,7 +89,9 @@ type Token @entity {
 type ProtocolMetric @entity {
   id: ID!
   timestamp: BigInt!
-  circulatingSupply: BigInt!
-  totalSupply: BigInt!
+  circulatingSupply: BigDecimal!
+  totalSupply: BigDecimal!
+  ohmPrice: BigDecimal!
+  marketCap: BigDecimal!
 }
 

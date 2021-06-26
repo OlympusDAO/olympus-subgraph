@@ -823,21 +823,39 @@ export class ProtocolMetric extends Entity {
     this.set("timestamp", Value.fromBigInt(value));
   }
 
-  get circulatingSupply(): BigInt {
+  get circulatingSupply(): BigDecimal {
     let value = this.get("circulatingSupply");
-    return value.toBigInt();
+    return value.toBigDecimal();
   }
 
-  set circulatingSupply(value: BigInt) {
-    this.set("circulatingSupply", Value.fromBigInt(value));
+  set circulatingSupply(value: BigDecimal) {
+    this.set("circulatingSupply", Value.fromBigDecimal(value));
   }
 
-  get totalSupply(): BigInt {
+  get totalSupply(): BigDecimal {
     let value = this.get("totalSupply");
-    return value.toBigInt();
+    return value.toBigDecimal();
   }
 
-  set totalSupply(value: BigInt) {
-    this.set("totalSupply", Value.fromBigInt(value));
+  set totalSupply(value: BigDecimal) {
+    this.set("totalSupply", Value.fromBigDecimal(value));
+  }
+
+  get ohmPrice(): BigDecimal {
+    let value = this.get("ohmPrice");
+    return value.toBigDecimal();
+  }
+
+  set ohmPrice(value: BigDecimal) {
+    this.set("ohmPrice", Value.fromBigDecimal(value));
+  }
+
+  get marketCap(): BigDecimal {
+    let value = this.get("marketCap");
+    return value.toBigDecimal();
+  }
+
+  set marketCap(value: BigDecimal) {
+    this.set("marketCap", Value.fromBigDecimal(value));
   }
 }
