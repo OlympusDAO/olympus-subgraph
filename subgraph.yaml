@@ -102,6 +102,8 @@ dataSources:
           file: ./abis/OHMFRAXBondV2.json
         - name: FRAXBondV1
           file: ./abis/FRAXBondV1.json
+        - name: CirculatingSupply
+          file: ./abis/CirculatingSupply.json
       callHandlers:
         - function: stake(uint256,address)
           handler: handleStake

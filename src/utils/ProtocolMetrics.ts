@@ -17,6 +17,8 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.timestamp = timestamp
         protocolMetric.circulatingSupply = BigDecimal.fromString("0")
         protocolMetric.totalSupply = BigDecimal.fromString("0")
+        protocolMetric.ohmPrice = BigDecimal.fromString("0")
+        protocolMetric.marketCap = BigDecimal.fromString("0")
         protocolMetric.save()
     }
     return protocolMetric as ProtocolMetric
