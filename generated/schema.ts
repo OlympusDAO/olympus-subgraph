@@ -858,4 +858,13 @@ export class ProtocolMetric extends Entity {
   set marketCap(value: BigDecimal) {
     this.set("marketCap", Value.fromBigDecimal(value));
   }
+
+  get totalValueLocked(): BigDecimal {
+    let value = this.get("totalValueLocked");
+    return value.toBigDecimal();
+  }
+
+  set totalValueLocked(value: BigDecimal) {
+    this.set("totalValueLocked", Value.fromBigDecimal(value));
+  }
 }
