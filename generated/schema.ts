@@ -867,4 +867,13 @@ export class ProtocolMetric extends Entity {
   set totalValueLocked(value: BigDecimal) {
     this.set("totalValueLocked", Value.fromBigDecimal(value));
   }
+
+  get totalOHMstaked(): BigDecimal {
+    let value = this.get("totalOHMstaked");
+    return value.toBigDecimal();
+  }
+
+  set totalOHMstaked(value: BigDecimal) {
+    this.set("totalOHMstaked", Value.fromBigDecimal(value));
+  }
 }

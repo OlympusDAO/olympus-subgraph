@@ -94,5 +94,6 @@ type ProtocolMetric @entity {
   ohmPrice: BigDecimal!
   marketCap: BigDecimal!
   totalValueLocked: BigDecimal!
+  totalOHMstaked: BigDecimal!
 }
 
