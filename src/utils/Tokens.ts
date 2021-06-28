@@ -1,13 +1,9 @@
 import { Token } from '../../generated/schema'
-import { getTokenAdress } from './Constants'
 
 export function loadOrCreateToken(name: string): Token{
-    let address = getTokenAdress(name)
-    let token = Token.load(address.toHex())
+    let token = Token.load(name)
     if (token == null) {
-        token = new Token(address.toHex())
-        token.name = name
-        token.address = address
+        token = new Token(name)
         token.save()
     }
     return token as Token

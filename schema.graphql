@@ -1,17 +1,5 @@
-type Treasury @entity {
-  id: ID!
-  bondDeposits: [Deposit!]! @derivedFrom(field: "treasury")
-  bondWithdrawals: [Redemption!]! @derivedFrom(field: "treasury")
-  daiBondTotalDeposit : BigDecimal
-  ohmDaiSlpTotalDeposit : BigDecimal
-  dailyBonds: [DailyBond!]! @derivedFrom(field: "treasury")
-  dailyStackingRewards: [DailyStackingReward!]! @derivedFrom(field: "treasury")
-  ohmies: [Ohmie!]!
-}
-
 type DailyBond @entity {
   id: ID!
-  treasury: Treasury!
   timestamp: BigInt!
   token: Token!
   amount: BigDecimal!
@@ -22,19 +10,20 @@ type Ohmie @entity {
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
   bondRedemptions: [Redemption!]! @derivedFrom(field: "ohmie")
-  sentOhmTransactions: [OhmTransaction!]! @derivedFrom(field: "ohmieFrom")
-  receivedOhmTransactions: [OhmTransaction!]! @derivedFrom(field: "ohmieTo")
-  sentSohmTransactions: [SohmTransaction!]! @derivedFrom(field: "ohmieFrom")
-  receivedSohmTransactions: [SohmTransaction!]! @derivedFrom(field: "ohmieTo")
   stakeTransactions: [Stake!]! @derivedFrom(field: "ohmie")
   unstakeTransactions: [Unstake!]! @derivedFrom(field: "ohmie")
-  receivedRebases: [OhmieRebase!]! @derivedFrom(field: "ohmie")
-  daiBondTotalDeposit: BigDecimal
-  ohmDaiSlpTotalDeposit: BigDecimal
-  ohmBalance: BigDecimal
-  sohmBalance: BigDecimal
-  stakedRewards: BigDecimal
-  treasury: Treasury!
+  historicBalance: [OhmieBalance!]! @derivedFrom(field: "ohmie")
+  lastBalance: OhmieBalance
+}
+
+type OhmieBalance @entity {
+  id: ID!
+  ohmie: Ohmie!
+  sohmBalance: BigDecimal!
+  ohmBalance: BigDecimal!
+  bondBalance: BigDecimal!
+  dollarBalance: BigDecimal!
+  timestamp: BigInt!
 }
 
 type Deposit @entity {
@@ -44,7 +33,6 @@ type Deposit @entity {
   amount: BigDecimal!
   maxPremium: BigDecimal!
   token: Token!
-  treasury: Treasury!
   timestamp: BigInt!
 }
 
@@ -53,62 +41,7 @@ type Redemption @entity {
   transaction: Transaction
   ohmie: Ohmie
   token: Token
-  treasury: Treasury
-  amount: BigDecimal
   timestamp: BigInt
-}
-
-type Transaction @entity {
-  "transaction hash"
-  id: ID!
-  timestamp: BigInt!
-  blockNumber: BigInt!
-  blockHash: Bytes!
-  from: Bytes!
-  to: Bytes
-  value: BigInt!
-  gasUsed: BigInt!
-  gasPrice: BigInt!
-}
-
-type OhmTransaction @entity {
-  id: ID!
-  transaction: Transaction!
-  ohmieTo: Ohmie!
-  ohmieFrom: Ohmie!
-  amount: BigDecimal!
-  timestamp: BigInt!
-}
-
-type SohmTransaction @entity {
-  id: ID!
-  transaction: Transaction!
-  ohmieTo: Ohmie!
-  ohmieFrom: Ohmie!
-  amount: BigDecimal!
-  timestamp: BigInt!
-}
-
-type Token @entity {
-  id: ID!
-  name: String!
-  address: Bytes!
-}
-
-type Rebase @entity {
-  id: ID!
-  transaction: String!
-  amount: BigDecimal!
-  stakedOhms: BigDecimal!
-  percentage: BigDecimal!
-  timestamp: BigInt!
-}
-
-type DailyStackingReward @entity {
-  id: ID!
-  treasury: Treasury!
-  timestamp: BigInt!
-  amount: BigDecimal!
 }
 
 type Stake @entity {
@@ -127,10 +60,38 @@ type Unstake @entity {
   timestamp: BigInt!
 }
 
-type OhmieRebase @entity {
+type Rebase @entity {
+  id: ID!
+  transaction: String!
+  amount: BigDecimal!
+  stakedOhms: BigDecimal!
+  percentage: BigDecimal!
+  timestamp: BigInt!
+}
+
+type Transaction @entity {
+  "transaction hash"
   id: ID!
   timestamp: BigInt!
-  ohmie: Ohmie!
-  percentage: BigDecimal!
-  amount: BigDecimal!
+  blockNumber: BigInt!
+  blockHash: Bytes!
+  from: Bytes!
+  to: Bytes
+  value: BigInt!
+  gasUsed: BigInt!
+  gasPrice: BigInt!
 }
+
+type Token @entity {
+  id: ID!
+}
+
+type ProtocolMetric @entity {
+  id: ID!
+  timestamp: BigInt!
+  circulatingSupply: BigDecimal!
+  totalSupply: BigDecimal!
+  ohmPrice: BigDecimal!
+  marketCap: BigDecimal!
+}
+
