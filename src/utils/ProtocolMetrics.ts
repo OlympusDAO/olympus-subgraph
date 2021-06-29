@@ -20,6 +20,7 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.ohmPrice = BigDecimal.fromString("0")
         protocolMetric.marketCap = BigDecimal.fromString("0")
         protocolMetric.totalValueLocked = BigDecimal.fromString("0")
+        protocolMetric.totalOHMstaked = BigDecimal.fromString("0")
         protocolMetric.save()
     }
     return protocolMetric as ProtocolMetric
@@ -52,8 +53,8 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     //Total Value Locked
     let v1balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
     let v2balance = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V2)), 9)
-    let totalOHMLocked = v1balance.plus(v2balance)
-    pm.totalValueLocked = totalOHMLocked.times(pm.ohmPrice)
+    pm.totalOHMstaked = v1balance.plus(v2balance)
+    pm.totalValueLocked = pm.totalOHMstaked.times(pm.ohmPrice)
 
     pm.save()
     
