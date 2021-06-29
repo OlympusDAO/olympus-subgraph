@@ -51,6 +51,10 @@ dataSources:
           file: ./abis/FRAXBondV1.json
         - name: CirculatingSupply
           file: ./abis/CirculatingSupply.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       callHandlers:
         - function: stakeOHM(uint256)
           handler: handleStake
@@ -104,6 +108,10 @@ dataSources:
           file: ./abis/FRAXBondV1.json
         - name: CirculatingSupply
           file: ./abis/CirculatingSupply.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       callHandlers:
         - function: stake(uint256,address)
           handler: handleStake
