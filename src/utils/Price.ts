@@ -31,7 +31,7 @@ export function getPairUSD(lp_amount: BigInt, pair_adress: string): BigDecimal{
     let part1 = toDecimal(lp_amount,18).div(toDecimal(total_lp,18))
     let two = BigInt.fromI32(2)
     let part2 = two.times(lp_token_1).times(lp_token_2)
-    let sqrt = toDecimal(part2.sqrt(), 9)
+    let sqrt = toDecimal(part2.sqrt(), 12)
     let result = part1.times(sqrt)
     return result
 }
