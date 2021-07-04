@@ -55,6 +55,8 @@ dataSources:
           file: ./abis/BondingCalculator.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json
       callHandlers:
         - function: stakeOHM(uint256)
           handler: handleStake
@@ -112,6 +114,8 @@ dataSources:
           file: ./abis/BondingCalculator.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json
       callHandlers:
         - function: stake(uint256,address)
           handler: handleStake

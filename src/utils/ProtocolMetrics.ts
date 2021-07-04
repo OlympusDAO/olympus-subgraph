@@ -3,9 +3,10 @@ import { OlympusERC20 } from '../../generated/OlympusStakingV1/OlympusERC20';
 import { CirculatingSupply } from '../../generated/OlympusStakingV1/CirculatingSupply';
 import { ERC20 } from '../../generated/OlympusStakingV1/ERC20';
 import { UniswapV2Pair } from '../../generated/OlympusStakingV1/UniswapV2Pair';
+import { MasterChef } from '../../generated/OlympusStakingV1/MasterChef';
 
 import { ProtocolMetric, Transaction } from '../../generated/schema'
-import { CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, OHM_ERC20_CONTRACT, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, SUSHI_OHMDAI_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK } from './Constants';
+import { CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, OHMDAI_ONSEN_ID, OHM_ERC20_CONTRACT, ONSEN_ALLOCATOR, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, SUSHI_MASTERCHEF, SUSHI_OHMDAI_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK } from './Constants';
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { getOHMUSDRate, getPairUSD } from './Price';
@@ -64,6 +65,7 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     let daiERC20 = ERC20.bind(Address.fromString(ERC20DAI_CONTRACT))
     let fraxERC20 = ERC20.bind(Address.fromString(ERC20FRAX_CONTRACT))
     let ohmdaiPair = UniswapV2Pair.bind(Address.fromString(SUSHI_OHMDAI_PAIR))
+    let ohmdaiOnsenMC = MasterChef.bind(Address.fromString(SUSHI_MASTERCHEF))
     let ohmfraxPair = UniswapV2Pair.bind(Address.fromString(UNI_OHMFRAX_PAIR))
 
     let treasury_address = TREASURY_ADDRESS;
@@ -73,7 +75,9 @@ export function updateProtocolMetrics(transaction: Transaction): void{
 
     let daiBalance = daiERC20.balanceOf(Address.fromString(treasury_address))
     let fraxBalance = fraxERC20.balanceOf(Address.fromString(treasury_address))
-    let ohmdaiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
+    let ohmdaiSushiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
+    let ohmdaiOnsenBalance = ohmdaiOnsenMC.userInfo(BigInt.fromI32(OHMDAI_ONSEN_ID), Address.fromString(ONSEN_ALLOCATOR)).value0
+    let ohmdaiBalance = ohmdaiSushiBalance.plus(ohmdaiOnsenBalance)
     let ohmdai_value = getPairUSD(ohmdaiBalance, SUSHI_OHMDAI_PAIR)
 
     let ohmfraxBalance = BigInt.fromI32(0)
