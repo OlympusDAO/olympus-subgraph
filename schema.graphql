@@ -101,7 +101,9 @@ type ProtocolMetric @entity {
   treasuryDaiLPValue: BigDecimal!
   treasuryFraxValue: BigDecimal!
   treasuryFraxLPValue: BigDecimal!
-  totalSlpSupply: BigDecimal!
-  treasuryTotalDaiSlpSupply: BigDecimal!
+  totalOhmDaiLPSupply: BigDecimal!
+  treasuryOhmDaiLPSupply: BigDecimal!
+  totalOhmFraxLPSupply: BigDecimal!
+  treasuryOHMFraxLPSupply: BigDecimal!
 }
 

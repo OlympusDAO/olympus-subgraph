@@ -93,23 +93,14 @@ export function updateProtocolMetrics(transaction: Transaction): void{
         ohmfrax_value = getPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
     }
 
-    log.info("Treasury ohmdai_value {} ohmfrax_value {}", [ohmdai_value.toString(), ohmfrax_value.toString()])
-
     let ohmdai_rfv = ohmdai_value.times(BigDecimal.fromString("0.03"))
     let ohmfrax_rfv = ohmfrax_value.times(BigDecimal.fromString("0.03"))
-    log.info("Treasury ohmdai_rfv {} ohmfrax_rfv {}", [ohmdai_rfv.toString(), ohmfrax_rfv.toString()])
-
 
     let stableValue = daiBalance.plus(fraxBalance)
     let stableValueDecimal = toDecimal(stableValue, 18)
-    log.info("Treasury Stable Balance {}", [stableValue.toString()])
-    log.info("Treasury Stable Double Balance {}", [stableValueDecimal.toString()])
 
     let lpValue = ohmdai_value.plus(ohmfrax_value)
-    log.info("Treasury LPV Balance {}", [lpValue.toString()])
-
     let rfvLpValue = ohmdai_rfv.plus(ohmfrax_rfv)
-    log.info("Treasury RFV Balance {}", [rfvLpValue.toString()])
 
     pm.treasuryMarketValue = stableValueDecimal.plus(lpValue)
     pm.treasuryRiskFreeValue = stableValueDecimal.plus(rfvLpValue)
@@ -118,8 +109,10 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.treasuryDaiLPValue = ohmdai_value
     pm.treasuryFraxValue = toDecimal(fraxBalance, 18)
     pm.treasuryFraxLPValue = ohmfrax_value
-    pm.totalSlpSupply = toDecimal(ohmdaiPair.totalSupply(),18)
-    pm.treasuryTotalDaiSlpSupply = toDecimal(ohmdaiBalance,18)
+    pm.totalOhmDaiLPSupply = toDecimal(ohmdaiPair.totalSupply(),18)
+    pm.treasuryOhmDaiLPSupply = toDecimal(ohmdaiBalance,18)
+    pm.totalOhmFraxLPSupply = toDecimal(ohmdaiPair.totalSupply(),18)
+    pm.treasuryOHMFraxLPSupply = toDecimal(ohmfraxBalance,18)
 
     pm.save()
     

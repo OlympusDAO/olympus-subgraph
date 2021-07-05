@@ -931,22 +931,39 @@ export class ProtocolMetric extends Entity {
     this.set("treasuryFraxLPValue", Value.fromBigDecimal(value));
   }
 
-  get totalSlpSupply(): BigDecimal {
-    let value = this.get("totalSlpSupply");
+  get totalOhmDaiLPSupply(): BigDecimal {
+    let value = this.get("totalOhmDaiLPSupply");
     return value.toBigDecimal();
   }
 
-  set totalSlpSupply(value: BigDecimal) {
-    this.set("totalSlpSupply", Value.fromBigDecimal(value));
+  set totalOhmDaiLPSupply(value: BigDecimal) {
+    this.set("totalOhmDaiLPSupply", Value.fromBigDecimal(value));
   }
 
-  get treasuryTotalDaiSlpSupply(): BigDecimal {
-    let value = this.get("treasuryTotalDaiSlpSupply");
+  get treasuryOhmDaiLPSupply(): BigDecimal {
+    let value = this.get("treasuryOhmDaiLPSupply");
     return value.toBigDecimal();
   }
 
-  set treasuryTotalDaiSlpSupply(value: BigDecimal) {
-    this.set("treasuryTotalDaiSlpSupply", Value.fromBigDecimal(value));
+  set treasuryOhmDaiLPSupply(value: BigDecimal) {
+    this.set("treasuryOhmDaiLPSupply", Value.fromBigDecimal(value));
   }
 
+  get totalOhmFraxLPSupply(): BigDecimal {
+    let value = this.get("totalOhmFraxLPSupply");
+    return value.toBigDecimal();
+  }
+
+  set totalOhmFraxLPSupply(value: BigDecimal) {
+    this.set("totalOhmFraxLPSupply", Value.fromBigDecimal(value));
+  }
+
+  get treasuryOHMFraxLPSupply(): BigDecimal {
+    let value = this.get("treasuryOHMFraxLPSupply");
+    return value.toBigDecimal();
+  }
+
+  set treasuryOHMFraxLPSupply(value: BigDecimal) {
+    this.set("treasuryOHMFraxLPSupply", Value.fromBigDecimal(value));
+  }
 }
