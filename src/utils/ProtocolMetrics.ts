@@ -30,6 +30,8 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.treasuryDaiLPValue = BigDecimal.fromString("0")
         protocolMetric.treasuryFraxValue = BigDecimal.fromString("0")
         protocolMetric.treasuryFraxLPValue = BigDecimal.fromString("0")
+        protocolMetric.totalSlpSupply = BigDecimal.fromString("0")
+        protocolMetric.treasuryTotalDaiSlpSupply = BigDecimal.fromString("0")
         protocolMetric.save()
     }
     return protocolMetric as ProtocolMetric
@@ -116,6 +118,8 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.treasuryDaiLPValue = ohmdai_value
     pm.treasuryFraxValue = toDecimal(fraxBalance, 18)
     pm.treasuryFraxLPValue = ohmfrax_value
+    pm.totalSlpSupply = toDecimal(ohmdaiPair.totalSupply(),18)
+    pm.treasuryTotalDaiSlpSupply = toDecimal(ohmdaiBalance,18)
 
     pm.save()
     
