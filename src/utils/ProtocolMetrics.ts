@@ -26,6 +26,10 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.totalOHMstaked = BigDecimal.fromString("0")
         protocolMetric.treasuryRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMarketValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryDaiValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryDaiLPValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryFraxValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryFraxLPValue = BigDecimal.fromString("0")
         protocolMetric.save()
     }
     return protocolMetric as ProtocolMetric
@@ -89,8 +93,8 @@ export function updateProtocolMetrics(transaction: Transaction): void{
 
     log.info("Treasury ohmdai_value {} ohmfrax_value {}", [ohmdai_value.toString(), ohmfrax_value.toString()])
 
-    let ohmdai_rfv = ohmdai_value.times(BigDecimal.fromString("0.3"))
-    let ohmfrax_rfv = ohmfrax_value.times(BigDecimal.fromString("0.3"))
+    let ohmdai_rfv = ohmdai_value.times(BigDecimal.fromString("0.03"))
+    let ohmfrax_rfv = ohmfrax_value.times(BigDecimal.fromString("0.03"))
     log.info("Treasury ohmdai_rfv {} ohmfrax_rfv {}", [ohmdai_rfv.toString(), ohmfrax_rfv.toString()])
 
 
@@ -107,6 +111,11 @@ export function updateProtocolMetrics(transaction: Transaction): void{
 
     pm.treasuryMarketValue = stableValueDecimal.plus(lpValue)
     pm.treasuryRiskFreeValue = stableValueDecimal.plus(rfvLpValue)
+
+    pm.treasuryDaiValue = toDecimal(daiBalance, 18)
+    pm.treasuryDaiLPValue = ohmdai_value
+    pm.treasuryFraxValue = toDecimal(fraxBalance, 18)
+    pm.treasuryFraxLPValue = ohmfrax_value
 
     pm.save()
     

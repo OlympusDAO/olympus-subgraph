@@ -894,4 +894,40 @@ export class ProtocolMetric extends Entity {
   set treasuryMarketValue(value: BigDecimal) {
     this.set("treasuryMarketValue", Value.fromBigDecimal(value));
   }
+
+  get treasuryDaiValue(): BigDecimal {
+    let value = this.get("treasuryDaiValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryDaiValue(value: BigDecimal) {
+    this.set("treasuryDaiValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryDaiLPValue(): BigDecimal {
+    let value = this.get("treasuryDaiLPValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryDaiLPValue(value: BigDecimal) {
+    this.set("treasuryDaiLPValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryFraxValue(): BigDecimal {
+    let value = this.get("treasuryFraxValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryFraxValue(value: BigDecimal) {
+    this.set("treasuryFraxValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryFraxLPValue(): BigDecimal {
+    let value = this.get("treasuryFraxLPValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryFraxLPValue(value: BigDecimal) {
+    this.set("treasuryFraxLPValue", Value.fromBigDecimal(value));
+  }
 }

@@ -97,5 +97,9 @@ type ProtocolMetric @entity {
   totalOHMstaked: BigDecimal!
   treasuryRiskFreeValue: BigDecimal!
   treasuryMarketValue: BigDecimal!
+  treasuryDaiValue: BigDecimal!
+  treasuryDaiLPValue: BigDecimal!
+  treasuryFraxValue: BigDecimal!
+  treasuryFraxLPValue: BigDecimal!
 }
 
