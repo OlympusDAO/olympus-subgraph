@@ -26,6 +26,8 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.totalOHMstaked = BigDecimal.fromString("0")
         protocolMetric.treasuryRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMarketValue = BigDecimal.fromString("0")
+        protocolMetric.totalSlpSupply = BigDecimal.fromString("0")
+        protocolMetric.treasuryTotalDaiSlpSupply = BigDecimal.fromString("0")
         protocolMetric.save()
     }
     return protocolMetric as ProtocolMetric
@@ -107,6 +109,9 @@ export function updateProtocolMetrics(transaction: Transaction): void{
 
     pm.treasuryMarketValue = stableValueDecimal.plus(lpValue)
     pm.treasuryRiskFreeValue = stableValueDecimal.plus(rfvLpValue)
+
+    pm.totalSlpSupply = toDecimal(ohmdaiPair.totalSupply(),18)
+    pm.treasuryTotalDaiSlpSupply = toDecimal(ohmdaiBalance,18)
 
     pm.save()
     
