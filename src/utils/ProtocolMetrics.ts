@@ -68,13 +68,16 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     }
 
     //sOhm Supply
+    // let sohm_contract_v1 = sOlympusERC20.bind(Address.fromString(SOHM_ERC20_CONTRACT))
+    // pm.sOhmCirculatingSupply = toDecimal(sohm_contract_v1.circulatingSupply(), 9)
+    // log.debug("sohm_contract_v1 {}", [sohm_contract_v1.circulatingSupply().toString()])
+
+    pm.sOhmCirculatingSupply = BigDecimal.fromString("0")
+
     if(transaction.blockNumber.gt(BigInt.fromString(SOHM_ERC20_CONTRACTV2_BLOCK))){
         let sohm_contract_v2 = sOlympusERC20V2.bind(Address.fromString(SOHM_ERC20_CONTRACTV2))
-        pm.sOhmCirculatingSupply = toDecimal(sohm_contract_v2.circulatingSupply(), 9)
-    }
-    else{
-        let sohm_contract_v1 = sOlympusERC20.bind(Address.fromString(SOHM_ERC20_CONTRACT))
-        pm.sOhmCirculatingSupply = toDecimal(sohm_contract_v1.circulatingSupply(), 9)
+        log.debug("sohm_contract_v2 {}", [sohm_contract_v2.circulatingSupply().toString()])
+        pm.sOhmCirculatingSupply = pm.sOhmCirculatingSupply.plus(toDecimal(sohm_contract_v2.circulatingSupply(), 9))
     }
 
     //OHM Price
@@ -139,22 +142,28 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.treasuryOHMFraxLPSupply = toDecimal(ohmfraxBalance,18)
 
     // Rebase rewards
+
+    // Breaks subgraph completely :(
+    // let staking_contract_v1 = OlympusStakingV1.bind(Address.fromString(STAKING_CONTRACT_V1))   
+    // let response = staking_contract_v1.try_ohmToDistributeNextEpoch()
+    // if(response.reverted==false){
+    //     next_distribution = toDecimal(response.value,9)
+    // }
+    
     let next_distribution = BigDecimal.fromString("0")
-    if(transaction.blockNumber.lt(BigInt.fromString(STAKING_CONTRACT_V2_BLOCK))){
-        let staking_contract_v1 = OlympusStakingV1.bind(Address.fromString(STAKING_CONTRACT_V1))   
-        next_distribution = toDecimal(staking_contract_v1.ohmToDistributeNextEpoch(),9) 
-    }
-    else{
+
+    if(transaction.blockNumber.gt(BigInt.fromString(STAKING_CONTRACT_V2_BLOCK))){
         let staking_contract_v2 = OlympusStakingV2.bind(Address.fromString(STAKING_CONTRACT_V2))
-        next_distribution = toDecimal(staking_contract_v2.epoch().value3,9) 
+        next_distribution = next_distribution.plus(toDecimal(staking_contract_v2.epoch().value3,9))
     }
+
     pm.nextEpochRebase = next_distribution.div(pm.sOhmCirculatingSupply).times(BigDecimal.fromString("100"));
     let nextEpochRebase_number = Number.parseFloat(pm.nextEpochRebase.toString())
     let currentAPY = Math.pow(((nextEpochRebase_number/100)+1), (365*3)-1)*100
     pm.currentAPY = BigDecimal.fromString(currentAPY.toString())
 
-    //Runway
-    if(pm.totalOHMstaked.gt(BigDecimal.fromString("0")) && pm.treasuryRiskFreeValue.gt(BigDecimal.fromString("0"))){
+    // Runway
+    if(pm.totalOHMstaked.gt(BigDecimal.fromString("0")) && pm.treasuryRiskFreeValue.gt(BigDecimal.fromString("0")) &&  pm.nextEpochRebase.gt(BigDecimal.fromString("0"))){
         let treasury_runway = Number.parseFloat(pm.treasuryRiskFreeValue.div(pm.totalOHMstaked).toString())
 
         let runway10k = (Math.log(treasury_runway) / Math.log(1+0.00421449))/3;
@@ -171,7 +180,6 @@ export function updateProtocolMetrics(transaction: Transaction): void{
         pm.runway70k = BigDecimal.fromString(runway70k.toString())
         pm.runway100k = BigDecimal.fromString(runway100k.toString())
         pm.runwayCurrent = BigDecimal.fromString(runwayCurrent.toString())
-
     }
 
     pm.save()
