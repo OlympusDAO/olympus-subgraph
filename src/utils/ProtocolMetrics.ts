@@ -68,15 +68,13 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     }
 
     //sOhm Supply
-    // let sohm_contract_v1 = sOlympusERC20.bind(Address.fromString(SOHM_ERC20_CONTRACT))
-    // pm.sOhmCirculatingSupply = toDecimal(sohm_contract_v1.circulatingSupply(), 9)
-    // log.debug("sohm_contract_v1 {}", [sohm_contract_v1.circulatingSupply().toString()])
+    let sohm_contract_v1 = sOlympusERC20.bind(Address.fromString(SOHM_ERC20_CONTRACT))
+    pm.sOhmCirculatingSupply = toDecimal(sohm_contract_v1.circulatingSupply(), 9)
 
-    pm.sOhmCirculatingSupply = BigDecimal.fromString("0")
+    // pm.sOhmCirculatingSupply = BigDecimal.fromString("0")
 
     if(transaction.blockNumber.gt(BigInt.fromString(SOHM_ERC20_CONTRACTV2_BLOCK))){
         let sohm_contract_v2 = sOlympusERC20V2.bind(Address.fromString(SOHM_ERC20_CONTRACTV2))
-        log.debug("sohm_contract_v2 {}", [sohm_contract_v2.circulatingSupply().toString()])
         pm.sOhmCirculatingSupply = pm.sOhmCirculatingSupply.plus(toDecimal(sohm_contract_v2.circulatingSupply(), 9))
     }
 
@@ -144,19 +142,24 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     // Rebase rewards
 
     // Breaks subgraph completely :(
-    // let staking_contract_v1 = OlympusStakingV1.bind(Address.fromString(STAKING_CONTRACT_V1))   
-    // let response = staking_contract_v1.try_ohmToDistributeNextEpoch()
-    // if(response.reverted==false){
-    //     next_distribution = toDecimal(response.value,9)
-    // }
-    
     let next_distribution = BigDecimal.fromString("0")
+
+    let staking_contract_v1 = OlympusStakingV1.bind(Address.fromString(STAKING_CONTRACT_V1))   
+    let response = staking_contract_v1.try_ohmToDistributeNextEpoch()
+    if(response.reverted==false){
+        next_distribution = toDecimal(response.value,9)
+        log.debug("next_distribution {}", [next_distribution.toString()])
+    }
+    else{
+        log.debug("reverted staking_contract_v1", []) 
+    }
 
     if(transaction.blockNumber.gt(BigInt.fromString(STAKING_CONTRACT_V2_BLOCK))){
         let staking_contract_v2 = OlympusStakingV2.bind(Address.fromString(STAKING_CONTRACT_V2))
         next_distribution = next_distribution.plus(toDecimal(staking_contract_v2.epoch().value3,9))
     }
 
+    log.debug("next_distribution {} sOhmCirculatingSupply {}", [next_distribution.toString(), pm.sOhmCirculatingSupply.toString()])
     pm.nextEpochRebase = next_distribution.div(pm.sOhmCirculatingSupply).times(BigDecimal.fromString("100"));
     let nextEpochRebase_number = Number.parseFloat(pm.nextEpochRebase.toString())
     let currentAPY = Math.pow(((nextEpochRebase_number/100)+1), (365*3)-1)*100

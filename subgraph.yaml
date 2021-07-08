@@ -21,6 +21,8 @@ dataSources:
       abis:
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -80,6 +82,8 @@ dataSources:
       abis:
         - name: OlympusStakingV2
           file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -137,6 +141,10 @@ dataSources:
       entities:
         - OlympusStakingV2Helper
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: OlympusStakingV2Helper
           file: ./abis/OlympusStakingV2Helper.json
         - name: sOlympusERC20
@@ -186,6 +194,10 @@ dataSources:
       entities:
         - DAIBondDeposit
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -235,6 +247,10 @@ dataSources:
       entities:
         - DAIBondDeposit
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -284,6 +300,10 @@ dataSources:
       entities:
         - DAIBondDeposit
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -333,6 +353,10 @@ dataSources:
       entities:
         - OHMDAIBondV1
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -382,6 +406,10 @@ dataSources:
       entities:
         - OHMDAIBondV2
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -431,6 +459,8 @@ dataSources:
       entities:
         - OHMDAIBondV3
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -482,6 +512,8 @@ dataSources:
       entities:
         - OHMDAIBondV4
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -533,6 +565,8 @@ dataSources:
       entities:
         - OHMFRAXBondV1
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -584,6 +618,8 @@ dataSources:
       entities:
         - OHMFRAXBondV2
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -635,6 +671,8 @@ dataSources:
       entities:
         - FRAXBondV1
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
