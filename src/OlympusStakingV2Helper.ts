@@ -5,6 +5,7 @@ import {  StakeCall  } from '../generated/OlympusStakingV2Helper/OlympusStakingV
 import { toDecimal } from "./utils/Decimals"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { loadOrCreateTransaction } from "./utils/Transactions"
+import { updateProtocolMetrics } from './utils/ProtocolMetrics'
 
 export function handleStake(call: StakeCall): void {
     let ohmie = loadOrCreateOHMie(call.from as Address)
@@ -19,4 +20,5 @@ export function handleStake(call: StakeCall): void {
     stake.save()
 
     updateOhmieBalance(ohmie, transaction)
+    updateProtocolMetrics(transaction)
 }
