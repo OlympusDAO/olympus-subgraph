@@ -36,4 +36,5 @@ export function handleUnstake(call: UnstakeOHMCall): void {
     unstake.save()
 
     updateOhmieBalance(ohmie, transaction)
+    updateProtocolMetrics(transaction)
 }
