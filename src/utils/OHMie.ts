@@ -18,10 +18,15 @@ import { DAIBOND_CONTRACTS1, DAIBOND_CONTRACTS1_BLOCK, DAIBOND_CONTRACTS2, DAIBO
 import { loadOrCreateOhmieBalance } from './OhmieBalances'
 import { toDecimal } from './Decimals'
 import { getOHMUSDRate } from './Price'
+import { getHolderAux } from './Aux'
 
 export function loadOrCreateOHMie(addres: Address): Ohmie{
     let ohmie = Ohmie.load(addres.toHex())
     if (ohmie == null) {
+        let holders = getHolderAux()
+        holders.value = holders.value.plus(BigInt.fromI32(1))
+        holders.save()
+
         ohmie = new Ohmie(addres.toHex())
         ohmie.save()
     }
@@ -41,6 +46,12 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
     if(transaction.blockNumber.gt(BigInt.fromString(SOHM_ERC20_CONTRACTV2_BLOCK))){
         let sohm_contract_v2 = sOlympusERC20V2.bind(Address.fromString(SOHM_ERC20_CONTRACT))
         balance.sohmBalance = balance.sohmBalance.plus(toDecimal(sohm_contract_v2.balanceOf(Address.fromString(ohmie.id)), 9))
+    }
+
+    if(balance.ohmBalance.lt(BigDecimal.fromString("0.01")) && balance.sohmBalance.lt(BigDecimal.fromString("0.01"))){
+        let holders = getHolderAux()
+        holders.value = holders.value.minus(BigInt.fromI32(1))
+        holders.save()
     }
 
     //OHM-DAI

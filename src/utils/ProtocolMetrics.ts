@@ -14,6 +14,7 @@ import { CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, ERC20DA
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD } from './Price';
+import { getHolderAux } from './Aux';
 
 export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
     let dayTimestamp = dayFromTimestamp(timestamp);
@@ -34,6 +35,7 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.nextEpochRebase = BigDecimal.fromString("0")
         protocolMetric.nextDistributedOhm = BigDecimal.fromString("0")
         protocolMetric.currentAPY = BigDecimal.fromString("0")
+        protocolMetric.holders = BigInt.fromI32(0)
 
         protocolMetric.save()
     }
@@ -235,6 +237,9 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.runway100k = runways[4]
     pm.runwayCurrent = runways[5]
 
+    //Holders
+    pm.holders = getHolderAux().value
+    
     pm.save()
     
 }

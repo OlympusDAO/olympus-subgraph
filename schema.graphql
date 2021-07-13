@@ -107,5 +107,10 @@ type ProtocolMetric @entity {
   runway70k: BigDecimal
   runway100k: BigDecimal
   runwayCurrent: BigDecimal
+  holders: BigInt!
 }
 
+type Aux @entity {
+  id: ID!
+  value: BigInt!
+}

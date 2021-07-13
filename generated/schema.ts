@@ -1032,4 +1032,53 @@ export class ProtocolMetric extends Entity {
       this.set("runwayCurrent", Value.fromBigDecimal(value as BigDecimal));
     }
   }
+
+  get holders(): BigInt {
+    let value = this.get("holders");
+    return value.toBigInt();
+  }
+
+  set holders(value: BigInt) {
+    this.set("holders", Value.fromBigInt(value));
+  }
+}
+
+export class Aux extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Aux entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Aux entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Aux", id.toString(), this);
+  }
+
+  static load(id: string): Aux | null {
+    return store.get("Aux", id) as Aux | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
 }
