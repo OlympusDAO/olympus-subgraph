@@ -21,57 +21,6 @@ dataSources:
       abis:
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
-        - name: sOlympusERC20
-          file: ./abis/sOlympusERC20.json
-        - name: sOlympusERC20V2
-          file: ./abis/sOlympusERC20V2.json
-        - name: OlympusERC20
-          file: ./abis/OlympusERC20.json
-        - name: UniswapV2Pair
-          file: ./abis/UniswapV2Pair.json
-        - name: DAIBondV1
-          file: ./abis/DAIBondV1.json
-        - name: DAIBondV2
-          file: ./abis/DAIBondV2.json
-        - name: DAIBondV3
-          file: ./abis/DAIBondV3.json
-        - name: OHMDAIBondV1
-          file: ./abis/OHMDAIBondV1.json
-        - name: OHMDAIBondV2
-          file: ./abis/OHMDAIBondV2.json
-        - name: OHMDAIBondV3
-          file: ./abis/OHMDAIBondV3.json
-        - name: OHMDAIBondV4
-          file: ./abis/OHMDAIBondV4.json
-        - name: OHMFRAXBondV1
-          file: ./abis/OHMFRAXBondV1.json
-        - name: OHMFRAXBondV2
-          file: ./abis/OHMFRAXBondV2.json
-        - name: FRAXBondV1
-          file: ./abis/FRAXBondV1.json
-        - name: CirculatingSupply
-          file: ./abis/CirculatingSupply.json
-      callHandlers:
-        - function: stakeOHM(uint256)
-          handler: handleStake
-        - function: unstakeOHM(uint256)
-          handler: handleUnstake
-      file: ./src/OlympusStakingV1.ts
-  #Staking Contract V2
-  - kind: ethereum/contract
-    name: OlympusStakingV2
-    network: mainnet
-    source:
-      address: '0xfd31c7d00ca47653c6ce64af53c1571f9c36566a'
-      abi: OlympusStakingV2
-      startBlock: 12622679
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - OlympusStakingV2
-      abis:
         - name: OlympusStakingV2
           file: ./abis/OlympusStakingV2.json
         - name: sOlympusERC20
@@ -104,6 +53,73 @@ dataSources:
           file: ./abis/FRAXBondV1.json
         - name: CirculatingSupply
           file: ./abis/CirculatingSupply.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json
+      callHandlers:
+        - function: stakeOHM(uint256)
+          handler: handleStake
+        - function: unstakeOHM(uint256)
+          handler: handleUnstake
+      file: ./src/OlympusStakingV1.ts
+  #Staking Contract V2
+  - kind: ethereum/contract
+    name: OlympusStakingV2
+    network: mainnet
+    source:
+      address: '0xfd31c7d00ca47653c6ce64af53c1571f9c36566a'
+      abi: OlympusStakingV2
+      startBlock: 12622679
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OlympusStakingV2
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
+        - name: sOlympusERC20
+          file: ./abis/sOlympusERC20.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV1.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV3
+          file: ./abis/DAIBondV3.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: ./abis/OHMDAIBondV3.json
+        - name: OHMDAIBondV4
+          file: ./abis/OHMDAIBondV4.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
+        - name: OHMFRAXBondV2
+          file: ./abis/OHMFRAXBondV2.json
+        - name: FRAXBondV1
+          file: ./abis/FRAXBondV1.json
+        - name: CirculatingSupply
+          file: ./abis/CirculatingSupply.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json
       callHandlers:
         - function: stake(uint256,address)
           handler: handleStake
@@ -125,6 +141,10 @@ dataSources:
       entities:
         - OlympusStakingV2Helper
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: OlympusStakingV2Helper
           file: ./abis/OlympusStakingV2Helper.json
         - name: sOlympusERC20
@@ -174,6 +194,10 @@ dataSources:
       entities:
         - DAIBondDeposit
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -223,6 +247,10 @@ dataSources:
       entities:
         - DAIBondDeposit
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -272,6 +300,10 @@ dataSources:
       entities:
         - DAIBondDeposit
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -321,6 +353,10 @@ dataSources:
       entities:
         - OHMDAIBondV1
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -370,6 +406,10 @@ dataSources:
       entities:
         - OHMDAIBondV2
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
           file: ./abis/sOlympusERC20.json
         - name: sOlympusERC20V2
@@ -419,6 +459,8 @@ dataSources:
       entities:
         - OHMDAIBondV3
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -470,6 +512,8 @@ dataSources:
       entities:
         - OHMDAIBondV4
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -521,6 +565,8 @@ dataSources:
       entities:
         - OHMFRAXBondV1
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -572,6 +618,8 @@ dataSources:
       entities:
         - OHMFRAXBondV2
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20
@@ -623,6 +671,8 @@ dataSources:
       entities:
         - FRAXBondV1
       abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
         - name: OlympusStakingV1
           file: ./abis/OlympusStakingV1.json
         - name: sOlympusERC20

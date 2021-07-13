@@ -89,11 +89,23 @@ type Token @entity {
 type ProtocolMetric @entity {
   id: ID!
   timestamp: BigInt!
-  circulatingSupply: BigDecimal!
+  ohmCirculatingSupply: BigDecimal!
+  sOhmCirculatingSupply: BigDecimal!
   totalSupply: BigDecimal!
   ohmPrice: BigDecimal!
   marketCap: BigDecimal!
   totalValueLocked: BigDecimal!
   totalOHMstaked: BigDecimal!
+  treasuryRiskFreeValue: BigDecimal!
+  treasuryMarketValue: BigDecimal!
+  nextEpochRebase: BigDecimal!
+  nextDistributedOhm: BigDecimal!
+  currentAPY: BigDecimal!
+  runway10k: BigDecimal
+  runway20k: BigDecimal
+  runway50k: BigDecimal
+  runway70k: BigDecimal
+  runway100k: BigDecimal
+  runwayCurrent: BigDecimal
 }
 
