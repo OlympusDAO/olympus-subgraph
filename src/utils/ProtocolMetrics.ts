@@ -221,8 +221,8 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.treasuryRiskFreeValue = mv_rfv[1]
 
     // Rebase rewards, APY, rebase
-    pm.nextEpochRebase = getNextOHMRebase(transaction)
-    let apy_rebase = getAPY_Rebase(pm.sOhmCirculatingSupply, pm.nextEpochRebase)
+    pm.nextDistributedOhm = getNextOHMRebase(transaction)
+    let apy_rebase = getAPY_Rebase(pm.sOhmCirculatingSupply, pm.nextDistributedOhm)
     pm.currentAPY = apy_rebase[0]
     pm.nextEpochRebase = apy_rebase[1]
 
