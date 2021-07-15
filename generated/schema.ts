@@ -161,6 +161,15 @@ export class Ohmie extends Entity {
       this.set("lastBalance", Value.fromString(value as string));
     }
   }
+
+  get active(): boolean {
+    let value = this.get("active");
+    return value.toBoolean();
+  }
+
+  set active(value: boolean) {
+    this.set("active", Value.fromBoolean(value));
+  }
 }
 
 export class OhmieBalance extends Entity {

@@ -28,6 +28,7 @@ export function loadOrCreateOHMie(addres: Address): Ohmie{
         holders.save()
 
         ohmie = new Ohmie(addres.toHex())
+        ohmie.active = true
         ohmie.save()
     }
     return ohmie as Ohmie
@@ -48,10 +49,17 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
         balance.sohmBalance = balance.sohmBalance.plus(toDecimal(sohm_contract_v2.balanceOf(Address.fromString(ohmie.id)), 9))
     }
 
-    if(balance.ohmBalance.lt(BigDecimal.fromString("0.01")) && balance.sohmBalance.lt(BigDecimal.fromString("0.01"))){
+    if(ohmie.active && balance.ohmBalance.lt(BigDecimal.fromString("0.01")) && balance.sohmBalance.lt(BigDecimal.fromString("0.01"))){
         let holders = getHolderAux()
         holders.value = holders.value.minus(BigInt.fromI32(1))
         holders.save()
+        ohmie.active = false
+    }
+    else if(ohmie.active==false && (balance.ohmBalance.lt(BigDecimal.fromString("0.01")) || balance.sohmBalance.lt(BigDecimal.fromString("0.01")))){
+        let holders = getHolderAux()
+        holders.value = holders.value.plus(BigInt.fromI32(1))
+        holders.save()
+        ohmie.active = true
     }
 
     //OHM-DAI
