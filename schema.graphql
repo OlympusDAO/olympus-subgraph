@@ -3,6 +3,7 @@ type DailyBond @entity {
   timestamp: BigInt!
   token: Token!
   amount: BigDecimal!
+  value: BigDecimal!
 }
 
 type Ohmie @entity {
@@ -33,6 +34,7 @@ type Deposit @entity {
   amount: BigDecimal!
   maxPremium: BigDecimal!
   token: Token!
+  value: BigDecimal!
   timestamp: BigInt!
 }
 
@@ -67,6 +69,12 @@ type Rebase @entity {
   stakedOhms: BigDecimal!
   percentage: BigDecimal!
   timestamp: BigInt!
+}
+
+type DailyStakingReward @entity {
+  id: ID!
+  timestamp: BigInt!
+  amount: BigDecimal!
 }
 
 type Transaction @entity {

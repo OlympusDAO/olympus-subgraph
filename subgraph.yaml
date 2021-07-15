@@ -709,3 +709,48 @@ dataSources:
         - function: redeem(address,bool)
           handler: handleRedeem
       file: ./src/FRAXBondV1.ts
+  #sOHM
+  - kind: ethereum/contract
+    name: sOlympusERC20V1
+    network: mainnet
+    source:
+      address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
+      abi: sOlympusERC20
+      startBlock: 12084973
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - sOlympusERC20V1
+      abis:
+        - name: sOlympusERC20
+          file: ./abis/sOlympusERC20.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+      callHandlers:
+        - function: rebase(uint256)
+          handler: rebaseFunction
+      file: ./src/sOlympusERC20V1.ts
+  - kind: ethereum/contract
+    name: sOlympusERC20V2
+    network: mainnet
+    source:
+      address: '0xfd31c7d00ca47653c6ce64af53c1571f9c36566a'
+      abi: sOlympusERC20V2
+      startBlock: 12622679
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - sOlympusERC20V2
+      abis:
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+      callHandlers:
+        - function: rebase(uint256,uint256)
+          handler: rebaseFunction
+      file: ./src/sOlympusERC20V2.ts
