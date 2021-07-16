@@ -21,12 +21,13 @@ export function handleDeposit(call: DepositCall): void {
   deposit.transaction = transaction.id
   deposit.ohmie = ohmie.id
   deposit.amount = amount
+  deposit.value = amount
   deposit.maxPremium = toDecimal(call.inputs._maxPrice)
   deposit.token = token.id;
   deposit.timestamp = transaction.timestamp;
   deposit.save()
 
-  createDailyBondRecord(deposit.timestamp, token, deposit.amount)
+  createDailyBondRecord(deposit.timestamp, token, deposit.amount, deposit.value)
   updateOhmieBalance(ohmie, transaction)
 }
 
