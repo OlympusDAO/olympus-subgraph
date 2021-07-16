@@ -69,12 +69,14 @@ type Rebase @entity {
   stakedOhms: BigDecimal!
   percentage: BigDecimal!
   timestamp: BigInt!
+  value: BigDecimal!
 }
 
 type DailyStakingReward @entity {
   id: ID!
   timestamp: BigInt!
   amount: BigDecimal!
+  value: BigDecimal!
 }
 
 type Transaction @entity {

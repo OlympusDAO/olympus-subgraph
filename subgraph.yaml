@@ -716,7 +716,7 @@ dataSources:
     source:
       address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
       abi: sOlympusERC20
-      startBlock: 12084973
+      startBlock: 12112800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -728,6 +728,8 @@ dataSources:
           file: ./abis/sOlympusERC20.json
         - name: OlympusERC20
           file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
       callHandlers:
         - function: rebase(uint256)
           handler: rebaseFunction
@@ -750,6 +752,8 @@ dataSources:
           file: ./abis/sOlympusERC20V2.json
         - name: OlympusERC20
           file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
       callHandlers:
         - function: rebase(uint256,uint256)
           handler: rebaseFunction

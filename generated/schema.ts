@@ -658,6 +658,15 @@ export class Rebase extends Entity {
   set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
   }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
+  }
 }
 
 export class DailyStakingReward extends Entity {
@@ -706,6 +715,15 @@ export class DailyStakingReward extends Entity {
 
   set amount(value: BigDecimal) {
     this.set("amount", Value.fromBigDecimal(value));
+  }
+
+  get value(): BigDecimal {
+    let value = this.get("value");
+    return value.toBigDecimal();
+  }
+
+  set value(value: BigDecimal) {
+    this.set("value", Value.fromBigDecimal(value));
   }
 }
 
