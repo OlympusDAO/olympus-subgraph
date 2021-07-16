@@ -247,6 +247,40 @@ export class OhmieBalance extends Entity {
     this.set("dollarBalance", Value.fromBigDecimal(value));
   }
 
+  get stakes(): Array<string> | null {
+    let value = this.get("stakes");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set stakes(value: Array<string> | null) {
+    if (value === null) {
+      this.unset("stakes");
+    } else {
+      this.set("stakes", Value.fromStringArray(value as Array<string>));
+    }
+  }
+
+  get bonds(): Array<string> | null {
+    let value = this.get("bonds");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set bonds(value: Array<string> | null) {
+    if (value === null) {
+      this.unset("bonds");
+    } else {
+      this.set("bonds", Value.fromStringArray(value as Array<string>));
+    }
+  }
+
   get timestamp(): BigInt {
     let value = this.get("timestamp");
     return value.toBigInt();
@@ -1115,6 +1149,88 @@ export class ProtocolMetric extends Entity {
       this.unset("runwayCurrent");
     } else {
       this.set("runwayCurrent", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+}
+
+export class ContractInfo extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save ContractInfo entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save ContractInfo entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("ContractInfo", id.toString(), this);
+  }
+
+  static load(id: string): ContractInfo | null {
+    return store.get("ContractInfo", id) as ContractInfo | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get name(): string | null {
+    let value = this.get("name");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string | null) {
+    if (value === null) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(value as string));
+    }
+  }
+
+  get contract(): string | null {
+    let value = this.get("contract");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contract(value: string | null) {
+    if (value === null) {
+      this.unset("contract");
+    } else {
+      this.set("contract", Value.fromString(value as string));
+    }
+  }
+
+  get amount(): BigDecimal | null {
+    let value = this.get("amount");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set amount(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigDecimal(value as BigDecimal));
     }
   }
 }

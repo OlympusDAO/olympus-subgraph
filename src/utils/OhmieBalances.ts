@@ -14,6 +14,8 @@ export function loadOrCreateOhmieBalance(ohmie: Ohmie, timestamp: BigInt): Ohmie
         ohmieBalance.ohmBalance = BigDecimal.fromString("0")
         ohmieBalance.bondBalance = BigDecimal.fromString("0")
         ohmieBalance.dollarBalance = BigDecimal.fromString("0")
+        ohmieBalance.stakes = []
+        ohmieBalance.bonds = []
         ohmieBalance.save()
     }
     return ohmieBalance as OhmieBalance

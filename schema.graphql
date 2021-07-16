@@ -7,7 +7,6 @@ type DailyBond @entity {
 }
 
 type Ohmie @entity {
-  "address of user account"
   id: ID!
   bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
   bondRedemptions: [Redemption!]! @derivedFrom(field: "ohmie")
@@ -24,6 +23,8 @@ type OhmieBalance @entity {
   ohmBalance: BigDecimal!
   bondBalance: BigDecimal!
   dollarBalance: BigDecimal!
+  stakes: [ContractInfo!]
+  bonds: [ContractInfo!]
   timestamp: BigInt!
 }
 
@@ -80,7 +81,6 @@ type DailyStakingReward @entity {
 }
 
 type Transaction @entity {
-  "transaction hash"
   id: ID!
   timestamp: BigInt!
   blockNumber: BigInt!
@@ -119,3 +119,9 @@ type ProtocolMetric @entity {
   runwayCurrent: BigDecimal
 }
 
+type ContractInfo @entity {
+  id: ID!
+  name: String
+  contract: String
+  amount: BigDecimal
+}
