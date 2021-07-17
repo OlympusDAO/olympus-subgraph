@@ -69,6 +69,7 @@ type Rebase @entity {
   amount: BigDecimal!
   stakedOhms: BigDecimal!
   percentage: BigDecimal!
+  contract: String!
   timestamp: BigInt!
   value: BigDecimal!
 }

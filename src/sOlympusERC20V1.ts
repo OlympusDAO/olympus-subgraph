@@ -19,6 +19,7 @@ export function rebaseFunction(call: RebaseCall): void {
         rebase = new Rebase(transaction.id)
         rebase.amount = toDecimal(call.inputs.olyProfit, 9)
         rebase.stakedOhms = toDecimal(ohm_contract.balanceOf(Address.fromString(STAKING_CONTRACT_V1)), 9)
+        rebase.contract = STAKING_CONTRACT_V1
         rebase.percentage = rebase.amount.div(rebase.stakedOhms)
         rebase.transaction = transaction.id
         rebase.timestamp = transaction.timestamp

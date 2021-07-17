@@ -684,6 +684,15 @@ export class Rebase extends Entity {
     this.set("percentage", Value.fromBigDecimal(value));
   }
 
+  get contract(): string {
+    let value = this.get("contract");
+    return value.toString();
+  }
+
+  set contract(value: string) {
+    this.set("contract", Value.fromString(value));
+  }
+
   get timestamp(): BigInt {
     let value = this.get("timestamp");
     return value.toBigInt();
