@@ -91,7 +91,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     }
 
     let daiBalance = daiERC20.balanceOf(Address.fromString(treasury_address))
-    daiBalance = daiBalance.plus(aDaiERC20.balanceOf(Address.fromString(AAVE_ALLOCATOR)))
+    let adaiBalance = aDaiERC20.balanceOf(Address.fromString(AAVE_ALLOCATOR))
     let fraxBalance = fraxERC20.balanceOf(Address.fromString(treasury_address))
     let ohmdaiSushiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
     let ohmdaiOnsenBalance = ohmdaiOnsenMC.userInfo(BigInt.fromI32(OHMDAI_ONSEN_ID), Address.fromString(ONSEN_ALLOCATOR)).value0
@@ -108,7 +108,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         ohmfrax_rfv = getDiscountedPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
     }
 
-    let stableValue = daiBalance.plus(fraxBalance)
+    let stableValue = daiBalance.plus(fraxBalance).plus(adaiBalance)
     let stableValueDecimal = toDecimal(stableValue, 18)
 
     let lpValue = ohmdai_value.plus(ohmfrax_value)
@@ -120,6 +120,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     log.debug("Treasury Market Value {}", [mv.toString()])
     log.debug("Treasury RFV {}", [rfv.toString()])
     log.debug("Treasury DAI value {}", [toDecimal(daiBalance, 18).toString()])
+    log.debug("Treasury aDAI value {}", [adaiBalance.toString()])
     log.debug("Treasury OHM-DAI RFV {}", [ohmdai_rfv.toString()])
     log.debug("Treasury Frax value {}", [toDecimal(fraxBalance, 18).toString()])
     log.debug("Treasury OHM-FRAX RFV {}", [ohmfrax_rfv.toString()])
