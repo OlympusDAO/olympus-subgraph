@@ -11,7 +11,7 @@ dataSources:
     source:
       address: '0x0822f3c03dcc24d200aff33493dc08d0e1f274a2'
       abi: OlympusStakingV1
-      startBlock: 12112800
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -72,7 +72,7 @@ dataSources:
     source:
       address: '0xfd31c7d00ca47653c6ce64af53c1571f9c36566a'
       abi: OlympusStakingV2
-      startBlock: 12622679
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -133,7 +133,7 @@ dataSources:
     source:
       address: '0xC8C436271f9A6F10a5B80c8b8eD7D0E8f37a612d'
       abi: OlympusStakingV2Helper
-      startBlock: 12622725
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -186,7 +186,7 @@ dataSources:
     source:
       address: '0xa64ed1b66cb2838ef2a198d8345c0ce6967a2a3c'
       abi: DAIBondV1
-      startBlock: 12280908
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -239,7 +239,7 @@ dataSources:
     source:
       address: '0xd03056323b7a63e2095ae97fa1ad92e4820ff045'
       abi: DAIBondV2
-      startBlock: 12525351
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -292,7 +292,7 @@ dataSources:
     source:
       address: '0x575409F8d77c12B05feD8B455815f0e54797381c'
       abi: DAIBondV3
-      startBlock: 12659928
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -345,7 +345,7 @@ dataSources:
     source:
       address: '0xd27001d1aAEd5f002C722Ad729de88a91239fF29'
       abi: OHMDAIBondV1
-      startBlock: 12154429
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -398,7 +398,7 @@ dataSources:
     source:
       address: '0x13e8484a86327f5882d1340ed0d7643a29548536'
       abi: OHMDAIBondV2
-      startBlock: 12368362
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -451,7 +451,7 @@ dataSources:
     source:
       address: '0x996668c46fc0b764afda88d83eb58afc933a1626'
       abi: OHMDAIBondV3
-      startBlock: 12525388
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -504,7 +504,7 @@ dataSources:
     source:
       address: '0x956c43998316b6a2F21f89a1539f73fB5B78c151'
       abi: OHMDAIBondV4
-      startBlock: 12659907
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -557,7 +557,7 @@ dataSources:
     source:
       address: '0x539b6c906244ac34e348bbe77885cdfa994a3776'
       abi: OHMFRAXBondV1
-      startBlock: 12621882
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -610,7 +610,7 @@ dataSources:
     source:
       address: '0xc20cfff07076858a7e642e396180ec390e5a02f7'
       abi: OHMFRAXBondV2
-      startBlock: 12659925
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -663,7 +663,7 @@ dataSources:
     source:
       address: '0x8510c8c2B6891E04864fa196693D44E6B6ec2514'
       abi: FRAXBondV1
-      startBlock: 12666825
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -716,7 +716,7 @@ dataSources:
     source:
       address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
       abi: sOlympusERC20
-      startBlock: 12112800
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -740,7 +740,7 @@ dataSources:
     source:
       address: '0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'
       abi: sOlympusERC20V2
-      startBlock: 12622596
+      startBlock: 12846000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

@@ -120,7 +120,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     log.debug("Treasury Market Value {}", [mv.toString()])
     log.debug("Treasury RFV {}", [rfv.toString()])
     log.debug("Treasury DAI value {}", [toDecimal(daiBalance, 18).toString()])
-    log.debug("Treasury aDAI value {}", [adaiBalance.toString()])
+    log.debug("Treasury aDAI value {}", [toDecimal(adaiBalance, 18).toString()])
     log.debug("Treasury OHM-DAI RFV {}", [ohmdai_rfv.toString()])
     log.debug("Treasury Frax value {}", [toDecimal(fraxBalance, 18).toString()])
     log.debug("Treasury OHM-FRAX RFV {}", [ohmfrax_rfv.toString()])

@@ -27,13 +27,13 @@ export function getDiscountedPairUSD(lp_amount: BigInt, pair_adress: string): Bi
     let total_lp = pair.totalSupply()
     let lp_token_1 = toDecimal(pair.getReserves().value0, 9)
     let lp_token_2 = toDecimal(pair.getReserves().value1, 18)
-    let kLast = lp_token_1.times(lp_token_2).digits
+    let kLast = lp_token_1.times(lp_token_2).truncate(0).digits
 
     let part1 = toDecimal(lp_amount,18).div(toDecimal(total_lp,18))
     let two = BigInt.fromI32(2)
 
     let sqrt = kLast.sqrt();
-    let part2 = toDecimal(two.times(sqrt), 11)
+    let part2 = toDecimal(two.times(sqrt), 0)
     let result = part1.times(part2)
     return result
 }
