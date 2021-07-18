@@ -56,8 +56,8 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
 
     if(transaction.blockNumber.gt(BigInt.fromString(SOHM_ERC20_CONTRACTV2_BLOCK))){
         let sohm_contract_v2 = sOlympusERC20V2.bind(Address.fromString(SOHM_ERC20_CONTRACTV2))
-        let sohmV2Balance = balance.sohmBalance.plus(toDecimal(sohm_contract_v2.balanceOf(Address.fromString(ohmie.id)), 9))
-        balance.sohmBalance = sohmV2Balance
+        let sohmV2Balance = toDecimal(sohm_contract_v2.balanceOf(Address.fromString(ohmie.id)), 9)
+        balance.sohmBalance = balance.sohmBalance.plus(sohmV2Balance)
 
         let cinfoSohmBalance_v2 = loadOrCreateContractInfo(ohmie.id + transaction.timestamp.toString() + "sOlympusERC20V2")
         cinfoSohmBalance_v2.name = "sOHM"
@@ -75,7 +75,7 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
         holders.save()
         ohmie.active = false
     }
-    else if(ohmie.active==false && (balance.ohmBalance.lt(BigDecimal.fromString("0.01")) || balance.sohmBalance.lt(BigDecimal.fromString("0.01")))){
+    else if(ohmie.active==false && (balance.ohmBalance.gt(BigDecimal.fromString("0.01")) || balance.sohmBalance.gt(BigDecimal.fromString("0.01")))){
         let holders = getHolderAux()
         holders.value = holders.value.plus(BigInt.fromI32(1))
         holders.save()
