@@ -8,3 +8,6 @@ Add aDAI logging
 ### July 18
 Add xSUSHI to treasury
 Publish MV and RFV by asset
+
+### Development
+Add holders information
