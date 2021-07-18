@@ -14,6 +14,7 @@ import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCU
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate } from './Price';
+import { getHolderAux } from './Aux';
 
 export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
     let dayTimestamp = dayFromTimestamp(timestamp);
@@ -39,6 +40,7 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.treasuryDaiMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryFraxMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryXsushiMarketValue = BigDecimal.fromString("0")
+        protocolMetric.holders = BigInt.fromI32(0)
 
         protocolMetric.save()
     }
@@ -266,6 +268,9 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.runway100k = runways[4]
     pm.runwayCurrent = runways[5]
 
+    //Holders
+    pm.holders = getHolderAux().value
+    
     pm.save()
     
 }

@@ -19,11 +19,17 @@ import { loadOrCreateOhmieBalance } from './OhmieBalances'
 import { toDecimal } from './Decimals'
 import { getOHMUSDRate } from './Price'
 import { loadOrCreateContractInfo } from './ContractInfo'
+import { getHolderAux } from './Aux'
 
 export function loadOrCreateOHMie(addres: Address): Ohmie{
     let ohmie = Ohmie.load(addres.toHex())
     if (ohmie == null) {
+        let holders = getHolderAux()
+        holders.value = holders.value.plus(BigInt.fromI32(1))
+        holders.save()
+
         ohmie = new Ohmie(addres.toHex())
+        ohmie.active = true
         ohmie.save()
     }
     return ohmie as Ohmie
@@ -63,6 +69,18 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
 
     balance.stakes = stakes
 
+    if(ohmie.active && balance.ohmBalance.lt(BigDecimal.fromString("0.01")) && balance.sohmBalance.lt(BigDecimal.fromString("0.01"))){
+        let holders = getHolderAux()
+        holders.value = holders.value.minus(BigInt.fromI32(1))
+        holders.save()
+        ohmie.active = false
+    }
+    else if(ohmie.active==false && (balance.ohmBalance.lt(BigDecimal.fromString("0.01")) || balance.sohmBalance.lt(BigDecimal.fromString("0.01")))){
+        let holders = getHolderAux()
+        holders.value = holders.value.plus(BigInt.fromI32(1))
+        holders.save()
+        ohmie.active = true
+    }
 
     //OHM-DAI
     let bonds = balance.bonds
