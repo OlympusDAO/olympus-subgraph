@@ -1050,6 +1050,51 @@ export class ProtocolMetric extends Entity {
     this.set("nextDistributedOhm", Value.fromBigDecimal(value));
   }
 
+  get treasuryDaiRiskFreeValue(): BigDecimal {
+    let value = this.get("treasuryDaiRiskFreeValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryDaiRiskFreeValue(value: BigDecimal) {
+    this.set("treasuryDaiRiskFreeValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryFraxRiskFreeValue(): BigDecimal {
+    let value = this.get("treasuryFraxRiskFreeValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryFraxRiskFreeValue(value: BigDecimal) {
+    this.set("treasuryFraxRiskFreeValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryDaiMarketValue(): BigDecimal {
+    let value = this.get("treasuryDaiMarketValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryDaiMarketValue(value: BigDecimal) {
+    this.set("treasuryDaiMarketValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryFraxMarketValue(): BigDecimal {
+    let value = this.get("treasuryFraxMarketValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryFraxMarketValue(value: BigDecimal) {
+    this.set("treasuryFraxMarketValue", Value.fromBigDecimal(value));
+  }
+
+  get treasuryXsushiMarketValue(): BigDecimal {
+    let value = this.get("treasuryXsushiMarketValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryXsushiMarketValue(value: BigDecimal) {
+    this.set("treasuryXsushiMarketValue", Value.fromBigDecimal(value));
+  }
+
   get currentAPY(): BigDecimal {
     let value = this.get("currentAPY");
     return value.toBigDecimal();

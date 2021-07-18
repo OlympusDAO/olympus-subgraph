@@ -1,5 +1,5 @@
 import {
-    SUSHI_OHMDAI_PAIR,
+    SUSHI_OHMDAI_PAIR, SUSHI_XSUSHI_ETH_PAIR, SUSHI_USDC_ETH_PAIR
 } from './Constants'
 import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts'
 import { UniswapV2Pair } from '../../generated/OlympusStakingV1/UniswapV2Pair';
@@ -7,7 +7,20 @@ import { toDecimal } from './Decimals'
 
 
 let BIG_DECIMAL_1E9 = BigDecimal.fromString('1e9')
+let BIG_DECIMAL_1E12 = BigDecimal.fromString('1e12')
 
+export function getETHUSDRate(): BigDecimal {
+    let pair = UniswapV2Pair.bind(Address.fromString(SUSHI_USDC_ETH_PAIR))
+
+    let reserves = pair.getReserves()
+    let reserve0 = reserves.value0.toBigDecimal()
+    let reserve1 = reserves.value1.toBigDecimal()
+
+    let ethRate = reserve0.div(reserve1).times(BIG_DECIMAL_1E12)
+    log.debug("ETH rate {}", [ethRate.toString()])
+    
+    return ethRate
+}
 
 export function getOHMUSDRate(): BigDecimal {
     let pair = UniswapV2Pair.bind(Address.fromString(SUSHI_OHMDAI_PAIR))
@@ -15,10 +28,26 @@ export function getOHMUSDRate(): BigDecimal {
     let reserves = pair.getReserves()
     let reserve0 = reserves.value0.toBigDecimal()
     let reserve1 = reserves.value1.toBigDecimal()
-    return reserve1.div(reserve0).div(BIG_DECIMAL_1E9)
+
+    let ohmRate = reserve1.div(reserve0).div(BIG_DECIMAL_1E9)
+    log.debug("OHM rate {}", [ohmRate.toString()])
+
+    return ohmRate
 }
 
+export function getXsushiUSDRate(): BigDecimal {
+    let pair = UniswapV2Pair.bind(Address.fromString(SUSHI_XSUSHI_ETH_PAIR))
 
+    let reserves = pair.getReserves()
+    let reserve0 = reserves.value0.toBigDecimal()
+    let reserve1 = reserves.value1.toBigDecimal()
+
+    let xsushiRate = reserve1.div(reserve0).times(getETHUSDRate())
+    log.debug("xsushiRate rate {}", [xsushiRate.toString()])
+
+    return xsushiRate
+
+}
 
 //(slp_treasury/slp_supply)*(2*sqrt(lp_dai * lp_ohm))
 export function getDiscountedPairUSD(lp_amount: BigInt, pair_adress: string): BigDecimal{

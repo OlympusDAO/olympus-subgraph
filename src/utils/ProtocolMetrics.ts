@@ -10,10 +10,10 @@ import { OlympusStakingV2 } from '../../generated/OlympusStakingV2/OlympusStakin
 import { OlympusStakingV1 } from '../../generated/OlympusStakingV1/OlympusStakingV1';
 
 import { ProtocolMetric, Transaction } from '../../generated/schema'
-import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, OHMDAI_ONSEN_ID, OHM_ERC20_CONTRACT, ONSEN_ALLOCATOR, SOHM_ERC20_CONTRACT, SOHM_ERC20_CONTRACTV2, SOHM_ERC20_CONTRACTV2_BLOCK, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, STAKING_CONTRACT_V2_BLOCK, SUSHI_MASTERCHEF, SUSHI_OHMDAI_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK } from './Constants';
+import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, OHMDAI_ONSEN_ID, OHM_ERC20_CONTRACT, ONSEN_ALLOCATOR, SOHM_ERC20_CONTRACT, SOHM_ERC20_CONTRACTV2, SOHM_ERC20_CONTRACTV2_BLOCK, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, STAKING_CONTRACT_V2_BLOCK, SUSHI_MASTERCHEF, SUSHI_OHMDAI_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK, XSUSI_ERC20_CONTRACT } from './Constants';
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
-import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD } from './Price';
+import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate } from './Price';
 
 export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
     let dayTimestamp = dayFromTimestamp(timestamp);
@@ -34,6 +34,11 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.nextEpochRebase = BigDecimal.fromString("0")
         protocolMetric.nextDistributedOhm = BigDecimal.fromString("0")
         protocolMetric.currentAPY = BigDecimal.fromString("0")
+        protocolMetric.treasuryDaiRiskFreeValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryFraxRiskFreeValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryDaiMarketValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryFraxMarketValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryXsushiMarketValue = BigDecimal.fromString("0")
 
         protocolMetric.save()
     }
@@ -80,6 +85,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let daiERC20 = ERC20.bind(Address.fromString(ERC20DAI_CONTRACT))
     let fraxERC20 = ERC20.bind(Address.fromString(ERC20FRAX_CONTRACT))
     let aDaiERC20 = ERC20.bind(Address.fromString(ADAI_ERC20_CONTRACT))
+    let xSushiERC20 = ERC20.bind(Address.fromString(XSUSI_ERC20_CONTRACT))
 
     let ohmdaiPair = UniswapV2Pair.bind(Address.fromString(SUSHI_OHMDAI_PAIR))
     let ohmdaiOnsenMC = MasterChef.bind(Address.fromString(SUSHI_MASTERCHEF))
@@ -93,6 +99,9 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let daiBalance = daiERC20.balanceOf(Address.fromString(treasury_address))
     let adaiBalance = aDaiERC20.balanceOf(Address.fromString(AAVE_ALLOCATOR))
     let fraxBalance = fraxERC20.balanceOf(Address.fromString(treasury_address))
+    let xSushiBalance = xSushiERC20.balanceOf(Address.fromString(treasury_address))
+    let xSushi_value = toDecimal(xSushiBalance, 18).times(getXsushiUSDRate())
+
     let ohmdaiSushiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
     let ohmdaiOnsenBalance = ohmdaiOnsenMC.userInfo(BigInt.fromI32(OHMDAI_ONSEN_ID), Address.fromString(ONSEN_ALLOCATOR)).value0
     let ohmdaiBalance = ohmdaiSushiBalance.plus(ohmdaiOnsenBalance)
@@ -114,18 +123,31 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let lpValue = ohmdai_value.plus(ohmfrax_value)
     let rfvLpValue = ohmdai_rfv.plus(ohmfrax_rfv)
 
-    let mv = stableValueDecimal.plus(lpValue)
+    let mv = stableValueDecimal.plus(lpValue).plus(xSushi_value)
     let rfv = stableValueDecimal.plus(rfvLpValue)
 
     log.debug("Treasury Market Value {}", [mv.toString()])
     log.debug("Treasury RFV {}", [rfv.toString()])
     log.debug("Treasury DAI value {}", [toDecimal(daiBalance, 18).toString()])
     log.debug("Treasury aDAI value {}", [toDecimal(adaiBalance, 18).toString()])
+    log.debug("Treasury xSushi value {}", [xSushi_value.toString()])
     log.debug("Treasury OHM-DAI RFV {}", [ohmdai_rfv.toString()])
     log.debug("Treasury Frax value {}", [toDecimal(fraxBalance, 18).toString()])
     log.debug("Treasury OHM-FRAX RFV {}", [ohmfrax_rfv.toString()])
 
-    return [mv, rfv]
+    return [
+        mv, 
+        rfv,
+        // treasuryDaiRiskFreeValue = DAI RFV * DAI + aDAI
+        ohmdai_rfv.plus(toDecimal(daiBalance, 18)).plus(toDecimal(adaiBalance, 18)),
+        // treasuryFraxRiskFreeValue = FRAX RFV * FRAX
+        ohmfrax_rfv.plus(toDecimal(fraxBalance, 18)),
+        // treasuryDaiMarketValue = DAI LP * DAI + aDAI
+        ohmdai_value.plus(toDecimal(daiBalance, 18)).plus(toDecimal(adaiBalance, 18)),
+        // treasuryFraxMarketValue = FRAX LP * FRAX
+        ohmfrax_value.plus(toDecimal(fraxBalance, 18)),
+        xSushi_value
+    ]
 }
 
 function getNextOHMRebase(transaction: Transaction): BigDecimal{
@@ -223,6 +245,11 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     let mv_rfv = getMV_RFV(transaction)
     pm.treasuryMarketValue = mv_rfv[0]
     pm.treasuryRiskFreeValue = mv_rfv[1]
+    pm.treasuryDaiRiskFreeValue = mv_rfv[2]
+    pm.treasuryFraxRiskFreeValue = mv_rfv[3]
+    pm.treasuryDaiMarketValue = mv_rfv[4]
+    pm.treasuryFraxMarketValue = mv_rfv[5]
+    pm.treasuryXsushiMarketValue = mv_rfv[6]
 
     // Rebase rewards, APY, rebase
     pm.nextDistributedOhm = getNextOHMRebase(transaction)
