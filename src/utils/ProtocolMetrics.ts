@@ -29,7 +29,6 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.ohmPrice = BigDecimal.fromString("0")
         protocolMetric.marketCap = BigDecimal.fromString("0")
         protocolMetric.totalValueLocked = BigDecimal.fromString("0")
-        protocolMetric.totalOHMstaked = BigDecimal.fromString("0")
         protocolMetric.treasuryRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryMarketValue = BigDecimal.fromString("0")
         protocolMetric.nextEpochRebase = BigDecimal.fromString("0")
