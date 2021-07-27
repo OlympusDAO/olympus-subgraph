@@ -740,7 +740,7 @@ dataSources:
     source:
       address: '0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'
       abi: sOlympusERC20V2
-      startBlock: 12846355
+      startBlock: 12622596
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
