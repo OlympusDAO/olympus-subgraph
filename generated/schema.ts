@@ -1206,6 +1206,24 @@ export class ProtocolMetric extends Entity {
     }
   }
 
+  get treasuryOhmDaiPOL(): BigDecimal {
+    let value = this.get("treasuryOhmDaiPOL");
+    return value.toBigDecimal();
+  }
+
+  set treasuryOhmDaiPOL(value: BigDecimal) {
+    this.set("treasuryOhmDaiPOL", Value.fromBigDecimal(value));
+  }
+
+  get treasuryOhmFraxPOL(): BigDecimal {
+    let value = this.get("treasuryOhmFraxPOL");
+    return value.toBigDecimal();
+  }
+
+  set treasuryOhmFraxPOL(value: BigDecimal) {
+    this.set("treasuryOhmFraxPOL", Value.fromBigDecimal(value));
+  }
+
   get holders(): BigInt {
     let value = this.get("holders");
     return value.toBigInt();

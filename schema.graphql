@@ -123,6 +123,8 @@ type ProtocolMetric @entity {
   runway70k: BigDecimal
   runway100k: BigDecimal
   runwayCurrent: BigDecimal
+  treasuryOhmDaiPOL: BigDecimal!
+  treasuryOhmFraxPOL: BigDecimal!
   holders: BigInt!
 }
 

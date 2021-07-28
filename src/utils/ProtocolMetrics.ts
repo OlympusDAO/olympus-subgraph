@@ -39,6 +39,8 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.treasuryDaiMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryFraxMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryXsushiMarketValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryOhmDaiPOL = BigDecimal.fromString("0")
+        protocolMetric.treasuryOhmFraxPOL = BigDecimal.fromString("0")
         protocolMetric.holders = BigInt.fromI32(0)
 
         protocolMetric.save()
@@ -106,16 +108,22 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let ohmdaiSushiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
     let ohmdaiOnsenBalance = ohmdaiOnsenMC.userInfo(BigInt.fromI32(OHMDAI_ONSEN_ID), Address.fromString(ONSEN_ALLOCATOR)).value0
     let ohmdaiBalance = ohmdaiSushiBalance.plus(ohmdaiOnsenBalance)
+    let ohmdaiTotalLP = toDecimal(ohmdaiPair.totalSupply(), 18)
+    let ohmdaiPOL = toDecimal(ohmdaiBalance, 18).div(ohmdaiTotalLP)
     let ohmdai_value = getPairUSD(ohmdaiBalance, SUSHI_OHMDAI_PAIR)
     let ohmdai_rfv = getDiscountedPairUSD(ohmdaiBalance, SUSHI_OHMDAI_PAIR)
 
     let ohmfraxBalance = BigInt.fromI32(0)
     let ohmfrax_value = BigDecimal.fromString("0")
     let ohmfrax_rfv = BigDecimal.fromString("0")
+    let ohmfraxTotalLP = BigDecimal.fromString("0")
+    let ohmfraxPOL = BigDecimal.fromString("0")
     if(transaction.blockNumber.gt(BigInt.fromString(UNI_OHMFRAX_PAIR_BLOCK))){
         ohmfraxBalance = ohmfraxPair.balanceOf(Address.fromString(treasury_address))
         ohmfrax_value = getPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
         ohmfrax_rfv = getDiscountedPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
+        ohmdaiTotalLP = toDecimal(ohmfraxPair.totalSupply(), 18)
+        ohmfraxPOL = toDecimal(ohmfraxBalance, 18).div(ohmfraxTotalLP)
     }
 
     let stableValue = daiBalance.plus(fraxBalance).plus(adaiBalance)
@@ -147,7 +155,10 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         ohmdai_value.plus(toDecimal(daiBalance, 18)).plus(toDecimal(adaiBalance, 18)),
         // treasuryFraxMarketValue = FRAX LP * FRAX
         ohmfrax_value.plus(toDecimal(fraxBalance, 18)),
-        xSushi_value
+        xSushi_value,
+        // POL
+        ohmdaiPOL,
+        ohmfraxPOL
     ]
 }
 
@@ -251,6 +262,8 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.treasuryDaiMarketValue = mv_rfv[4]
     pm.treasuryFraxMarketValue = mv_rfv[5]
     pm.treasuryXsushiMarketValue = mv_rfv[6]
+    pm.treasuryOhmDaiPOL = mv_rfv[7]
+    pm.treasuryOhmFraxPOL = mv_rfv[8]
 
     // Rebase rewards, APY, rebase
     pm.nextDistributedOhm = getNextOHMRebase(transaction)
