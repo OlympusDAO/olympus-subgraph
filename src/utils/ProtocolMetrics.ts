@@ -109,7 +109,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let ohmdaiOnsenBalance = ohmdaiOnsenMC.userInfo(BigInt.fromI32(OHMDAI_ONSEN_ID), Address.fromString(ONSEN_ALLOCATOR)).value0
     let ohmdaiBalance = ohmdaiSushiBalance.plus(ohmdaiOnsenBalance)
     let ohmdaiTotalLP = toDecimal(ohmdaiPair.totalSupply(), 18)
-    let ohmdaiPOL = toDecimal(ohmdaiBalance, 18).div(ohmdaiTotalLP)
+    let ohmdaiPOL = toDecimal(ohmdaiBalance, 18).div(ohmdaiTotalLP).times(BigDecimal.fromString("100"))
     let ohmdai_value = getPairUSD(ohmdaiBalance, SUSHI_OHMDAI_PAIR)
     let ohmdai_rfv = getDiscountedPairUSD(ohmdaiBalance, SUSHI_OHMDAI_PAIR)
 
@@ -123,7 +123,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         ohmfrax_value = getPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
         ohmfrax_rfv = getDiscountedPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
         ohmdaiTotalLP = toDecimal(ohmfraxPair.totalSupply(), 18)
-        ohmfraxPOL = toDecimal(ohmfraxBalance, 18).div(ohmfraxTotalLP)
+        ohmfraxPOL = toDecimal(ohmfraxBalance, 18).div(ohmfraxTotalLP).times(BigDecimal.fromString("100"))
     }
 
     let stableValue = daiBalance.plus(fraxBalance).plus(adaiBalance)
