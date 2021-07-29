@@ -122,8 +122,8 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         ohmfraxBalance = ohmfraxPair.balanceOf(Address.fromString(treasury_address))
         ohmfrax_value = getPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
         ohmfrax_rfv = getDiscountedPairUSD(ohmfraxBalance, UNI_OHMFRAX_PAIR)
+        ohmdaiTotalLP = toDecimal(ohmfraxPair.totalSupply(), 18)
         if (ohmfraxTotalLP.gt(BigDecimal.fromString("0")) &&  ohmfraxBalance.gt(BigInt.fromI32(0))){
-            ohmdaiTotalLP = toDecimal(ohmfraxPair.totalSupply(), 18)
             ohmfraxPOL = toDecimal(ohmfraxBalance, 18).div(ohmfraxTotalLP).times(BigDecimal.fromString("100"))
         }
     }
