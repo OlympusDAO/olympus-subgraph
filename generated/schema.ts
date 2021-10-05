@@ -1113,6 +1113,57 @@ export class ProtocolMetric extends Entity {
     this.set("currentAPY", Value.fromBigDecimal(value));
   }
 
+  get runway2dot5k(): BigDecimal | null {
+    let value = this.get("runway2dot5k");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway2dot5k(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("runway2dot5k");
+    } else {
+      this.set("runway2dot5k", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
+  get runway5k(): BigDecimal | null {
+    let value = this.get("runway5k");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway5k(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("runway5k");
+    } else {
+      this.set("runway5k", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
+  get runway7dot5k(): BigDecimal | null {
+    let value = this.get("runway7dot5k");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigDecimal();
+    }
+  }
+
+  set runway7dot5k(value: BigDecimal | null) {
+    if (value === null) {
+      this.unset("runway7dot5k");
+    } else {
+      this.set("runway7dot5k", Value.fromBigDecimal(value as BigDecimal));
+    }
+  }
+
   get runway10k(): BigDecimal | null {
     let value = this.get("runway10k");
     if (value === null || value.kind == ValueKind.NULL) {
