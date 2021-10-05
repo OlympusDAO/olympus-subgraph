@@ -1,4 +1,4 @@
-import {  DepositCall, RedeemCall  } from '../generated/FRAXBondV1/FRAXBondV1'
+import {  DepositCall, RedeemCall  } from '../generated/LUSDBondV1/LUSDBondV1'
 import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
@@ -6,7 +6,6 @@ import { toDecimal } from "./utils/Decimals"
 import { LUSDBOND_TOKEN } from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { createDailyBondRecord } from './utils/DailyBond'
-import { getETHUSDRate } from './utils/Price'
 
 export function handleDeposit(call: DepositCall): void {
   let ohmie = loadOrCreateOHMie(call.transaction.from)
