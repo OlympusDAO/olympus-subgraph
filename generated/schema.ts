@@ -1068,6 +1068,15 @@ export class ProtocolMetric extends Entity {
     this.set("treasuryFraxRiskFreeValue", Value.fromBigDecimal(value));
   }
 
+  get treasuryLusdRiskFreeValue(): BigDecimal {
+    let value = this.get("treasuryLusdRiskFreeValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryLusdRiskFreeValue(value: BigDecimal) {
+    this.set("treasuryLusdRiskFreeValue", Value.fromBigDecimal(value));
+  }
+
   get treasuryDaiMarketValue(): BigDecimal {
     let value = this.get("treasuryDaiMarketValue");
     return value.toBigDecimal();
@@ -1086,6 +1095,15 @@ export class ProtocolMetric extends Entity {
     this.set("treasuryFraxMarketValue", Value.fromBigDecimal(value));
   }
 
+  get treasuryLusdMarketValue(): BigDecimal {
+    let value = this.get("treasuryLusdMarketValue");
+    return value.toBigDecimal();
+  }
+
+  set treasuryLusdMarketValue(value: BigDecimal) {
+    this.set("treasuryLusdMarketValue", Value.fromBigDecimal(value));
+  }
+
   get treasuryXsushiMarketValue(): BigDecimal {
     let value = this.get("treasuryXsushiMarketValue");
     return value.toBigDecimal();
@@ -1102,15 +1120,6 @@ export class ProtocolMetric extends Entity {
 
   set treasuryWETHMarketValue(value: BigDecimal) {
     this.set("treasuryWETHMarketValue", Value.fromBigDecimal(value));
-  }
-
-  get treasuryLusdRiskFreeValue(): BigDecimal {
-    let value = this.get("treasuryLusdRiskFreeValue");
-    return value.toBigDecimal();
-  }
-
-  set treasuryLusdRiskFreeValue(value: BigDecimal) {
-    this.set("treasuryLusdRiskFreeValue", Value.fromBigDecimal(value));
   }
 
   get currentAPY(): BigDecimal {
@@ -1291,6 +1300,15 @@ export class ProtocolMetric extends Entity {
 
   set treasuryOhmFraxPOL(value: BigDecimal) {
     this.set("treasuryOhmFraxPOL", Value.fromBigDecimal(value));
+  }
+
+  get treasuryOhmLusdPOL(): BigDecimal {
+    let value = this.get("treasuryOhmLusdPOL");
+    return value.toBigDecimal();
+  }
+
+  set treasuryOhmLusdPOL(value: BigDecimal) {
+    this.set("treasuryOhmLusdPOL", Value.fromBigDecimal(value));
   }
 
   get holders(): BigInt {

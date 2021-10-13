@@ -113,11 +113,12 @@ type ProtocolMetric @entity {
   nextDistributedOhm: BigDecimal!
   treasuryDaiRiskFreeValue: BigDecimal!
   treasuryFraxRiskFreeValue: BigDecimal!
+  treasuryLusdRiskFreeValue: BigDecimal!
   treasuryDaiMarketValue: BigDecimal!
   treasuryFraxMarketValue: BigDecimal!
+  treasuryLusdMarketValue: BigDecimal!
   treasuryXsushiMarketValue: BigDecimal!
   treasuryWETHMarketValue: BigDecimal!
-  treasuryLusdRiskFreeValue: BigDecimal!
   currentAPY: BigDecimal!
   runway2dot5k: BigDecimal
   runway5k: BigDecimal
@@ -130,6 +131,7 @@ type ProtocolMetric @entity {
   runwayCurrent: BigDecimal
   treasuryOhmDaiPOL: BigDecimal!
   treasuryOhmFraxPOL: BigDecimal!
+  treasuryOhmLusdPOL: BigDecimal!
   holders: BigInt!
 }
 
