@@ -278,6 +278,8 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
     }
     balance.bonds = bonds
 
+    //TODO add LUSD and OHMLUSD
+
     //Price
     let usdRate = getOHMUSDRate()
     balance.dollarBalance = balance.ohmBalance.times(usdRate).plus(balance.sohmBalance.times(usdRate)).plus(balance.bondBalance.times(usdRate))

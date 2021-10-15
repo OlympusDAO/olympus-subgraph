@@ -1442,3 +1442,106 @@ export class Aux extends Entity {
     this.set("value", Value.fromBigInt(value));
   }
 }
+
+export class BondDiscount extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save BondDiscount entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save BondDiscount entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("BondDiscount", id.toString(), this);
+  }
+
+  static load(id: string): BondDiscount | null {
+    return store.get("BondDiscount", id) as BondDiscount | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get dai_discount(): BigDecimal {
+    let value = this.get("dai_discount");
+    return value.toBigDecimal();
+  }
+
+  set dai_discount(value: BigDecimal) {
+    this.set("dai_discount", Value.fromBigDecimal(value));
+  }
+
+  get ohmdai_discount(): BigDecimal {
+    let value = this.get("ohmdai_discount");
+    return value.toBigDecimal();
+  }
+
+  set ohmdai_discount(value: BigDecimal) {
+    this.set("ohmdai_discount", Value.fromBigDecimal(value));
+  }
+
+  get frax_discount(): BigDecimal {
+    let value = this.get("frax_discount");
+    return value.toBigDecimal();
+  }
+
+  set frax_discount(value: BigDecimal) {
+    this.set("frax_discount", Value.fromBigDecimal(value));
+  }
+
+  get ohmfrax_discount(): BigDecimal {
+    let value = this.get("ohmfrax_discount");
+    return value.toBigDecimal();
+  }
+
+  set ohmfrax_discount(value: BigDecimal) {
+    this.set("ohmfrax_discount", Value.fromBigDecimal(value));
+  }
+
+  get eth_discount(): BigDecimal {
+    let value = this.get("eth_discount");
+    return value.toBigDecimal();
+  }
+
+  set eth_discount(value: BigDecimal) {
+    this.set("eth_discount", Value.fromBigDecimal(value));
+  }
+
+  get lusd_discount(): BigDecimal {
+    let value = this.get("lusd_discount");
+    return value.toBigDecimal();
+  }
+
+  set lusd_discount(value: BigDecimal) {
+    this.set("lusd_discount", Value.fromBigDecimal(value));
+  }
+
+  get ohmlusd_discount(): BigDecimal {
+    let value = this.get("ohmlusd_discount");
+    return value.toBigDecimal();
+  }
+
+  set ohmlusd_discount(value: BigDecimal) {
+    this.set("ohmlusd_discount", Value.fromBigDecimal(value));
+  }
+}

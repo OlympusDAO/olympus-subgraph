@@ -16,6 +16,7 @@ import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate, getETHUSDRate } from './Price';
 import { getHolderAux } from './Aux';
+import { updateBondDiscounts } from './BondDiscounts';
 
 export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
     let dayTimestamp = dayFromTimestamp(timestamp);
@@ -355,4 +356,5 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     
     pm.save()
     
+    updateBondDiscounts(transaction)
 }

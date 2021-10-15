@@ -146,3 +146,15 @@ type Aux @entity {
   id: ID!
   value: BigInt!
 }
+
+type BondDiscount @entity {
+  id: ID!
+  timestamp: BigInt!
+  dai_discount: BigDecimal!
+  ohmdai_discount: BigDecimal!
+  frax_discount: BigDecimal!
+  ohmfrax_discount: BigDecimal!
+  eth_discount: BigDecimal!
+  lusd_discount: BigDecimal!
+  ohmlusd_discount: BigDecimal!
+}
