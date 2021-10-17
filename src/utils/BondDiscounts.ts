@@ -59,7 +59,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = OHMDAIBondV4.bind(Address.fromString(OHMDAISLPBOND_CONTRACT4))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.ohmdai_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.ohmdai_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.ohmdai_discount = bd.ohmdai_discount.minus(BigDecimal.fromString("1"))
+            bd.ohmdai_discount = bd.ohmdai_discount.times(BigDecimal.fromString("100"))
+            log.debug("OHMDAI Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
 
@@ -72,7 +75,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = DAIBondV2.bind(Address.fromString(DAIBOND_CONTRACTS2))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.dai_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.dai_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.dai_discount = bd.dai_discount.minus(BigDecimal.fromString("1"))
+            bd.dai_discount = bd.dai_discount.times(BigDecimal.fromString("100"))
+            log.debug("DAI Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }    
     }
     
@@ -80,7 +86,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = DAIBondV3.bind(Address.fromString(DAIBOND_CONTRACTS3))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.dai_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.dai_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.dai_discount = bd.dai_discount.minus(BigDecimal.fromString("1"))
+            bd.dai_discount = bd.dai_discount.times(BigDecimal.fromString("100"))
+            log.debug("DAI Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }    
     }
 
@@ -89,14 +98,20 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = OHMFRAXBondV1.bind(Address.fromString(OHMFRAXLPBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.ohmfrax_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.ohmfrax_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.ohmfrax_discount = bd.ohmfrax_discount.minus(BigDecimal.fromString("1"))
+            bd.ohmfrax_discount = bd.ohmfrax_discount.times(BigDecimal.fromString("100"))
+            log.debug("OHMFRAX Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
     if(transaction.blockNumber.gt(BigInt.fromString(OHMFRAXLPBOND_CONTRACT2_BLOCK))){
         let bond = OHMFRAXBondV2.bind(Address.fromString(OHMFRAXLPBOND_CONTRACT2))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.ohmfrax_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.ohmfrax_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.ohmfrax_discount = bd.ohmfrax_discount.minus(BigDecimal.fromString("1"))
+            bd.ohmfrax_discount = bd.ohmfrax_discount.times(BigDecimal.fromString("100"))
+            log.debug("OHMFRAX Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
 
@@ -105,7 +120,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = FRAXBondV1.bind(Address.fromString(FRAXBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.frax_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.frax_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.frax_discount = bd.frax_discount.minus(BigDecimal.fromString("1"))
+            bd.frax_discount = bd.frax_discount.times(BigDecimal.fromString("100"))
+            log.debug("FRAX Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
 
@@ -114,7 +132,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = ETHBondV1.bind(Address.fromString(ETHBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.eth_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.eth_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.eth_discount = bd.eth_discount.minus(BigDecimal.fromString("1"))
+            bd.eth_discount = bd.eth_discount.times(BigDecimal.fromString("100"))
+            log.debug("ETH Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
 
@@ -123,7 +144,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = LUSDBondV1.bind(Address.fromString(LUSDBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.lusd_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.lusd_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.lusd_discount = bd.lusd_discount.minus(BigDecimal.fromString("1"))
+            bd.lusd_discount = bd.lusd_discount.times(BigDecimal.fromString("100"))
+            log.debug("LUSD Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
 
@@ -132,7 +156,10 @@ export function updateBondDiscounts(transaction: Transaction): void{
         let bond = OHMLUSDBondV1.bind(Address.fromString(OHMLUSDBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false){
-            bd.ohmlusd_discount = ohmRate.div(toDecimal(price_call.value, 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
+            bd.ohmlusd_discount = ohmRate.div(toDecimal(price_call.value, 18))
+            bd.ohmlusd_discount = bd.ohmlusd_discount.minus(BigDecimal.fromString("1"))
+            bd.ohmlusd_discount = bd.ohmlusd_discount.times(BigDecimal.fromString("100"))
+            log.debug("OHMLUSD Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
     
