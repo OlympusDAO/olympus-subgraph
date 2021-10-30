@@ -120,17 +120,18 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         lusdBalance = lusdERC20.balanceOf(Address.fromString(treasury_address))
     }
 
-    //CONVEX
+    //CONVEX Frax allocator
     // TODO add to mv and mvrfv
-    let convexrfv =  BigDecimal.fromString("0");
+    let convexrfv =  BigInt.fromString("0");
     if(transaction.blockNumber.gt(BigInt.fromString(CONVEX_ALLOCATOR1_BLOCK))){
         let allocator1 = ConvexAllocator.bind(Address.fromString(CONVEX_ALLOCATOR1))
-        convexrfv = convexrfv.plus(toDecimal(allocator1.totalValueDeployed(), 18))
+        convexrfv = convexrfv.plus(allocator1.totalValueDeployed())
     }
     if(transaction.blockNumber.gt(BigInt.fromString(CONVEX_ALLOCATOR2_BLOCK))){
         let allocator2 = ConvexAllocator.bind(Address.fromString(CONVEX_ALLOCATOR2))
-        convexrfv = convexrfv.plus(toDecimal(allocator2.totalValueDeployed(), 18))
+        convexrfv = convexrfv.plus(allocator2.totalValueDeployed())
     }
+    fraxBalance.plus(convexrfv)
 
     //OHMDAI
     let ohmdaiSushiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
@@ -179,8 +180,8 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let lpValue = ohmdai_value.plus(ohmfrax_value).plus(ohmlusd_value)
     let rfvLpValue = ohmdai_rfv.plus(ohmfrax_rfv).plus(ohmlusd_rfv)
 
-    let mv = stableValueDecimal.plus(lpValue).plus(xSushi_value).plus(weth_value).plus(convexrfv)
-    let rfv = stableValueDecimal.plus(rfvLpValue).plus(convexrfv)
+    let mv = stableValueDecimal.plus(lpValue).plus(xSushi_value).plus(weth_value)
+    let rfv = stableValueDecimal.plus(rfvLpValue)
 
     log.debug("Treasury Market Value {}", [mv.toString()])
     log.debug("Treasury RFV {}", [rfv.toString()])
@@ -193,7 +194,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     log.debug("Treasury Frax value {}", [toDecimal(fraxBalance, 18).toString()])
     log.debug("Treasury OHM-FRAX RFV {}", [ohmfrax_rfv.toString()])
     log.debug("Treasury OHM-LUSD RFV {}", [ohmlusd_rfv.toString()])
-    log.debug("Convex Allocator", [convexrfv.toString()])
+    log.debug("Convex Allocator", [toDecimal(convexrfv, 18).toString()])
 
     return [
         mv, 
