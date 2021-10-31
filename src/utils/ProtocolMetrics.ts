@@ -131,7 +131,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         let allocator2 = ConvexAllocator.bind(Address.fromString(CONVEX_ALLOCATOR2))
         convexrfv = convexrfv.plus(allocator2.totalValueDeployed())
     }
-    fraxBalance.plus(convexrfv)
+    fraxBalance = fraxBalance.plus(convexrfv)
 
     //OHMDAI
     let ohmdaiSushiBalance = ohmdaiPair.balanceOf(Address.fromString(treasury_address))
@@ -194,7 +194,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     log.debug("Treasury Frax value {}", [toDecimal(fraxBalance, 18).toString()])
     log.debug("Treasury OHM-FRAX RFV {}", [ohmfrax_rfv.toString()])
     log.debug("Treasury OHM-LUSD RFV {}", [ohmlusd_rfv.toString()])
-    log.debug("Convex Allocator", [toDecimal(convexrfv, 18).toString()])
+    log.debug("Convex Allocator {}", [toDecimal(convexrfv, 18).toString()])
 
     return [
         mv, 
