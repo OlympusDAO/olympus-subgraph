@@ -179,7 +179,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         }
     }
 
-    //OHMLUSD
+    //OHMETH
     let ohmethBalance = BigInt.fromI32(0)
     let ohmeth_value = BigDecimal.fromString("0")
     let ohmeth_rfv = BigDecimal.fromString("0")
