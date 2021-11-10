@@ -14,7 +14,7 @@ import { ProtocolMetric, Transaction } from '../../generated/schema'
 import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, CONVEX_ALLOCATOR1, CONVEX_ALLOCATOR1_BLOCK, CONVEX_ALLOCATOR2, CONVEX_ALLOCATOR2_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, LUSDBOND_CONTRACT1_BLOCK, LUSD_ERC20_CONTRACT, LUSD_ERC20_CONTRACTV2_BLOCK, OHMDAI_ONSEN_ID, OHM_ERC20_CONTRACT, ONSEN_ALLOCATOR, SOHM_ERC20_CONTRACT, SOHM_ERC20_CONTRACTV2, SOHM_ERC20_CONTRACTV2_BLOCK, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, STAKING_CONTRACT_V2_BLOCK, SUSHI_MASTERCHEF, SUSHI_OHMDAI_PAIR, SUSHI_OHMETH_PAIR, SUSHI_OHMLUSD_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, SUSHI_OHMETH_PAIR_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK, UNI_OHMLUSD_PAIR_BLOCK, WETH_ERC20_CONTRACT, XSUSI_ERC20_CONTRACT } from './Constants';
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
-import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate, getETHUSDRate } from './Price';
+import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate, getETHUSDRate, getPairWETH } from './Price';
 import { getHolderAux } from './Aux';
 import { updateBondDiscounts } from './BondDiscounts';
 
@@ -187,7 +187,11 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let ohmethPOL = BigDecimal.fromString("0")
     if(transaction.blockNumber.gt(BigInt.fromString(SUSHI_OHMETH_PAIR_BLOCK))){
         ohmethBalance = ohmethPair.balanceOf(Address.fromString(treasury_address))
-        ohmeth_value = getPairUSD(ohmethBalance, SUSHI_OHMETH_PAIR)
+        log.debug("ohmethBalance {}", [ohmethBalance.toString()])
+
+        ohmeth_value = getPairWETH(ohmethBalance, SUSHI_OHMETH_PAIR)
+        log.debug("ohmeth_value {}", [ohmeth_value.toString()])
+
         ohmeth_rfv = getDiscountedPairUSD(ohmethBalance, SUSHI_OHMETH_PAIR)
         ohmethTotalLP = toDecimal(ohmethPair.totalSupply(), 18)
         if (ohmethTotalLP.gt(BigDecimal.fromString("0")) &&  ohmethBalance.gt(BigInt.fromI32(0))){

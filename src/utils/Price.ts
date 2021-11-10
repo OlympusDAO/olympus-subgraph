@@ -78,3 +78,16 @@ export function getPairUSD(lp_amount: BigInt, pair_adress: string): BigDecimal{
 
     return ownedLP.times(total_lp_usd)
 }
+
+export function getPairWETH(lp_amount: BigInt, pair_adress: string): BigDecimal{
+    let pair = UniswapV2Pair.bind(Address.fromString(pair_adress))
+    let total_lp = pair.totalSupply()
+    let lp_token_0 = pair.getReserves().value0
+    let lp_token_1 = pair.getReserves().value1
+    let ownedLP = toDecimal(lp_amount,18).div(toDecimal(total_lp,18))
+    let ohm_value = toDecimal(lp_token_0, 9).times(getOHMUSDRate())
+    let eth_value = toDecimal(lp_token_1, 18).times(getETHUSDRate())
+    let total_lp_usd = ohm_value.plus(eth_value)
+
+    return ownedLP.times(total_lp_usd)
+}
