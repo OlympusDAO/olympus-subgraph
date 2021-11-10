@@ -3,7 +3,7 @@ import { Deposit, Redemption } from '../generated/schema'
 import { loadOrCreateTransaction } from "./utils/Transactions"
 import { loadOrCreateOHMie, updateOhmieBalance } from "./utils/OHMie"
 import { toDecimal } from "./utils/Decimals"
-import { OHMETHLPBOND_TOKEN, UNI_OHMETH_PAIR } from './utils/Constants'
+import { OHMETHLPBOND_TOKEN, SUSHI_OHMETH_PAIR } from './utils/Constants'
 import { loadOrCreateToken } from './utils/Tokens'
 import { createDailyBondRecord } from './utils/DailyBond'
 import { getPairUSD } from './utils/Price'
@@ -18,7 +18,7 @@ export function handleDeposit(call: DepositCall): void {
   deposit.transaction = transaction.id
   deposit.ohmie = ohmie.id
   deposit.amount = amount
-  deposit.value = getPairUSD(call.inputs._amount, UNI_OHMETH_PAIR)
+  deposit.value = getPairUSD(call.inputs._amount, SUSHI_OHMETH_PAIR)
   deposit.maxPremium = toDecimal(call.inputs._maxPrice)
   deposit.token = token.id;
   deposit.timestamp = transaction.timestamp;
