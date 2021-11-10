@@ -1311,6 +1311,15 @@ export class ProtocolMetric extends Entity {
     this.set("treasuryOhmLusdPOL", Value.fromBigDecimal(value));
   }
 
+  get treasuryOhmEthPOL(): BigDecimal {
+    let value = this.get("treasuryOhmEthPOL");
+    return value.toBigDecimal();
+  }
+
+  set treasuryOhmEthPOL(value: BigDecimal) {
+    this.set("treasuryOhmEthPOL", Value.fromBigDecimal(value));
+  }
+
   get holders(): BigInt {
     let value = this.get("holders");
     return value.toBigInt();
