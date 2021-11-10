@@ -132,6 +132,7 @@ type ProtocolMetric @entity {
   treasuryOhmDaiPOL: BigDecimal!
   treasuryOhmFraxPOL: BigDecimal!
   treasuryOhmLusdPOL: BigDecimal!
+  treasuryOhmEthPOL: BigDecimal!
   holders: BigInt!
 }
 

@@ -6,12 +6,15 @@ export const FRAXBOND_TOKEN: string = "FRAX";
 export const ETHBOND_TOKEN: string = "WETH";
 export const LUSDBOND_TOKEN: string = "LUSD";
 export const OHMLUSDLPBOND_TOKEN: string = "OHM-LUSD";
+export const OHMETHLPBOND_TOKEN: string = "OHM-WETH";
 
 export const SUSHI_OHMDAI_PAIR = '0x34d7d7Aaf50AD4944B70B320aCB24C95fa2def7c';
 export const UNI_OHMFRAX_PAIR = '0x2dce0dda1c2f98e0f171de8333c3c6fe1bbf4877';
 export const UNI_OHMFRAX_PAIR_BLOCK = '12563434';
 export const SUSHI_XSUSHI_ETH_PAIR = '0x36e2fcccc59e5747ff63a03ea2e5c0c2c14911e7';
 export const SUSHI_USDC_ETH_PAIR = '0x397ff1542f962076d0bfe58ea045ffa2d347aca0';
+export const SUSHI_OHMETH_PAIR = '0xfffae4a0f4ac251f4705717cd24cadccc9f33e06';
+export const SUSHI_OHMETH_PAIR_BLOCK = '12310798';
 export const TREASURY_ADDRESS = '0x886CE997aa9ee4F8c2282E182aB72A705762399D';
 export const TREASURY_ADDRESS_V2 = '0x31f8cc382c9898b273eff4e0b7626a6987c846e8';
 export const TREASURY_ADDRESS_V2_BLOCK = '12525281';

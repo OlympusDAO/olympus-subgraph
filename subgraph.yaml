@@ -57,6 +57,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
         - name: CirculatingSupply
@@ -126,6 +128,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
         - name: CirculatingSupply
@@ -197,6 +201,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -256,6 +262,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -317,6 +325,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -378,6 +388,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -439,6 +451,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -500,6 +514,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -557,6 +573,14 @@ dataSources:
           file: ./abis/FRAXBondV1.json
         - name: ETHBondV1
           file: ./abis/ETHBondV1.json
+        - name: LUSDBondV1
+          file: ./abis/LUSDBondV1.json
+        - name: OHMLUSDBondV1
+          file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
+        - name: ConvexAllocator
+          file: ./abis/ConvexAllocator.json
       callHandlers:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
@@ -616,6 +640,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -677,6 +703,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -738,6 +766,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -799,6 +829,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -860,6 +892,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -921,6 +955,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -1031,6 +1067,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
         - name: ConvexAllocator
           file: ./abis/ConvexAllocator.json
       callHandlers:
@@ -1039,3 +1077,66 @@ dataSources:
         - function: redeem(address,bool)
           handler: handleRedeem
       file: ./src/OHMLUSDBondV1.ts
+  # ETH-OHM v2
+  - kind: ethereum/contract
+    name: OHMETHBondV1
+    network: mainnet
+    source:
+      address: '0xB6C9dc843dEc44Aa305217c2BbC58B44438B6E16'
+      abi: OHMETHBondV1
+      startBlock: 13481888
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - OHMETHBondV1
+      abis:
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
+        - name: sOlympusERC20
+          file: ./abis/sOlympusERC20.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV1.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV3
+          file: ./abis/DAIBondV3.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: ./abis/OHMDAIBondV3.json
+        - name: OHMDAIBondV4
+          file: ./abis/OHMDAIBondV4.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
+        - name: OHMFRAXBondV2
+          file: ./abis/OHMFRAXBondV2.json
+        - name: FRAXBondV1
+          file: ./abis/FRAXBondV1.json
+        - name: ETHBondV1
+          file: ./abis/ETHBondV1.json
+        - name: LUSDBondV1
+          file: ./abis/LUSDBondV1.json
+        - name: OHMLUSDBondV1
+          file: ./abis/LUSDBondV1.json
+        - name: OHMETHBondV1
+          file: ./abis/OHMETHBondV1.json
+        - name: ConvexAllocator
+          file: ./abis/ConvexAllocator.json
+      callHandlers:
+        - function: deposit(uint256,uint256,address)
+          handler: handleDeposit
+        - function: redeem(address,bool)
+          handler: handleRedeem
+      file: ./src/OHMETHBondV1.ts
