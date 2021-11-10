@@ -114,6 +114,7 @@ type ProtocolMetric @entity {
   treasuryDaiRiskFreeValue: BigDecimal!
   treasuryFraxRiskFreeValue: BigDecimal!
   treasuryLusdRiskFreeValue: BigDecimal!
+  treasuryWETHRiskFreeValue: BigDecimal!
   treasuryDaiMarketValue: BigDecimal!
   treasuryFraxMarketValue: BigDecimal!
   treasuryLusdMarketValue: BigDecimal!

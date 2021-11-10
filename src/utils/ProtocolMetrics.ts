@@ -43,6 +43,7 @@ export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
         protocolMetric.treasuryFraxMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryLusdMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryXsushiMarketValue = BigDecimal.fromString("0")
+        protocolMetric.treasuryWETHRiskFreeValue = BigDecimal.fromString("0")
         protocolMetric.treasuryWETHMarketValue = BigDecimal.fromString("0")
         protocolMetric.treasuryOhmDaiPOL = BigDecimal.fromString("0")
         protocolMetric.treasuryOhmFraxPOL = BigDecimal.fromString("0")
@@ -228,6 +229,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         // treasuryFraxMarketValue = FRAX LP * FRAX
         ohmfrax_value.plus(toDecimal(fraxBalance, 18)),
         xSushi_value,
+        ohmeth_rfv.plus(weth_value),
         ohmeth_value.plus(weth_value),
         ohmlusd_rfv.plus(toDecimal(lusdBalance, 18)),
         ohmlusd_value.plus(toDecimal(lusdBalance, 18)),
@@ -348,13 +350,14 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.treasuryDaiMarketValue = mv_rfv[4]
     pm.treasuryFraxMarketValue = mv_rfv[5]
     pm.treasuryXsushiMarketValue = mv_rfv[6]
-    pm.treasuryWETHMarketValue = mv_rfv[7]
-    pm.treasuryLusdRiskFreeValue = mv_rfv[8]
-    pm.treasuryLusdMarketValue = mv_rfv[9]
-    pm.treasuryOhmDaiPOL = mv_rfv[10]
-    pm.treasuryOhmFraxPOL = mv_rfv[11]
-    pm.treasuryOhmLusdPOL = mv_rfv[12]
-    pm.treasuryOhmEthPOL = mv_rfv[13]
+    pm.treasuryWETHRiskFreeValue = mv_rfv[7]
+    pm.treasuryWETHMarketValue = mv_rfv[8]
+    pm.treasuryLusdRiskFreeValue = mv_rfv[9]
+    pm.treasuryLusdMarketValue = mv_rfv[10]
+    pm.treasuryOhmDaiPOL = mv_rfv[11]
+    pm.treasuryOhmFraxPOL = mv_rfv[12]
+    pm.treasuryOhmLusdPOL = mv_rfv[13]
+    pm.treasuryOhmEthPOL = mv_rfv[14]
 
     // Rebase rewards, APY, rebase
     pm.nextDistributedOhm = getNextOHMRebase(transaction)
