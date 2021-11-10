@@ -131,6 +131,8 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
         let allocator2 = ConvexAllocator.bind(Address.fromString(CONVEX_ALLOCATOR2))
         convexrfv = convexrfv.plus(allocator2.totalValueDeployed())
     }
+    //Multiplied by 10e9 for consistency
+    convexrfv = convexrfv.times(BigInt.fromString("1000000000"))
     fraxBalance = fraxBalance.plus(convexrfv)
 
     //OHMDAI
