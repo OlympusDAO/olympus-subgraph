@@ -386,6 +386,8 @@ export function updateProtocolMetrics(blockNumber: BigInt): void{
 }
 
 export function handleBlock(block: ethereum.Block): void {
+
+    //Only sync every 8 hours approx, except when wer are close to present where we update metrics every 10 blocks
     let skipBlocks = 2200;
     if(block.number.toI32() > 13610000){
         skipBlocks = 10;
