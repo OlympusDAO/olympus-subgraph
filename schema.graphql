@@ -6,67 +6,8 @@ type DailyBond @entity {
   value: BigDecimal!
 }
 
-type Ohmie @entity {
-  id: ID!
-  bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
-  bondRedemptions: [Redemption!]! @derivedFrom(field: "ohmie")
-  stakeTransactions: [Stake!]! @derivedFrom(field: "ohmie")
-  unstakeTransactions: [Unstake!]! @derivedFrom(field: "ohmie")
-  historicBalance: [OhmieBalance!]! @derivedFrom(field: "ohmie")
-  lastBalance: OhmieBalance
-  active: Boolean!
-}
-
-type OhmieBalance @entity {
-  id: ID!
-  ohmie: Ohmie!
-  sohmBalance: BigDecimal!
-  ohmBalance: BigDecimal!
-  bondBalance: BigDecimal!
-  dollarBalance: BigDecimal!
-  stakes: [ContractInfo!]
-  bonds: [ContractInfo!]
-  timestamp: BigInt!
-}
-
-type Deposit @entity {
-  id: ID!
-  transaction: Transaction!
-  ohmie: Ohmie!
-  amount: BigDecimal!
-  maxPremium: BigDecimal!
-  token: Token!
-  value: BigDecimal!
-  timestamp: BigInt!
-}
-
-type Redemption @entity {
-  id: ID!
-  transaction: Transaction
-  ohmie: Ohmie
-  token: Token
-  timestamp: BigInt
-}
-
-type Stake @entity {
-  id: ID!
-  transaction: Transaction!
-  ohmie: Ohmie!
-  amount: BigDecimal!
-  timestamp: BigInt!
-}
-
-type Unstake @entity {
-  id: ID!
-  transaction: Transaction!
-  ohmie: Ohmie!
-  amount: BigDecimal!
-  timestamp: BigInt!
-}
-
 type Rebase @entity {
   id: ID!
-  transaction: String!
   amount: BigDecimal!
   stakedOhms: BigDecimal!
   percentage: BigDecimal!
@@ -80,18 +21,6 @@ type DailyStakingReward @entity {
   timestamp: BigInt!
   amount: BigDecimal!
   value: BigDecimal!
-}
-
-type Transaction @entity {
-  id: ID!
-  timestamp: BigInt!
-  blockNumber: BigInt!
-  blockHash: Bytes!
-  from: Bytes!
-  to: Bytes
-  value: BigInt!
-  gasUsed: BigInt!
-  gasPrice: BigInt!
 }
 
 type Token @entity {
@@ -134,19 +63,6 @@ type ProtocolMetric @entity {
   treasuryOhmFraxPOL: BigDecimal!
   treasuryOhmLusdPOL: BigDecimal!
   treasuryOhmEthPOL: BigDecimal!
-  holders: BigInt!
-}
-
-type ContractInfo @entity {
-  id: ID!
-  name: String
-  contract: String
-  amount: BigDecimal
-}
-
-type Aux @entity {
-  id: ID!
-  value: BigInt!
 }
 
 type BondDiscount @entity {

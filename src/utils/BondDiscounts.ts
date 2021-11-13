@@ -13,7 +13,7 @@ import { ETHBondV1 } from '../../generated/ETHBondV1/ETHBondV1';
 import { LUSDBondV1 } from '../../generated/LUSDBondV1/LUSDBondV1';
 import { OHMLUSDBondV1 } from '../../generated/OHMLUSDBondV1/OHMLUSDBondV1';
 
-import { BondDiscount, Transaction } from '../../generated/schema'
+import { BondDiscount } from '../../generated/schema'
 import { DAIBOND_CONTRACTS1, DAIBOND_CONTRACTS1_BLOCK, DAIBOND_CONTRACTS2, DAIBOND_CONTRACTS2_BLOCK, DAIBOND_CONTRACTS3, DAIBOND_CONTRACTS3_BLOCK, ETHBOND_CONTRACT1, ETHBOND_CONTRACT1_BLOCK, FRAXBOND_CONTRACT1, FRAXBOND_CONTRACT1_BLOCK, LUSDBOND_CONTRACT1, LUSDBOND_CONTRACT1_BLOCK, OHMDAISLPBOND_CONTRACT1, OHMDAISLPBOND_CONTRACT1_BLOCK, OHMDAISLPBOND_CONTRACT2, OHMDAISLPBOND_CONTRACT2_BLOCK, OHMDAISLPBOND_CONTRACT3, OHMDAISLPBOND_CONTRACT3_BLOCK, OHMDAISLPBOND_CONTRACT4, OHMDAISLPBOND_CONTRACT4_BLOCK, OHMFRAXLPBOND_CONTRACT1, OHMFRAXLPBOND_CONTRACT1_BLOCK, OHMFRAXLPBOND_CONTRACT2, OHMFRAXLPBOND_CONTRACT2_BLOCK, OHMLUSDBOND_CONTRACT1, OHMLUSDBOND_CONTRACT1_BLOCK } from './Constants';
 import { hourFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
@@ -38,24 +38,24 @@ export function loadOrCreateBondDiscount(timestamp: BigInt): BondDiscount{
     return bondDiscount as BondDiscount
 }
 
-export function updateBondDiscounts(transaction: Transaction): void{
-    let bd = loadOrCreateBondDiscount(transaction.timestamp);
+export function updateBondDiscounts(blockNumber: BigInt): void{
+    let bd = loadOrCreateBondDiscount(blockNumber);
     let ohmRate = getOHMUSDRate();
 
     //OHMDAI
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT1_BLOCK))){
         let bond = OHMDAIBondV1.bind(Address.fromString(OHMDAISLPBOND_CONTRACT1))
         //bd.ohmdai_discount = ohmRate.div(toDecimal(bond.bondPriceInUSD(), 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
     }
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT2_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT2_BLOCK))){
         let bond = OHMDAIBondV2.bind(Address.fromString(OHMDAISLPBOND_CONTRACT2))
         //bd.ohmdai_discount = ohmRate.div(toDecimal(bond.bondPriceInUSD(), 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
     }
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT3_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT3_BLOCK))){
         let bond = OHMDAIBondV3.bind(Address.fromString(OHMDAISLPBOND_CONTRACT3))
         //bd.ohmdai_discount = ohmRate.div(toDecimal(bond.bondPriceInUSD(), 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
     }
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT4_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMDAISLPBOND_CONTRACT4_BLOCK))){
         let bond = OHMDAIBondV4.bind(Address.fromString(OHMDAISLPBOND_CONTRACT4))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -67,11 +67,11 @@ export function updateBondDiscounts(transaction: Transaction): void{
     }
 
     //DAI
-    if(transaction.blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS1_BLOCK))){
         let bond = DAIBondV1.bind(Address.fromString(DAIBOND_CONTRACTS1))
         //bd.dai_discount = ohmRate.div(toDecimal(bond.bondPriceInUSD(), 18)).minus(BigDecimal.fromString("1")).times(BigDecimal.fromString("100"))
     }
-    if(transaction.blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS2_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS2_BLOCK))){
         let bond = DAIBondV2.bind(Address.fromString(DAIBOND_CONTRACTS2))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -82,7 +82,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
         }    
     }
     
-    if(transaction.blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS3_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(DAIBOND_CONTRACTS3_BLOCK))){
         let bond = DAIBondV3.bind(Address.fromString(DAIBOND_CONTRACTS3))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -94,7 +94,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
     }
 
     //OHMFRAX
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMFRAXLPBOND_CONTRACT1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMFRAXLPBOND_CONTRACT1_BLOCK))){
         let bond = OHMFRAXBondV1.bind(Address.fromString(OHMFRAXLPBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -104,7 +104,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
             log.debug("OHMFRAX Discount OHM price {}  Bond Price {}  Discount {}", [ohmRate.toString(), price_call.value.toString(), bd.ohmfrax_discount.toString()])
         }
     }
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMFRAXLPBOND_CONTRACT2_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMFRAXLPBOND_CONTRACT2_BLOCK))){
         let bond = OHMFRAXBondV2.bind(Address.fromString(OHMFRAXLPBOND_CONTRACT2))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -116,7 +116,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
     }
 
     //FRAX
-    if(transaction.blockNumber.gt(BigInt.fromString(FRAXBOND_CONTRACT1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(FRAXBOND_CONTRACT1_BLOCK))){
         let bond = FRAXBondV1.bind(Address.fromString(FRAXBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -128,7 +128,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
     }
 
     //ETH
-    if(transaction.blockNumber.gt(BigInt.fromString(ETHBOND_CONTRACT1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(ETHBOND_CONTRACT1_BLOCK))){
         let bond = ETHBondV1.bind(Address.fromString(ETHBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -140,7 +140,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
     }
 
     //LUSD
-    if(transaction.blockNumber.gt(BigInt.fromString(LUSDBOND_CONTRACT1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(LUSDBOND_CONTRACT1_BLOCK))){
         let bond = LUSDBondV1.bind(Address.fromString(LUSDBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
@@ -152,7 +152,7 @@ export function updateBondDiscounts(transaction: Transaction): void{
     }
 
     //OHMLUSD
-    if(transaction.blockNumber.gt(BigInt.fromString(OHMLUSDBOND_CONTRACT1_BLOCK))){
+    if(blockNumber.gt(BigInt.fromString(OHMLUSDBOND_CONTRACT1_BLOCK))){
         let bond = OHMLUSDBondV1.bind(Address.fromString(OHMLUSDBOND_CONTRACT1))
         let price_call = bond.try_bondPriceInUSD()
         if(price_call.reverted===false && price_call.value.gt(BigInt.fromI32(0))){
