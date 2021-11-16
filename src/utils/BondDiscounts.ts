@@ -1,11 +1,11 @@
 import { Address, BigDecimal, BigInt, log} from '@graphprotocol/graph-ts'
 import { OHMDAIBondV1 } from '../../generated/OHMDAIBondV1/OHMDAIBondV1';
-import { OHMDAIBondV2 } from '../../generated/OHMDAIBondV1/OHMDAIBondV2';
-import { OHMDAIBondV3 } from '../../generated/OHMDAIBondV1/OHMDAIBondV3';
-import { OHMDAIBondV4 } from '../../generated/OHMDAIBondV1/OHMDAIBondV4';
+import { OHMDAIBondV2 } from '../../generated/OHMDAIBondV2/OHMDAIBondV2';
+import { OHMDAIBondV3 } from '../../generated/OHMDAIBondV3/OHMDAIBondV3';
+import { OHMDAIBondV4 } from '../../generated/OHMDAIBondV4/OHMDAIBondV4';
 import { DAIBondV1 } from '../../generated/DAIBondV1/DAIBondV1';
-import { DAIBondV2 } from '../../generated/DAIBondV1/DAIBondV2';
-import { DAIBondV3 } from '../../generated/DAIBondV1/DAIBondV3';
+import { DAIBondV2 } from '../../generated/DAIBondV2/DAIBondV2';
+import { DAIBondV3 } from '../../generated/DAIBondV3/DAIBondV3';
 import { OHMFRAXBondV1 } from '../../generated/OHMFRAXBondV1/OHMFRAXBondV1';
 import { OHMFRAXBondV2 } from '../../generated/OHMFRAXBondV2/OHMFRAXBondV2';
 import { FRAXBondV1 } from '../../generated/FRAXBondV1/FRAXBondV1';

@@ -402,6 +402,32 @@ dataSources:
           file: ./abis/ERC20.json
         - name: MasterChef
           file: ./abis/MasterChef.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV1.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV3
+          file: ./abis/DAIBondV3.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: ./abis/OHMDAIBondV3.json
+        - name: OHMDAIBondV4
+          file: ./abis/OHMDAIBondV4.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
+        - name: OHMFRAXBondV2
+          file: ./abis/OHMFRAXBondV2.json
+        - name: FRAXBondV1
+          file: ./abis/FRAXBondV1.json
+        - name: ETHBondV1
+          file: ./abis/ETHBondV1.json
+        - name: LUSDBondV1
+          file: ./abis/LUSDBondV1.json
+        - name: OHMLUSDBondV1
+          file: ./abis/OHMLUSDBondV1.json
       blockHandlers:
         - handler: handleBlock
       file: ./src/utils/ProtocolMetrics.ts
