@@ -1,5 +1,5 @@
 import {
-    SUSHI_OHMDAI_PAIR, SUSHI_XSUSHI_ETH_PAIR, SUSHI_USDC_ETH_PAIR
+    SUSHI_OHMDAI_PAIR, SUSHI_XSUSHI_ETH_PAIR, SUSHI_USDC_ETH_PAIR, SUSHI_CVX_ETH_PAIR
 } from './Constants'
 import { Address, BigDecimal, BigInt, log } from '@graphprotocol/graph-ts'
 import { UniswapV2Pair } from '../../generated/OlympusStakingV1/UniswapV2Pair';
@@ -50,7 +50,7 @@ export function getXsushiUSDRate(): BigDecimal {
 }
 
 export function getCVXUSDRate(): BigDecimal {
-    let pair = UniswapV2Pair.bind(Address.fromString(SUSHI_XSUSHI_ETH_PAIR))
+    let pair = UniswapV2Pair.bind(Address.fromString(SUSHI_CVX_ETH_PAIR))
 
     let reserves = pair.getReserves()
     let reserve0 = reserves.value0.toBigDecimal()
