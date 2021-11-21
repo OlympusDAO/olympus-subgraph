@@ -334,8 +334,10 @@ function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal): BigDe
 }
 
 
-export function updateProtocolMetrics(blockNumber: BigInt): void{
-    let pm = loadOrCreateProtocolMetric(blockNumber);
+export function updateProtocolMetrics(block: ethereum.Block): void{
+    let blockNumber = block.number;
+
+    let pm = loadOrCreateProtocolMetric(block.timestamp);
 
     //Total Supply
     pm.totalSupply = getTotalSupply()
@@ -406,6 +408,6 @@ export function handleBlock(block: ethereum.Block): void {
     }
 
     if(block.number.toI32()%skipBlocks==0){
-        updateProtocolMetrics(block.timestamp)
+        updateProtocolMetrics(block)
     }
 }
