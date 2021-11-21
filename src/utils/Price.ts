@@ -49,6 +49,20 @@ export function getXsushiUSDRate(): BigDecimal {
 
 }
 
+export function getCVXUSDRate(): BigDecimal {
+    let pair = UniswapV2Pair.bind(Address.fromString(SUSHI_XSUSHI_ETH_PAIR))
+
+    let reserves = pair.getReserves()
+    let reserve0 = reserves.value0.toBigDecimal()
+    let reserve1 = reserves.value1.toBigDecimal()
+
+    let xsushiRate = reserve1.div(reserve0).times(getETHUSDRate())
+    log.debug("cvx rate {}", [xsushiRate.toString()])
+
+    return xsushiRate
+
+}
+
 //(slp_treasury/slp_supply)*(2*sqrt(lp_dai * lp_ohm))
 export function getDiscountedPairUSD(lp_amount: BigInt, pair_adress: string): BigDecimal{
     let pair = UniswapV2Pair.bind(Address.fromString(pair_adress))
