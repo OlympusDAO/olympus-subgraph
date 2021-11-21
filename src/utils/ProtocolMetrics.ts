@@ -394,6 +394,6 @@ export function handleBlock(block: ethereum.Block): void {
     }
 
     if(block.number.toI32()%skipBlocks==0){
-        updateProtocolMetrics(block.number)
+        updateProtocolMetrics(block.timestamp)
     }
 }
