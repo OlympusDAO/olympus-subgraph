@@ -449,3 +449,69 @@ dataSources:
         - function: deposit(uint256,uint256,address)
           handler: handleDeposit
       file: ./src/OHMETHBondV1.ts
+  # Start syncing protocol metrics every 10 blocks when we are close to present
+  - kind: ethereum/contract
+    name: ProtocolMetrics
+    network: mainnet
+    source:
+      address: '0x31932e6e45012476ba3a3a4953cba62aee77fbbe'
+      abi: sOlympusERC20
+      startBlock: 13683000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ProtocolMetrics
+      abis:
+        - name: OlympusStakingV1
+          file: ./abis/OlympusStakingV1.json
+        - name: OlympusStakingV2
+          file: ./abis/OlympusStakingV2.json
+        - name: sOlympusERC20
+          file: ./abis/sOlympusERC20.json
+        - name: sOlympusERC20V2
+          file: ./abis/sOlympusERC20V2.json
+        - name: OlympusERC20
+          file: ./abis/OlympusERC20.json
+        - name: UniswapV2Pair
+          file: ./abis/UniswapV2Pair.json
+        - name: ConvexAllocator
+          file: ./abis/ConvexAllocator.json
+        - name: CirculatingSupply
+          file: ./abis/CirculatingSupply.json
+        - name: BondingCalculator
+          file: ./abis/BondingCalculator.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json
+        - name: DAIBondV1
+          file: ./abis/DAIBondV1.json
+        - name: DAIBondV2
+          file: ./abis/DAIBondV2.json
+        - name: DAIBondV3
+          file: ./abis/DAIBondV3.json
+        - name: OHMDAIBondV1
+          file: ./abis/OHMDAIBondV1.json
+        - name: OHMDAIBondV2
+          file: ./abis/OHMDAIBondV2.json
+        - name: OHMDAIBondV3
+          file: ./abis/OHMDAIBondV3.json
+        - name: OHMDAIBondV4
+          file: ./abis/OHMDAIBondV4.json
+        - name: OHMFRAXBondV1
+          file: ./abis/OHMFRAXBondV1.json
+        - name: OHMFRAXBondV2
+          file: ./abis/OHMFRAXBondV2.json
+        - name: FRAXBondV1
+          file: ./abis/FRAXBondV1.json
+        - name: ETHBondV1
+          file: ./abis/ETHBondV1.json
+        - name: LUSDBondV1
+          file: ./abis/LUSDBondV1.json
+        - name: OHMLUSDBondV1
+          file: ./abis/OHMLUSDBondV1.json
+      blockHandlers:
+        - handler: handleBlock
+      file: ./src/utils/ProtocolMetrics.ts
