@@ -21,6 +21,6 @@ export function loadOrCreateDailyBond(timestamp: BigInt, token: Token): DailyBon
 export function createDailyBondRecord(timestamp: BigInt, token: Token, amount: BigDecimal, value: BigDecimal): void{
     let dailyBond = loadOrCreateDailyBond(timestamp, token)
     dailyBond.amount = dailyBond.amount.plus(amount)
-    dailyBond.value = dailyBond.amount.plus(value)
+    dailyBond.value = dailyBond.value.plus(value)
     dailyBond.save()
 }
