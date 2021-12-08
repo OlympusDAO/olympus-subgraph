@@ -9,10 +9,11 @@ import { MasterChef } from '../../generated/OlympusStakingV1/MasterChef';
 import { OlympusStakingV2 } from '../../generated/OlympusStakingV2/OlympusStakingV2';
 import { OlympusStakingV1 } from '../../generated/OlympusStakingV1/OlympusStakingV1';
 import { ConvexAllocator } from '../../generated/OlympusStakingV1/ConvexAllocator';
+import { Distributor } from '../../generated/sOlympusERC20V1/Distributor';
 import { ethereum } from '@graphprotocol/graph-ts'
 
 import { ProtocolMetric } from '../../generated/schema'
-import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, CONVEX_ALLOCATOR1, CONVEX_ALLOCATOR1_BLOCK, CONVEX_ALLOCATOR2, CONVEX_ALLOCATOR2_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, LUSDBOND_CONTRACT1_BLOCK, LUSD_ERC20_CONTRACT, LUSD_ERC20_CONTRACTV2_BLOCK, OHMDAI_ONSEN_ID, OHM_ERC20_CONTRACT, ONSEN_ALLOCATOR, SOHM_ERC20_CONTRACT, SOHM_ERC20_CONTRACTV2, SOHM_ERC20_CONTRACTV2_BLOCK, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, STAKING_CONTRACT_V2_BLOCK, SUSHI_MASTERCHEF, SUSHI_OHMDAI_PAIR, SUSHI_OHMETH_PAIR, SUSHI_OHMLUSD_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, SUSHI_OHMETH_PAIR_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK, UNI_OHMLUSD_PAIR_BLOCK, WETH_ERC20_CONTRACT, XSUSI_ERC20_CONTRACT, CVX_ERC20_CONTRACT, CVX_ERC20_CONTRACT_BLOCK } from './Constants';
+import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCULATING_SUPPLY_CONTRACT_BLOCK, CONVEX_ALLOCATOR1, CONVEX_ALLOCATOR1_BLOCK, CONVEX_ALLOCATOR2, CONVEX_ALLOCATOR2_BLOCK, ERC20DAI_CONTRACT, ERC20FRAX_CONTRACT, LUSDBOND_CONTRACT1_BLOCK, LUSD_ERC20_CONTRACT, LUSD_ERC20_CONTRACTV2_BLOCK, OHMDAI_ONSEN_ID, OHM_ERC20_CONTRACT, ONSEN_ALLOCATOR, SOHM_ERC20_CONTRACT, SOHM_ERC20_CONTRACTV2, SOHM_ERC20_CONTRACTV2_BLOCK, STAKING_CONTRACT_V1, STAKING_CONTRACT_V2, STAKING_CONTRACT_V2_BLOCK, SUSHI_MASTERCHEF, SUSHI_OHMDAI_PAIR, SUSHI_OHMETH_PAIR, SUSHI_OHMLUSD_PAIR, TREASURY_ADDRESS, TREASURY_ADDRESS_V2, TREASURY_ADDRESS_V2_BLOCK, SUSHI_OHMETH_PAIR_BLOCK, UNI_OHMFRAX_PAIR, UNI_OHMFRAX_PAIR_BLOCK, UNI_OHMLUSD_PAIR_BLOCK, WETH_ERC20_CONTRACT, XSUSI_ERC20_CONTRACT, CVX_ERC20_CONTRACT, CVX_ERC20_CONTRACT_BLOCK, DISTRIBUTOR_CONTRACT_BLOCK, DISTRIBUTOR_CONTRACT } from './Constants';
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate, getETHUSDRate, getPairWETH, getCVXUSDRate } from './Price';
@@ -294,7 +295,7 @@ function getAPY_Rebase(sOHM: BigDecimal, distributedOHM: BigDecimal): BigDecimal
     return [currentAPYdecimal, nextEpochRebase]
 }
 
-function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal): BigDecimal[]{
+function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal, block: ethereum.Block): BigDecimal[]{
     let runway2dot5k = BigDecimal.fromString("0")
     let runway5k = BigDecimal.fromString("0")
     let runway7dot5k = BigDecimal.fromString("0")
@@ -317,7 +318,12 @@ function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal): BigDe
         let runway70k_num = (Math.log(treasury_runway) / Math.log(1+0.00600065))/3;
         let runway100k_num = (Math.log(treasury_runway) / Math.log(1+0.00632839))/3;
         let nextEpochRebase_number = Number.parseFloat(rebase.toString())/100
+        if(block.number.toI32() > DISTRIBUTOR_CONTRACT_BLOCK){
+            let distributorContract = Distributor.bind(Address.fromString(DISTRIBUTOR_CONTRACT))
+            nextEpochRebase_number = Number.parseFloat(toDecimal(distributorContract.info(BigInt.fromI32(4)).value0,6).toString())
+        }
         let runwayCurrent_num = (Math.log(treasury_runway) / Math.log(1+nextEpochRebase_number))/3;
+
 
         runway2dot5k = BigDecimal.fromString(runway2dot5k_num.toString())
         runway5k = BigDecimal.fromString(runway5k_num.toString())
@@ -383,7 +389,7 @@ export function updateProtocolMetrics(block: ethereum.Block): void{
     pm.nextEpochRebase = apy_rebase[1]
 
     //Runway
-    let runways = getRunway(pm.sOhmCirculatingSupply, pm.treasuryRiskFreeValue, pm.nextEpochRebase)
+    let runways = getRunway(pm.sOhmCirculatingSupply, pm.treasuryRiskFreeValue, pm.nextEpochRebase, block)
     pm.runway2dot5k = runways[0]
     pm.runway5k = runways[1]
     pm.runway7dot5k = runways[2]

@@ -67,6 +67,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/OHMLUSDBondV1.json
+        - name: Distributor
+          file: ./abis/Distributor.json
       callHandlers:
         - function: rebase(uint256)
           handler: rebaseFunction
@@ -133,6 +135,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/OHMLUSDBondV1.json
+        - name: Distributor
+          file: ./abis/Distributor.json
       callHandlers:
         - function: rebase(uint256,uint256)
           handler: rebaseFunction
@@ -512,6 +516,8 @@ dataSources:
           file: ./abis/LUSDBondV1.json
         - name: OHMLUSDBondV1
           file: ./abis/OHMLUSDBondV1.json
+        - name: Distributor
+          file: ./abis/Distributor.json
       blockHandlers:
         - handler: handleBlock
       file: ./src/utils/ProtocolMetrics.ts

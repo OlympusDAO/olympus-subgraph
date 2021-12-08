@@ -109,15 +109,6 @@ export class Rebase extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get transaction(): string {
-    let value = this.get("transaction");
-    return value.toString();
-  }
-
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
-  }
-
   get amount(): BigDecimal {
     let value = this.get("amount");
     return value.toBigDecimal();
@@ -677,15 +668,6 @@ export class ProtocolMetric extends Entity {
 
   set treasuryOhmEthPOL(value: BigDecimal) {
     this.set("treasuryOhmEthPOL", Value.fromBigDecimal(value));
-  }
-
-  get holders(): BigInt {
-    let value = this.get("holders");
-    return value.toBigInt();
-  }
-
-  set holders(value: BigInt) {
-    this.set("holders", Value.fromBigInt(value));
   }
 }
 
