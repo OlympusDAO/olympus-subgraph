@@ -295,7 +295,7 @@ function getAPY_Rebase(sOHM: BigDecimal, distributedOHM: BigDecimal): BigDecimal
     return [currentAPYdecimal, nextEpochRebase]
 }
 
-function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal, block: ethereum.Block): BigDecimal[]{
+function getRunway(totalSupply: BigDecimal, rfv: BigDecimal, rebase: BigDecimal, block: ethereum.Block): BigDecimal[]{
     let runway2dot5k = BigDecimal.fromString("0")
     let runway5k = BigDecimal.fromString("0")
     let runway7dot5k = BigDecimal.fromString("0")
@@ -306,8 +306,8 @@ function getRunway(sOHM: BigDecimal, rfv: BigDecimal, rebase: BigDecimal, block:
     let runway100k = BigDecimal.fromString("0")
     let runwayCurrent = BigDecimal.fromString("0")
 
-    if(sOHM.gt(BigDecimal.fromString("0")) && rfv.gt(BigDecimal.fromString("0")) &&  rebase.gt(BigDecimal.fromString("0"))){
-        let treasury_runway = Number.parseFloat(rfv.div(sOHM).toString())
+    if(totalSupply.gt(BigDecimal.fromString("0")) && rfv.gt(BigDecimal.fromString("0")) &&  rebase.gt(BigDecimal.fromString("0"))){
+        let treasury_runway = Number.parseFloat(rfv.div(totalSupply).toString())
 
         let runway2dot5k_num = (Math.log(treasury_runway) / Math.log(1+0.0029438))/3;
         let runway5k_num = (Math.log(treasury_runway) / Math.log(1+0.003579))/3;
@@ -389,7 +389,7 @@ export function updateProtocolMetrics(block: ethereum.Block): void{
     pm.nextEpochRebase = apy_rebase[1]
 
     //Runway
-    let runways = getRunway(pm.sOhmCirculatingSupply, pm.treasuryRiskFreeValue, pm.nextEpochRebase, block)
+    let runways = getRunway(pm.totalSupply, pm.treasuryRiskFreeValue, pm.nextEpochRebase, block)
     pm.runway2dot5k = runways[0]
     pm.runway5k = runways[1]
     pm.runway7dot5k = runways[2]
