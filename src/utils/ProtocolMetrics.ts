@@ -65,7 +65,7 @@ function getTotalSupply(): BigDecimal{
     return total_supply
 }
 
-function getCriculatingSupply(transaction: Transaction, total_supply: BigDecimal): BigDecimal{
+function getCirculatingSupply(transaction: Transaction, total_supply: BigDecimal): BigDecimal{
     let circ_supply = BigDecimal.fromString("0")
     if(transaction.blockNumber.gt(BigInt.fromString(CIRCULATING_SUPPLY_CONTRACT_BLOCK))){
         let circulatingsupply_contract = CirculatingSupply.bind(Address.fromString(CIRCULATING_SUPPLY_CONTRACT))
@@ -342,7 +342,7 @@ export function updateProtocolMetrics(transaction: Transaction): void{
     pm.totalSupply = getTotalSupply()
 
     //Circ Supply
-    pm.ohmCirculatingSupply = getCriculatingSupply(transaction, pm.totalSupply)
+    pm.ohmCirculatingSupply = getCirculatingSupply(transaction, pm.totalSupply)
 
     //sOhm Supply
     pm.sOhmCirculatingSupply = getSohmSupply(transaction)
